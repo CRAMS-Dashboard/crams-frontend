@@ -1,0 +1,158 @@
+<div class="m_modal">
+    <!-- Modal content -->
+    <div class="m_modal-content">
+        <div class="m_modal-header">
+            <span class="m_close" ng-click="vm.mClose()"></span>
+            <div class="label_h4">User details</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"
+                     ng-if="flash" ng-bind="flash.message"></div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Please update user information</p>
+                    <span class="alert-info"> <strong>Info: </strong></span>Required fields are marked with an
+                    <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                </div>
+            </div>
+            <div class="display_separator"></div>
+            <br/>
+
+            <form name="contact_form" novalidate>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group" ng-class="{'has-error': vm.tm_form_errors['title_status']}">
+                            <label for="title">
+                                Title
+                            </label>
+                            <select name="title" id="title" class="form-control"
+                                    ng-model="vm.contact.title"
+                                    ng-options="title for title in vm.user_titles" required>
+                                <option value="">--- Select ---</option>
+                            </select>
+                            <span class="help-block" ng-show="vm.tm_form_errors['title_status']">
+                                {{ vm.tm_form_errors['title_message'] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tm_form_errors['given_name_status']}">
+                            <label for="given_name">
+                                Given name <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <input type="text" class="form-control" id="given_name"
+                                   ng-model="vm.contact.given_name"/>
+                            <span class="help-block" ng-show="vm.tm_form_errors['given_name_status']">
+                                {{ vm.tm_form_errors['given_name_message'] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tm_form_errors['surname_status']}">
+                            <label for="surname">
+                                Surname <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <input type="text" class="form-control" id="surname"
+                                   ng-model="vm.contact.surname"/>
+                            <span class="help-block" ng-show="vm.tm_form_errors['surname_status']">
+                                {{ vm.tm_form_errors['surname_message'] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tm_form_errors['email_status']}">
+                            <label for="email">
+                                Institutional email address <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <input type="email" class="form-control" id="email" ng-model="vm.contact.email" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tm_form_errors['phone_status']}">
+                            <label for="phone">
+                                Phone <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <input type="text" class="form-control" id="phone" ng-model="vm.contact.phone"/>
+                            <span class="help-block" ng-show="vm.tm_form_errors['phone_status']">
+                                {{ vm.tm_form_errors['phone_message'] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group" ng-class="{'has-error': vm.tm_form_errors['organisation_status']}">
+                            <label for="organisation">
+                                Institution <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <select name="organisation" id="organisation" class="form-control"
+                                    ng-model="vm.contact.organisation.name"
+                                    ng-options="org.name as org.name for org in vm.organisations" required>
+                                <option value="">--- Select ---</option>
+                            </select>
+                            <span class="help-block" ng-show="vm.tm_form_errors['organisation_status']">
+                                {{ vm.tm_form_errors['organisation_message'] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tm_form_errors['orcid_status']}">
+                            <label for="orcid">
+                                ORCID
+                            </label>
+                            <input type="text" class="form-control" id="orcid" ng-model="vm.contact.orcid"/>
+                            <span class="help-block" ng-show="vm.tm_form_errors['orcid_status']">
+                                {{ vm.tm_form_errors['orcid_message'] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tm_form_errors['scopusid_status']}">
+                            <label for="scopusid">
+                                Scopus ID
+                            </label>
+                            <input type="text" class="form-control" id="scopusid" ng-model="vm.contact.scopusid" maxlength="10"/>
+                            <span class="help-block" ng-show="vm.tm_form_errors['scopusid_status']">
+                                {{ vm.tm_form_errors['scopusid_message'] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn bg-primary" ng-click="vm.addOrUpdateUser()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            &nbsp;
+        </div>
+    </div>
+</div>

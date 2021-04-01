@@ -1,0 +1,52 @@
+<div class="main-container">
+    <div style="clear:both"></div>
+    <div>
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4 text-center">
+                <div class="alert alert-danger" ng-if="vm.token_expired">
+                    {{vm.token_expired_msg}}
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4 text-center">
+                <div class="panel panel-default">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="panel-body">
+                        <img ng-src="images/racmon/logo.png">
+                        <br/>
+                        <div class="label_default_5">
+                            Data Dashboard - Research Cloud Monash
+                        </div>
+                    </div>
+                    <div class="panel-line"></div>
+                    <div class="panel-body panel-left">
+                        Data Dashboard - Research Cloud Monash uses the Australian Access Federation (AAF) for its
+                        authentication.
+
+                        <p>
+                            <a target="_blank"
+                               href="http://support.nectar.org.au/support/solutions/articles/6000055377-getting-an-account">Having
+                                trouble logging in?</a>
+                        </p>
+                    </div>
+
+                    <div class="panel-footer">
+                        <a ng-href="{{vm.auth_redirect}}"><input class="btn bg-primary" type="button"
+                                                                 value="Log in"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+    </div>
+</div>
+<div ng-include="'templates/racmon/site_footer.html'"></div>

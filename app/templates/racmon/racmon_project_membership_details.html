@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="m_title">{{ vm.project_title }}</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="right_section">
+            <button type="button" ng-controller="AddMemberController as addUserCtrl"
+                    class="btn bg-primary" ng-click="addUserCtrl.showAddUser(vm.project_id)">Add User
+            </button>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div>
+    <div class="label_5 ng-scope">Current Users</div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="display_data_tab">
+                <thead>
+                <tr>
+                    <th width="25%">Name</th>
+                    <th width="25%">Email</th>
+                    <th width="25%">Member Role</th>
+                    <th width="25%">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="member in vm.project_members">
+                    <td>{{ member.given_name }} {{member.surname}}</td>
+                    <td>{{ member.email }}</td>
+                    <td>
+                        <div ng-repeat="role in member.roles">
+                            <span ng-if="member.roles.length > 1">-</span>{{ role }}
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!vm.isApplicant(member.email)">
+                            <a href="" ng-click="vm.removeProjectMember($event, member.email)">Remove</a>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

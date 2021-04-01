@@ -1,0 +1,43 @@
+<div ng-controller="StorageProductInfoController as spInfoCtrl">
+    <!-- popup template for the storage product info -->
+    <script type="text/ng-template" id="sp_info_modal">
+        <div>
+            <div class="modal-header">
+                <p class="label_h3"><span class="glyphicon glyphicon-tasks"></span> Storage Products</p>
+                <div class="mp_close" ng-click="vm.close()" title="Close"></div>
+                <hr class="ng-scope">
+            </div>
+            <div class="modal-body" id="modal-body" style="padding-top: 1px;">
+                <p class="label_h4" style="margin-top: 0px;">Vault</p>
+                <p>
+                    Vault storage is for the long term. Files to be kept for reference, but are not accessed every day.
+                    Best for achives in Zip, Tar or SquashFS format. Data left idle for more than set policy is migrated to low cost, slower storage.
+                    Vault storage can be a desktop share or network drive mounted on a server. It is backed up daily if requested.
+                </p>
+                <p class="label_h4">Market-File</p>
+                <p>
+                    Market storage is for data used every day. Best for data that changes frequently, shared by groups of users, and too large to be stored on a local machine.
+                    Market storage can be a desktop share or network drive mounted on a server. It is backed up daily.
+                </p>
+                <p class="label_h4">Object</p>
+                <p>
+                    Object store provides access via the S3/Swift protocol. It requires specialized client software. Generally used via NeCTAR Virtual Machines for Cloud Storage.
+                    It is accessible from outside the campus network. A separate application process is required to generate a NeCTAR identifier called a Tenant ID.
+                    It is replicated to multiple sites, but it is not backed up.
+                </p>
+                <p class="label_h4">Market-SONAS</p>
+                <p>
+                    This option is no longer available for new allocations. Currently being retired in favor of Vault and Market-File. The usage history of old allocations are still visible.
+                </p>
+                <p class="label_h4">Computational</p>
+                <p>
+                    Computational storage is presented as Volume storage to NeCTAR Virtual Machines. A separate application process is required to generate a NeCTAR identifier called a Tenant ID.
+                </p>
+                <br>
+                <div align="center">
+                    <button class="btn bg-primary" ng-click="vm.close()">Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-12">
+        <p><span class="label_5">Technical Contacts</span></p>
+        <p>The technical contact may be required to work with [Your Organsation] on technical issues related to this
+            application and its implementation. The technical contact may be the data custodian.
+        </p>
+    </div>
+</div>
+
+<!--<div class="row">-->
+    <!--<div class="col-md-6">-->
+        <!--<div ng-class="{'has-error': vm.technical_contact_invalid}">-->
+            <!--<span class="help-block has-error" ng-show="vm.technical_contact_invalid">-->
+                 <!--Please add a technical contact-->
+            <!--</span>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="row" ng-repeat="proj_contact in vm.project.project_contacts track by $index">
+    <div ng-if="proj_contact.contact_role == 'Technical Contact' && proj_contact.contact.email">
+        <div class="col-md-5">
+            <table class="data_tab">
+                <tr>
+                    <th width="150px">Title</th>
+                    <td>{{(proj_contact.contact.title || "")}}</td>
+                    <td rowspan="9" width="80px">
+                        <button class="btn btn-default" id="delete-contact" type="button"
+                                ng-click="vm.removeTechContact($index)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Given name</th>
+                    <td>{{proj_contact.contact.given_name}}</td>
+                </tr>
+                <tr>
+                    <th>Family name</th>
+                    <td>{{proj_contact.contact.surname}}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{proj_contact.contact.email}}</td>
+                </tr>
+                <tr>
+                    <th>Telephone</th>
+                    <td>{{proj_contact.contact.phone}}</td>
+                </tr>
+                <tr>
+                    <th>ORCID</th>
+                    <td>{{proj_contact.contact.orcid}}</td>
+                </tr>
+                <tr>
+                <tr>
+                    <th>ScopusID</th>
+                    <td>{{proj_contact.contact.scopusid}}</td>
+                </tr>
+                <tr>
+                    <th>Organisation</th>
+                    <td>{{proj_contact.contact.organisation.name}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="blank_separator"></div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-6">
+        <crams-technical-contact></crams-technical-contact>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="label_h4">{{vm.report_title}}</div>
+            </div>
+        </div>
+        <div class="row" ng-if="vm.show_calendar">
+            <div class="col-md-3">
+                    <span for="id-selected_date">
+                        Select ingest date:
+                    </span>
+                <p class="input-group">
+                    <input type="text" name="selected_date" id="id-selected_date" class="form-control"
+                           data-ng-model="vm.selected_date" readonly="readonly"
+                           uib-datepicker-popup='yyyyMMdd' is-open="vm.opened" ng-click="vm.openCalendar($event)"
+                           datepicker-options="vm.date_options" show-button-bar="false"
+                           ng-change="vm.selectedDateIngestReport()"/>
+                    <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="vm.openCalendar($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                </p>
+                <div class="blank_separator"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="center_div">
+                <div class="loading_div" ng-show="!vm.load_fininshed">
+                    <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                    <div class="loading_text">Loading reporting ...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="vm.load_fininshed">
+
+            <div class="col-md-12" ng-if="vm.report_data.length > 0">
+                <table class="s_display_data_tab">
+                    <tr>
+                        <th ng-repeat="(key, col_name) in vm.display_headings">
+                            {{col_name}}
+                        </th>
+                    </tr>
+                    <tr ng-repeat="data in vm.report_data">
+                        <td ng-repeat="(k, c) in vm.display_headings">
+                            <div ng-if="vm.isNumColumn(k)" style="float: right;">
+                                <span ng-if="vm.isCostColumn(k)">$</span>{{ vm.displayColumn(data, k) }}
+                            </div>
+                            <div ng-if="!vm.isNumColumn(k)">
+                                {{ vm.displayColumn(data, k) }}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <div>
+                    <button type="button" class="btn btn-default" ng-csv="vm.sortReportData()"
+                            filename="{{ vm.csvReportFileName() }}"
+                            csv-header="vm.sortHeadings()" decimal-separator="." charset="utf-8">
+                        <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-12" ng-if="vm.report_data.length == 0 || vm.report_data == undefined">
+                <div class="label_info">No Report Data</div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/' + theme + '/site_footer.html'"></div>

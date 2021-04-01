@@ -1,0 +1,69 @@
+<p class="label_h3">Section 5: Privacy Notice</p>
+<hr/>
+<p>
+    The information you provide will be used to administer your storage allocation in accordance with the
+    <a href="http://www.legislation.vic.gov.au/Domino/Web_Notes/LDMS/PubStatbook.nsf/f932b66241ecf1b7ca256e92000e23be/05CC92B3F8CB6A6BCA257D4700209220/%24FILE/14-060aa%20authorised.pdf"
+       target="_blank"> Privacy and Data
+        Protection Act 2014 (VIC)</a>.
+</p>
+<p>This information is being collected by [Your Organisation] and we will use the personal information you supply on this
+    form for the following purposes:
+</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group" class="form-control" ng-class="{'has-error': vm.privacy_question1_invalid}">
+            <input type="checkbox" id="id-privacy_question_1" name="privacy_question_1"
+                   ng-model="vm.project.requests[0].request_question_responses[11].question_response"
+                   ng-true-value="'{{vm.privacy1Question.choices[1]}}'"
+                   ng-false-value="'{{vm.privacy1Question.choices[2]}}'" required>
+            <span class="label_5">{{ vm.privacy1Question.question}}</span>
+            <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <span class="help-block" ng-show="vm.privacy_question1_invalid">Please check this box</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group" class="form-control" ng-class="{'has-error': vm.privacy_question2_invalid}">
+            <input type="checkbox" id="id-privacy_question_2" name="privacy_question_2"
+                   ng-model="vm.project.requests[0].request_question_responses[12].question_response"
+                   ng-true-value="'{{vm.privacy2Question.choices[1]}}'"
+                   ng-false-value="'{{vm.privacy2Question.choices[2]}}'" required>
+            <span class="label_5">{{ vm.privacy2Question.question}}</span>
+            <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <span class="help-block" ng-show="vm.privacy_question2_invalid">Please check this box</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <input type="checkbox" id="id-privacy_question_3" name="privacy_question_3"
+                   ng-model="vm.project.requests[0].request_question_responses[13].question_response"
+                   ng-true-value="'{{vm.privacy3Question.choices[1]}}'"
+                   ng-false-value="'{{vm.privacy3Question.choices[2]}}'">
+            <span class="label_5" ng-bind-html="vm.privacy3Question.question"></span>
+        </div>
+    </div>
+</div>
+<br/>
+<p>
+    You may access any personal information you have submitted to this website by contacting us by using the Support
+    Request option at the top of the page. [Your Organisation] is committed to protecting personal information provided by
+    you in accordance with the <a
+        href="http://www.legislation.vic.gov.au/Domino/Web_Notes/LDMS/PubStatbook.nsf/f932b66241ecf1b7ca256e92000e23be/05CC92B3F8CB6A6BCA257D4700209220/%24FILE/14-060aa%20authorised.pdf"
+        target="_blank"> Privacy and Data
+    Protection Act 2014 (VIC)</a> and all relevant Australian Privacy
+    Legislation.
+</p>
+<p>
+    For further information about how the University deals with personal information, please refer to the <a
+        href="link.to.your.organisation.privacy.policy" target="_blank">[Your Organisation Privacy Policy] </a> website or email <a href="mailto:link@linkto">Privacy Officer</a>.
+</p>
+<br/>
+<div class="privacy_div">
+    <i>Clicking <b>Submit</b> means that you have read and understood <b>Section 5</b> and have approved for [Your Organisation]
+        to use the information accordingly.</i>
+</div>
+<hr/>

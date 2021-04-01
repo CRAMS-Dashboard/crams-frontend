@@ -1,0 +1,147 @@
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <span class="label_h3">Research Grant Information</span>
+        </p>
+        <p>
+            <span class="alert-info1"><strong>Note</strong></span>:
+            Research grant information aids in the assessment of research allocations and indicates
+            the scale of the research supported.
+        </p>
+        <div ng-class="{'has-error': vm.grant_info_invalid}">
+            <span class="help-block has-error" ng-show="vm.grant_info_invalid && vm.alloc.project.grants.length !=0">
+                Please enter a value for required field
+            </span>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <table>
+            <tbody>
+            <tr ng-repeat="grant in vm.project.grants track by $index">
+                <td width="50%">
+                    <div class="border_div">
+                        <div class="col-md-10">
+                            <label>
+                                Type <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error':  vm.alloc_form['grant_type_' + $index].$invalid || vm.alloc_form['grant_type_' + $index].$error.isDup}">
+                                <select name="grant_type_{{$index}}" id="id-grant_type_{{$index}}"
+                                        class="form-control" ng-model="grant.grant_type.id"
+                                        ng-options="gtype.id as gtype.desc for gtype in vm.grant_types"
+                                        ng-change="vm.checkGrantTypeDup(this, $index)">
+                                    <option value="">--- Select ---</option>
+                                </select>
+                                <span class="help-block"
+                                      ng-show="vm.alloc_form['grant_type_' + $index].$invalid && !vm.alloc_form['grant_type_' + $index].$error.isDup">
+                                   Please select grant type.
+                                </span>
+                                <span class="help-block" ng-show="vm.alloc_form['grant_type_' + $index].$error.isDup">
+                                    Duplicated grant type.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <label for="id-funding_body_and_scheme_{{$index}}">
+                                Funding Body and Scheme<i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error': vm.alloc_form['funding_body_and_scheme_' + $index].$invalid}">
+                                <input type="text" min="1" name="funding_body_and_scheme_{{$index}}"
+                                       id="id-funding_body_and_scheme_{{$index}}" class="form-control"
+                                       ng-model="grant.funding_body_and_scheme"/>
+                                <span class="help-block"
+                                      ng-show="vm.alloc_form['funding_body_and_scheme_' + $index].$invalid">
+                                    Please enter the funding body and scheme.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <label for="id-start_year_{{$index}}">
+                                First Year Funded <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error':  vm.alloc_form['start_year_' + $index].$invalid}">
+                                <input type="number" name="start_year_{{$index}}" id="id-start_year_{{$index}}"
+                                       class="form-control" ng-model="grant.start_year" required/>
+                                <span class="help-block"
+                                      ng-show="vm.alloc_form['start_year_' + $index].$invalid">
+                                    Please enter a valid year.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <label for="id-grant_duration_{{$index}}">
+                                Funding Duration (In months)<i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error':  vm.alloc_form['grant_duration_' + $index].$invalid}">
+                                <input type="number" min="0" name="grant_duration_{{$index}}"
+                                       id="id-grant_duration_{{$index}}" max="999" min="0" required
+                                       onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                       class="form-control" ng-model="grant.duration" ng-change="vm.checkFundingDuration($index)"/>
+                                <span class="help-block"
+                                      ng-show="vm.alloc_form['grant_duration_' + $index].$invalid">
+                                    Please enter the grant duration (Between 1 to 999 Months).
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <label for="id-total_funding_{{$index}}">
+                                Total Funding <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error': vm.alloc_form['total_funding_' + $index].$invalid}">
+                                <input type="number" min="0" name="total_funding_{{$index}}" max="100000000000"
+                                       id="id-total_funding_{{$index}}" class="form-control" onkeypress="if(this.value.length==12) return false;"
+                                       ng-model="grant.total_funding" ng-change="vm.checkFundingMount($index)" style="float:left;width: 81%"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn">AUD</button>
+                                </span>
+                                <span class="help-block"
+                                      ng-show="vm.alloc_form['total_funding_' + $index].$invalid">
+                                    Please enter a valid amount for total funding.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <label for="id-grant_id_{{$index}}">
+                                Grant ID
+                            </label>
+                            <div class="form-group">
+                                <input type="text" min="1" name="grant_id_{{$index}}" id="id-grant_id_{{$index}}"
+                                       class="form-control" ng-model="grant.grant_id"/>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-default" id="delete-grant" type="button" ng-click="vm.removeGrant($index)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <input class="btn btn-default" type="button" value="Add grant" ng-click="vm.addGrant($event)">
+        </div>
+    </div>
+</div>

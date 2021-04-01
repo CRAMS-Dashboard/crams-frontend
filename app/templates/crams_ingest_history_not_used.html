@@ -1,0 +1,21 @@
+<div>
+    <button type="button" class="btn btn-default" ng-click="getIngestHistory()">History</button>
+    <div class="m_graphic_panel" ng-show="opened">
+        <div class="mp_header">
+            <div class="mp_close" ng-click="closeIngestHistory()" title="Close"></div>
+        </div>
+        <div class="mp_content" id="provision_id-{{provision_id}}"></div>
+        <div class="mp_content" ng-if="hasError">
+            <div class="g_alert">
+                {{error_msg}}
+            </div>
+        </div>
+        <div class="mp_footer" ng-if="!hasError">
+            <button type="button" class="btn btn-default" ng-csv="csvHistoryIngestData()" filename="history_ingest.csv"
+                    csv-header="csvHistoryIngestHeadings()" decimal-separator="." charset="utf-8">
+                <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+            </button>
+        </div>
+        <br/>
+    </div>
+</div>

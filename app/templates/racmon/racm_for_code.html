@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <span class="label_h3">Field of Research Codes</span> <i
+                class="glyphicon glyphicon-asterisk text-primary"></i>
+        </p>
+        <p>Please list the Fields of Research (FOR) codes associated with the collection. FOR Codes should ideally be
+            identified at the four- or six-digit level in order to ensure that they are classified correctly. Multiple
+            FOR codes can be added and the total must add up to 100%. For more information on FOR codes please refer to
+            the following
+            <a href="http://www.abs.gov.au/Ausstats/abs@.nsf/Latestproducts/6BB427AB9696C225CA2574180004463E?opendocument"
+               target="_blank">
+                website.
+            </a></p>
+        <p><span class="alert-info1"><strong>Note</strong></span>: Please provide at least one FOR code and its
+            weighted percentage</p>
+
+        <div ng-class="{'has-error': vm.sum_for_gt_100_invalid || vm.sum_for_lt_100_invalid }">
+            <span class="help-block has-error" ng-show="vm.sum_for_gt_100_invalid">
+                Sum of Field Of Research percentages greater than 100
+            </span>
+            <span class="help-block has-error" ng-show="vm.sum_for_lt_100_invalid">
+                Sum of Field Of Research percentages less than 100
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-repeat="for_code in vm.project.domains track by $index">
+    <div class="col-md-4">
+        <span class="label_5">Field Of Research</span>
+        <div class="form-group"
+             ng-class="{'has-error': vm.alloc_form['for_code' + $index].$invalid || vm.alloc_form['for_code' + $index].$error.isDup}">
+            <select name="for_code{{$index}}" id="id-for_code{{$index}}" class="form-control"
+                    ng-model="for_code.for_code.id"
+                    ng-options="for_code.id as for_code.desc for for_code in vm.for_codes"
+                    ng-change="vm.checkFORDuplicate(this, $index)">
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block"
+                  ng-show="vm.alloc_form['for_code' + $index].$invalid && !vm.alloc_form['for_code' + $index].$error.isDup">
+                Please select Field Of Research
+            </span>
+            <span class="help-block" ng-show="vm.alloc_form['for_code' + $index].$error.isDup">
+                Duplicated Field Of Research
+            </span>
+        </div>
+        <span class="label_5">Percentage</span> ( % )
+        <div class="form-group"
+             ng-class="{'has-error': vm.alloc_form['for_percentage' + $index].$invalid || vm.sum_for_gt_100_invalid || vm.sum_for_lt_100_invalid }">
+            <input type="number" step="0.01" min="0" class="form-control" ng-model="for_code.percentage"
+                   name="for_percentage{{$index}}" id="id-for_percentage{{$index}}" required/>
+            <span class="help-block" ng-show="vm.alloc_form['for_percentage' + $index].$invalid">
+                Please input the percentage for Field Of Research
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2" style="padding-top: 40px;" ng-if="$index > 0">
+        <input class="btn btn-default" type="button" value="Delete" ng-click="vm.removeFORCode($index)">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <input class="btn btn-default" type="button" value="Add Another FOR Code" ng-click="vm.addFORCode($event)">
+        </div>
+    </div>
+</div>

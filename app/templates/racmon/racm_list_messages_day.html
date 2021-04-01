@@ -1,0 +1,61 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="title_h1">Messages of the day</p>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="#/admin/message_day/new">
+                    <button class="btn btn-default">
+                        <i class="fa fa-commenting fa-lg" aria-hidden="true"></i> New Message
+                    </button>
+                </a>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <span> Total of {{ vm.total_pages}} pages</span>
+            </div>
+        </div>
+        <div class="row" ng-repeat="msg in vm.display_messages.messages">
+            <div class="col-md-12">
+                <div class="msg_section">
+                    <div ta-bind="text" ng-model="msg.message"></div>
+                    <span class="text-muted small"><em>{{msg.creation_ts | date:"dd/MM/yyyy"}}</em></span>
+                </div>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-12">
+                <span ng-if="vm.display_messages.prev_no > 0">
+                    <button class="btn btn-default" ng-click="vm.pagination(vm.display_messages.prev_no)">
+                       << Prev
+                    </button>
+                </span>
+                <span>
+                <button class="btn btn-default">
+                    Page {{ vm.display_messages.current_no }}
+                </button>
+                  </span>
+                <span ng-if="vm.display_messages.current_no < vm.total_pages">
+                    <button class="btn btn-default" ng-click="vm.pagination(vm.display_messages.next_no)">
+                        Next >>
+                    </button>
+                </span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/racmon/site_footer.html'"></div>

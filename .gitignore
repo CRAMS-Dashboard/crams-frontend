@@ -1,0 +1,10 @@
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+test/reporter/*.xml
+tmp
+.DS_Store
+.idea
+app/js/crams.config.js
+package-lock.json

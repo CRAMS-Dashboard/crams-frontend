@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            Reject a request, or specify changes a user needs to make to an allocation request before it can be
+            accepted.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <span class="alert-info1"><strong>Note</strong></span>: Required fields are marked with an
+        <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        sign
+    </div>
+</div>
+<hr/>
+
+<form name="decline_form" novalidate>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Project Title
+            </label>
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.alloc.title"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Project Description
+            </label>
+
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.proj_desc"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label for="id-approval_notes">
+                Reason
+            </label>
+            <p>
+                <span class="alert-info1"><strong>Note</strong></span>: A brief explanation of the reason the request
+                has been sent back to the user for changes.
+            </p>
+            <p> <i class="glyphicon glyphicon-asterisk text-primary"></i> Max 500 characters.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="{'has-error': vm.decline_notes_invalid}">
+                <textarea class="form-control" name="approval_notes" id="id-approval_notes"
+                          ng-model="vm.declineParams.approval_notes"
+                          rows="5"></textarea>
+                <span class="help-block"
+                      ng-show="vm.decline_notes_invalid">{{vm.decline_notes_err_msg}}</span>
+            </div>
+        </div>
+    </div>
+
+<!--    <div class="row">-->
+<!--        <div class="col-md-6">-->
+<!--            <div class="form-group">-->
+<!--                <input type="checkbox" ng-model="vm.alloc.requests[0].sent_email"> <span class="label_6"> Send email notification to all collection contacts </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="row">
+        <div class="col-md-5">
+            <div>
+                <button type="submit" class="btn bg-primary" ng-click="vm.decline_request()"
+                        ng-disabled="vm.btn_disabled"> Decline
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

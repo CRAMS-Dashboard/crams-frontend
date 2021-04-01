@@ -1,0 +1,135 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+
+        <!-- modal popup -->
+        <div class="row" ng-show="vm.show_popup_window">
+            <form name="vm.prov_id_form" novalidate>
+                <div class="col-md-12">
+                    <div class="modal_section_div">
+                        <div class="modal_section_header">
+                            <div class="modal_section_title">Change Provision ID</div>
+                            <div class="modal_section_close" ng-click="vm.close_popup_window()" title="Close"></div>
+                        </div>
+                        <div class="modal_section_noborder">
+                            <span class="alert-info1"><strong>Note</strong></span>: Required field are marked with
+                            a <i class="glyphicon glyphicon-asterisk text-primary"></i> sign
+                        </div>
+                        <div class="modal_section_noborder" ng-class="{'has-error': vm.hasError}">
+                            <span class="help-block has-error" ng-show="vm.hasError">
+                                 {{vm.error_msg}}
+                            </span>
+                        </div>
+                        <div class="modal_section_noborder_inner">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="display_data_tab">
+                                        <tr>
+                                            <th width="40%">
+                                                Storage Product
+                                            </th>
+                                            <td>
+                                                <div class="form-group" class="form-control">
+                                                    <div class="data_field_display">
+                                                        {{ vm.selected_stor_req.storage_product.name }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Current Provision ID
+                                            </th>
+                                            <td>
+                                                <div class="data_field_display">
+                                                    {{ vm.selected_stor_req.provision_id }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                New Provision ID <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                                            </th>
+                                            <td>
+                                                <div class="form-group" class="form-control"
+                                                     ng-class="{'has-error':vm.prov_id_invalid}">
+                                                    <input type="text" class="form-control" name="sp_provision_id"
+                                                           ng-model="vm.new_prov_id"
+                                                           maxlength="60" list="prov_ids"/>
+                                                    <datalist id="prov_ids">
+                                                        <option ng-repeat="prov_id in vm.available_prov_ids track by prov_id.index">{{prov_id.provision_id}}</option>
+                                                    </datalist>
+                                                    <span class="help-block" ng-show="vm.prov_id_invalid">
+                                                    Invalid, please select a valid provision id
+                                                </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="normal_blank_separator"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn bg-primary" type="submit" ng-click="vm.change_prov_id()">
+                                        Change Provision ID
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal_section_footer">
+                            &nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- provision id list -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="m_title">
+                    Project Name: {{ vm.project.title }}
+                </div>
+                <div class="col-md-12">
+                    <div class="sub_title">
+                        <span class="sub_title"><i class="fa fa-database"></i> Storage Resources (GB)</span>
+                    </div>
+                </div>
+                <div class="blank_separator"></div>
+
+                <!-- loading -->
+                <div class="col-md-12">
+                    <div class="center_div">
+                        <div class="loading" ng-show="!vm.loaded">
+                            <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                            <div class="loading_text">Loading ...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="vm.loaded">
+                    <div class="col-md-12">
+                        <table class="data_tab">
+                            <tr>
+                                <th width="30%">Storage Product</th>
+                                <th width="50%">Provision ID</th>
+                                <th width="20%">Action</th>
+                            </tr>
+                            <tr ng-repeat="stor_req in vm.project.requests[0].storage_requests">
+                                <td>{{ stor_req.storage_product.name }}</td>
+                                <td>{{ stor_req.provision_id }}</td>
+                                <td><a href="" ng-click="vm.open_popup_window(stor_req)">Change Provision ID</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/' + theme + '/site_footer.html'"></div>

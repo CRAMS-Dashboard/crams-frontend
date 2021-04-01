@@ -1,0 +1,107 @@
+<div class="provision_details">
+    <div class="mp_status_section">
+        <span class="p_success" ng-if="project.provisions.status == 'P'">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Success
+        </span>
+
+         <span class="p_failure" ng-if="project.provisions.status == 'F'">
+            <i class="fa fa-times-circle" aria-hidden="true"></i> Failure
+        </span>
+
+        <span class="p_progress"
+              ng-if="project.provisions.status != 'F' && project.provisions.status != 'P' && project.provisions.status !='NA'">
+            <i class="fa fa-product-hunt" aria-hidden="true"></i> In Progress
+        </span>
+    </div>
+    <div class="mp_details_section" ng-if="project.provisions.status !='NA'">
+        <span>
+            <button type="button" class="btn btn-default" ng-click="show_provision()">Details</button>
+        </span>
+
+        <div class="mp_outter_panel" ng-show="opened">
+            <div class="mp_header">
+                <div class="mp_title">Provision Details</div>
+                <div class="mp_close" ng-click="show_provision()" title="Close"></div>
+            </div>
+            <div class="mp_content">
+                <div class="mp_content_inner">
+                    <div class="each_field_row">
+                        <div class="data_field_div">Status:</div>
+                        <div class="data_field_desc">{{project.provisions.status_str}}</div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div class="line_separator"></div>
+                    <div class="each_field_row">
+                        <div class="data_heading_div">Project</div>
+                        <div class="data_field_desc"></div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div ng-repeat="project_prov in project.provisions.project_provisions">
+                        <div class="each_field_row">
+                            <div class="data_field_div">Status:</div>
+                            <div class="data_field_desc">{{project_prov.status_str}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                        <div class="each_field_row">
+                            <div class="data_field_div">Message:</div>
+                            <div class="data_field_desc">{{project_prov.message}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                    </div>
+                    <div class="line_separator"></div>
+                    <div class="each_field_row">
+                        <div class="data_heading_div">Compute Resources</div>
+                        <div class="data_field_desc"></div>
+                        <div style="clear:both"></div>
+                    </div>
+
+                    <div ng-repeat="compute_prov in project.provisions.compute_provisions">
+                        <div class="each_field_row">
+                            <div class="data_field_div">Name:</div>
+                            <div class="data_field_desc">{{compute_prov.name}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                        <div class="each_field_row">
+                            <div class="data_field_div">Status:</div>
+                            <div class="data_field_desc">{{compute_prov.status_str}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                        <div class="each_field_row">
+                            <div class="data_field_div">Message:</div>
+                            <div class="data_field_desc">{{compute_prov.message}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                    </div>
+                    <div class="line_separator"></div>
+                    <div class="each_field_row">
+                        <div class="data_heading_div">Storage Resources</div>
+                        <div class="data_field_desc"></div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div ng-repeat="storage_prov in project.provisions.storage_provisions">
+                        <div class="each_field_row">
+                            <div class="data_field_div">Name:</div>
+                            <div class="data_field_desc">{{storage_prov.name}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                        <div class="each_field_row">
+                            <div class="data_field_div">Status:</div>
+                            <div class="data_field_desc">{{storage_prov.status_str}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                        <div class="each_field_row">
+                            <div class="data_field_div">Message:</div>
+                            <div class="data_field_desc">{{storage_prov.message}}</div>
+                            <div style="clear:both"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div class="mp_footer">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+</div>

@@ -1,0 +1,167 @@
+<div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <input class="btn btn-default" type="button" value="Add Technical Contact"
+                       ng-click="vm.addTechnicalContact()">
+            </div>
+        </div>
+    </div>
+    <div class="mp_body_div" ng-show="vm.tc_popup_opened">
+        <div class="mp_header">
+            <div class="mp_title">Technical Contact</div>
+            <div class="mp_close" ng-click="vm.addTechnicalContact()" title="Close"></div>
+        </div>
+        <div class="mp_content">
+            <div class="mp_content_noborder">
+                <div class="form-group ">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="id-search_tc" name="search_tc"
+                               placeholder="Search technical contact by email or name here."
+                               ng-model="vm.search_tc"
+                               ng-change="vm.findProjectTechnicalContacts()"/>
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mp_content_noborder">
+                <div class="mp_details_section">
+                    <div ng-repeat="tc in vm.found_tc">
+                        <div class="line_separator"></div>
+                        <input type="radio" name="tc.email" ng-model="vm.selected_tc"
+                               value="{{tc.email}}" ng-change="vm.updateTechnicalContact(tc)"/>
+                        {{(tc.title || "") + " " + (tc.given_name || "") + " " + (tc.surname || "") +
+                        " (" + tc.email + ")"}}
+
+                    </div>
+
+                    <div ng-if="vm.found_tc.length == 0 && vm.tc_searched">
+                        <b>No technical contact found</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mp_content">
+            <div class="mp_content_noborder">
+                <button type="button" class="btn bg-primary" ng-click="vm.showNewTechnicalContactForm()">New Technical Contact</button>
+            </div>
+            <div ng-if="vm.show_new_tc">
+                <div class="mp_content_noborder">
+                    <span class="alert-info1"><strong>Note</strong></span>: Required fields are marked with
+                    a <i class="glyphicon glyphicon-asterisk text-primary"></i> sign
+                </div>
+                <br/>
+                <div style="clear: both"></div>
+                <div class="mp_content_inner">
+                    <form name="vm.contact_form" novalidate>
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tc_form_errors['title_status']}">
+                            <label for="title">
+                                Title
+                            </label>
+                            <input type="text" class="form-control" id="title" ng-model="vm.contact.title"
+                                   name="title" ng-change="vm.countChar(vm.contact.title)" maxlength="50"/>
+                            <div ng-if="vm.input_char_count[vm.contact.title]"><span class="label_grey"> {{ vm.input_char_count[vm.contact.title] }} characters (Max: 50)</span></div>
+                            <span class="help-block" ng-show="vm.tc_form_errors['title_status']">
+                                    {{ vm.tc_form_errors['title_message'] }}
+                                </span>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tc_form_errors['given_name_status']}">
+                            <label for="given_name">
+                                Given name <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <input type="text" class="form-control" id="given_name" name="given_name" maxlength="200"
+                                   ng-model="vm.contact.given_name" ng-change="vm.countChar(vm.contact.given_name)"/>
+                            <div ng-if="vm.input_char_count[vm.contact.given_name]"><span class="label_grey"> {{ vm.input_char_count[vm.contact.given_name] }} characters (Max: 200)</span></div>
+                            <span class="help-block" ng-show="vm.tc_form_errors['given_name_status']">
+                                    {{ vm.tc_form_errors['given_name_message'] }}
+                                </span>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tc_form_errors['surname_status']}">
+                            <label for="surname">
+                                Surname <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <input type="text" class="form-control" id="surname" name="surname" maxlength="200"
+                                   ng-model="vm.contact.surname" ng-change="vm.countChar(vm.contact.surname)"/>
+                            <div ng-if="vm.input_char_count[vm.contact.surname]"><span class="label_grey"> {{ vm.input_char_count[vm.contact.surname] }} characters (Max: 200)</span></div>
+                            <span class="help-block" ng-show="vm.tc_form_errors['surname_status']">
+                                    {{ vm.tc_form_errors['surname_message'] }}
+                                </span>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tc_form_errors['email_status']}">
+                            <label for="email">
+                                Institutional email address <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                            </label>
+                            <input type="text" class="form-control" id="email" ng-model="vm.contact.email"/>
+                            <span class="help-block" ng-show="vm.tc_form_errors['email_status']">
+                                    {{ vm.tc_form_errors['email_message'] }}
+                                </span>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tc_form_errors['phone_status']}">
+                            <label for="phone">
+                                Phone
+                            </label>
+                            <input type="text" class="form-control" id="phone" ng-model="vm.contact.phone"
+                                ng-change="vm.countChar(vm.contact.phone)" maxlength="50"/>
+                            <div ng-if="vm.input_char_count[vm.contact.phone]"><span class="label_grey"> {{ vm.input_char_count[vm.contact.phone] }} characters (Max: 50)</span></div>
+                            <span class="help-block" ng-show="vm.tc_form_errors['phone_status']">
+                                    {{ vm.tc_form_errors['phone_message'] }}
+                                </span>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': vm.dc_form_errors['organisation_status']}">
+                            <label for="organisation">
+                                Institution
+                            </label>
+                            <select name="organisation" id="organisation" class="form-control"
+                                    ng-model="vm.contact.organisation.name" ng-change="vm.organisation_change()"
+                                    ng-options="org.name as org.name for org in vm.organisations" required>
+                                <option value="">--- Select ---</option>
+                            </select>
+                            <span class="help-block" ng-show="vm.tc_form_errors['organisation_status']">
+                                {{ vm.tc_form_errors['organisation_message'] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tc_form_errors['orcid_status']}">
+                            <label for="orcid">
+                                ORCID
+                            </label>
+                            <input type="text" class="form-control" id="orcid" ng-model="vm.contact.orcid"/>
+                            <span class="help-block" ng-show="vm.tc_form_errors['orcid_status']">
+                                    {{ vm.tc_form_errors['orcid_message'] }}
+                                </span>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.tc_form_errors['scopusid_status']}">
+                            <label for="scopusid">
+                                ScopusID
+                            </label>
+                            <input type="text" class="form-control" id="scopusid" ng-model="vm.contact.scopusid" maxlength="10"/>
+                            <span class="help-block" ng-show="vm.tc_form_errors['scopusid_status']">
+                                    {{ vm.tc_form_errors['scopusid_message'] }}
+                                </span>
+                        </div>
+
+                        <button type="button" class="btn bg-primary" ng-click="vm.newTechnicalContact(vm.contact)">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="mp_footer">
+            &nbsp;&nbsp;
+        </div>
+    </div>
+    <div style="clear:both"></div>
+</div>

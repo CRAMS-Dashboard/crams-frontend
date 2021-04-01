@@ -1,0 +1,39 @@
+<div>
+    <!-- popup template for the support email -->
+    <script type="text/ng-template" id="ingestHistoryContent">
+        <div modal-movable>
+            <div class="modal-header">
+                <h3 class="label_h2">Ingestion History</h3>
+                <div class="mp_close" ng-click="vm.close()" title="Close"></div>
+                <hr class="ng-scope">
+            </div>
+            <div class="center_div" ng-show="!vm.loaded">
+                <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                <div class="loading_text">Loading ...</div>
+            </div>
+            <div ng-class="{ 'alert': flash, 'alert-danger': 'error' }" ng-show="vm.displayMessage"
+                 ng-bind="vm.errorMessage"></div>
+
+            <div class="modal-body" id="modal-body" style="padding-top: 1px;">
+
+                <div>
+                    <div id="provision_id-{{vm.provision_id}}"></div>
+                    <div ng-if="vm.hasError">
+                        <div class="g_alert">
+                            {{vm.error_msg}}
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-csv="vm.csvHistoryIngestData()"
+                        filename="{{vm.file_name}}"
+                        csv-header="vm.csvHistoryIngestHeadings()" decimal-separator="." charset="utf-8">
+                    <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+                </button>
+            </div>
+        </div>
+    </script>
+</div>

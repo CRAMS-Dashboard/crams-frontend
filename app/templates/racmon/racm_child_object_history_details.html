@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="m_title">
+            Project Name: <a href="#/{{ vm.allocations_base_path }}/child_objects/{{vm.request_id}}">{{
+            vm.history_data.project.title}}</a>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <span class="title_normal"> Total of <b>{{ vm.history_data.history.length }}</b> history records</span>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <table class="s_display_data_tab">
+            <thead>
+            <tr>
+                <th width="6">ID</th>
+                <th width="10%">Title</th>
+                <th width="12%">Description</th>
+                <th width="10%">Storage Product</th>
+                <th width="4%">Size (GB)</th>
+                <th width="8%">Location</th>
+                <th width="8%">Source</th>
+                <th width="8%">Data Owner</th>
+                <th width="8%">Archived Date</th>
+                <th width="8%">Retention Period (Year)</th>
+                <th width="6%">Review Date</th>
+                <th width="6%">Created By</th>
+                <th width="6%">Last Modified</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="history in vm.history_data.history track by $index">
+                <td>
+                    {{ vm.getChildId($index)}}
+                </td>
+                <td>
+                    {{ history.properties.title }}
+                </td>
+                <td>
+                    <div ng-text-truncate="history.properties.description" ng-tt-chars-threshold="30"></div>
+                </td>
+                <td>
+                    {{ vm.getSpNameById(history.provision_id)}}
+                </td>
+                <td>
+                    {{ history.allocation_gb }}
+                </td>
+                <td>
+                    {{ history.properties.data_path }}
+                </td>
+                <td>
+                    {{ history.properties.source_location }}
+                </td>
+                <td>
+                    {{ history.properties.data_owner }}
+                </td>
+                <td>
+                    {{ history.properties.archived_date }}
+                </td>
+                <td>
+                    {{ history.properties.retention_period }}
+                </td>
+                <td>
+                    {{ vm.setReviewDate(history.properties.archived_date, history.properties.retention_period) }}
+                </td>
+                <td>
+                    {{ history.created_by.first_name }} {{ history.created_by.last_name }}
+                </td>
+                <td>
+                    {{ history.creation_ts | date : 'yyyy-MM-dd HH:mm:ss' }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

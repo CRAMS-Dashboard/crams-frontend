@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <span class="label_h3">Funding Scheme</span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        </p>
+        <p><span class="alert-info1"><strong>Note</strong></span>: Please select a funding scheme</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" class="form-control"
+             ng-class="{'has-error': vm.funding_scheme_invalid || vm.alloc_form['funding_scheme'].$invalid}">
+            <select name="funding_scheme" id="funding_scheme" class="form-control"
+                    ng-model="vm.project.requests[0].funding_scheme.id"
+                    ng-options="fc.id as fc.funding_scheme for fc in vm.funding_schemes"
+                    ng-change="vm.changeFundingScheme()" required>
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block" ng-show="vm.funding_scheme_invalid || vm.alloc_form['funding_scheme'].$invalid">Please select a funding scheme</span>
+        </div>
+    </div>
+</div>

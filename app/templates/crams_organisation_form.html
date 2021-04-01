@@ -1,0 +1,79 @@
+<div>
+    <form name="vm.org_form" ng-submit="vm.saveOrg()" novalidate>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label for="name">Organisation name</label> <i
+                    class="glyphicon glyphicon-asterisk text-primary"></i>
+                <p>Full name of the organisation (200 characters max)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group" ng-class="{'has-error': vm.name_invalid}">
+                    <input type="text" class="form-control" ng-model="vm.org.name" name="name" maxlength="200" id="name"
+                           placeholder="Full name" ng-change="vm.orgNameCount()" required/>
+                    <span class="label_grey"> {{vm.org_name_count}} characters</span>
+                    <span class="help-block" ng-show="vm.name_invalid">Required field</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="short_name">Organisation short name</label> <i
+                    class="glyphicon glyphicon-asterisk text-primary"></i>
+                <p>Short name of organisation (50 characters max)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group" ng-class="{'has-error': vm.short_name_invalid}">
+                    <input type="text" class="form-control" ng-model="vm.org.short_name" name="short_name"
+                           id="short_name" maxlength="50" placeholder="Short name" ng-change="vm.shortNameCount()" required/>
+                    <span class="label_grey"> {{vm.short_name_count}} characters</span>
+                    <span class="help-block" ng-show="vm.short_name_invalid">Required field</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="ands_url">ANDS URL</label>
+                <p>ANDS URL address (OPTIONAL)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.ands_url_invalid || vm.org_form.ands_url.$error.email}">
+                    <input type="url" class="form-control" ng-model="vm.org.ands_url" name="ands_url" id="ands_url"
+                           placeholder="http://address.com/location/path (OPTIONAL)"/>
+                    <span class="help-block" ng-show="vm.ands_url_invalid">Invalid url</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="email">Notification email</label> <i
+                    class="glyphicon glyphicon-asterisk text-primary"></i>
+                <p>Email address for notification</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.notification_email_invalid || vm.org_form.email.$error.email}">
+                    <input type="email" class="form-control" ng-model="vm.org.notification_email" name="email"
+                           id="email"
+                           placeholder="email@address.com" required/>
+                    <span class="help-block" ng-show="vm.notification_email_invalid">Required field</span>
+                    <span class="help-block" ng-show="vm.org_form.email.$error.email">
+                        Invalid email
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+        <input class="btn bg-primary" type="submit" value="{{vm.save_button}}">
+    </form>
+</div>

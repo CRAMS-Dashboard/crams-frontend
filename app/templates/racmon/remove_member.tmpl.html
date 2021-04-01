@@ -1,0 +1,26 @@
+<md-dialog aria-label="Remove_member">
+    <form>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div class="col-sm-12">
+                    <div>
+                        Are you sure you want to remove <span class="label_5"> {{removed_email}}</span>?
+                        <hr/>
+                    </div>
+                    <br/>
+<!--                    <input type="checkbox" ng-model="sent_email"> <span class="label_6"> Send email notification to {{removed_email}} </span>-->
+                </div>
+
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <div class="col-sm-12 col-sm-offset-3">
+                <br/>
+                <md-button ng-click="answer('Yes')">Yes</md-button>
+                <md-button ng-click="answer('No')">No</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+

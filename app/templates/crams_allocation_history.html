@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-12">
+        <table class="display_data_tab">
+            <thead>
+            <tr>
+                <th width="15%">Status</th>
+                <th width="25%">Project</th>
+                <th width="15%">Transaction ID</th>
+                <th width="20%">Updated By</th>
+                <th width="15%">Modification Date</th>
+                <th width="10%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="nc_req in vm.history_list">
+                <td>
+                    {{nc_req.request_status.display_name}}
+                </td>
+                <td>
+                    {{nc_req.project.title}}
+                </td>
+                <td>
+                    {{nc_req.transaction_id}}
+                </td>
+                <td>
+                    {{nc_req.updated_by.email}}
+                </td>
+                <td>
+                    {{nc_req.allocation_request_update_ts | date:"dd/MM/yyyy 'at' h:mma"}}
+                </td>
+                <td>
+                    <a href="#/{{ vm.allocations_base_path }}/view_request/{{nc_req.id}}">View</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div style="clear: both"/>

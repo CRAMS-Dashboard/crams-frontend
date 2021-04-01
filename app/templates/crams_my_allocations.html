@@ -1,0 +1,226 @@
+<div class="row">
+    <div class="center_div">
+        <div class="loading_div" ng-show="!vm.loaded">
+            <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+            <div class="loading_text">Loading ...</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="count_title" ng-if="vm.projects.length >= 0">
+            <span class="text-muted small"><em>Total of {{ vm.projects.length }} Allocation(s)</em></span>
+        </div>
+        <div class="pull-right" ng-if="vm.projects.length > 0">
+            <button type="button" class="btn btn-default btn-sm" ng-csv="vm.allocationCSVData()"
+                    filename="allocations.csv"
+                    csv-header="vm.allocationsCSVHeadings()" decimal-separator="." charset="utf-8">
+                <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+            </button>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <table class="display_data_tab" ng-if="vm.copied_projects.length > 0">
+            <thead>
+            <tr>
+                <th width="15%">
+                    <span>Name</span>
+                    <span class="pull-right text-muted small" ng-click="vm.showNameFilter()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.asc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.desc"></i>
+                    </span>
+                    <div class="mp_body_small_div" ng-if="vm.show_filter_window">
+                        <div class="mp_header">
+                            <div class="mp_close" ng-click="vm.closeNameFilter()" title="Close"></div>
+                        </div>
+                        <div class="mp_border_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Sort</div>
+                                </div>
+                            </div>
+                            <div class="mp_content">
+                                        <span class="btn btn-default" ng-class="{ 'span_clicked': vm.asc}"
+                                              ng-click="vm.setAscDescSort('asc')">
+                                            <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ascending
+                                        </span>
+                                <span class="btn btn-default" ng-class="{ 'span_clicked': vm.desc}"
+                                      ng-click="vm.setAscDescSort('desc')">
+                                            <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Descending
+                                        </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Filter</div>
+                                    <br/>
+                                    <div class="mp_content_noborder">
+                                        <div class="form-group ">
+                                            <input type="text" class="form-control" id="id-filter_projects_by_name"
+                                                   name="filter_projects_by_name"
+                                                   placeholder="Type project name to filter"
+                                                   ng-model="vm.filtered_project_name"
+                                                   ng-change="vm.filterProjects()"/>
+                                        </div>
+                                    </div>
+                                    <div class="mp_content">
+                                        <span class="btn btn-default" ng-click="vm.clearFilter()">
+                                            <i class="fa fa-eraser" aria-hidden="true"></i> Clear Filter
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th width="10%">
+                    <span>Status</span>
+                    <span class="pull-right text-muted small" ng-click="vm.showStatusFilter()">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                    </span>
+                    <div class="mp_body_small_div" ng-if="vm.show_status_window">
+                        <div class="mp_header">
+                            <div class="mp_close" ng-click="vm.closeStatusFilter()" title="Close"></div>
+                        </div>
+                        <div class="mp_border_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Status</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div ng-repeat="req_status in vm.all_status">
+                                        <input type="checkbox" checklist-model="vm.selected_status"
+                                               checklist-value="req_status.code"/> {{req_status.display_name}}
+                                    </div>
+                                    <div class="mp_content">
+                                        <span class="btn btn-default" ng-click="vm.filterProjects()">
+                                            <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </th>
+                <th width="22%">Resources</th>
+                <th width="13%">
+                    <span>Transaction ID</span>
+                    <span class="pull-right text-muted small" ng-click="vm.transactionIdSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.transAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.transDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">
+                    <span>Funding</span>
+                    <span class="pull-right text-muted small" ng-click="vm.fundingSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.fundingAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.fundingDesc"></i>
+                    </span>
+                </th>
+                <th width="30%">Actions</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="project in vm.projects  track by $index">
+            <tr ng-repeat="nc_req in project.requests">
+                <td>
+                    <a href="#/{{ vm.allocations_base_path }}/view_request/{{nc_req.id}}">{{project.title}}</a>
+                </td>
+                <td>
+                    {{nc_req.request_status.display_name}}
+                </td>
+                <td>
+                    <div class="row" ng-repeat="comp_request in nc_req.compute_requests">
+                        <div class="col-md-12">
+                            {{comp_request.compute_product.name}}: {{comp_request.cores}} Cores,
+                            {{comp_request.core_hours}} VCPU Hours
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="storage_request in nc_req.storage_requests">
+                        <div class="col-md-12">
+                            <table class="no_border_tab">
+                                <tr>
+                                    <td width="40%">
+                                        {{storage_request.storage_product.name}}:
+                                    </td>
+                                    <td width="30">
+                                        <span ng-if="nc_req.request_status.code !='N' && nc_req.request_status.code !='E' && nc_req.request_status.code !='X' && nc_req.request_status.code !='R'">
+                                            {{storage_request.approved_quota_total}}
+                                        </span>
+                                        <span ng-if="nc_req.request_status.code =='N' || nc_req.request_status.code =='E' || nc_req.request_status.code =='X' || nc_req.request_status.code =='R'">
+                                            {{storage_request.requested_quota_total}}
+                                        </span>
+                                        GB
+                                    </td>
+                                    <td width="30%">
+                                        <div ng-if="nc_req.partial_provision_flag.storage_request">
+                                            <span ng-if="vm.isSpProvisioned(storage_request)">
+                                                [ <span class="provisioned">Provisioned</span> ]
+                                            </span>
+                                            <span ng-if="vm.isSpProvisionPending(storage_request)">
+                                                [ <span class="in_progress">Pending</span> ]
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td>{{nc_req.transaction_id}}</td>
+                <td>
+                    {{nc_req.funding_scheme.funding_scheme}}
+                </td>
+                <td>
+                    <span ng-if="(nc_req.request_status.code =='E' || nc_req.request_status.code =='N') && !vm.isReadonly(nc_req)">
+                        <span ng-if="nc_req.e_research_system.e_research_body == erb">
+                            <a href="#/{{ vm.allocations_base_path }}/edit_racmon_request/{{project.id}}/{{nc_req.id}}">Edit</a>
+                             <span ng-if="nc_req.request_status.code != 'N'"> | </span>
+                        </span>
+                    </span>
+                    <span ng-if="nc_req.request_status.code !='N' && nc_req.request_status.code !='E' && nc_req.request_status.code !='A' && !vm.isReadonly(nc_req)">
+                        <span ng-if="nc_req.e_research_system.e_research_body == erb">
+                            <a href="#/{{ vm.allocations_base_path }}/edit_racmon_request/{{project.id}}/{{nc_req.id}}">Amend/Extend allocation</a> |
+                        </span>
+                    </span>
+                    <span ng-if="(nc_req.request_status.code =='P' || nc_req.request_status.code =='X' || nc_req.request_status.code == 'J' || nc_req.request_status.code == 'U') && !vm.isReadonly(nc_req)">
+                        <span ng-if="nc_req.e_research_system.e_research_body == erb">
+                           <a href="#/project_membership/{{project.id}}">Membership</a> |
+                       </span>
+                    </span>
+                    <span ng-if="(nc_req.request_status.code =='P' || nc_req.request_status.code =='X' || nc_req.request_status.code == 'J' || nc_req.request_status.code == 'U') && !vm.isReadonly(nc_req)">
+                        <span ng-if="nc_req.e_research_system.e_research_body == erb && globals.selected_view === 'admin'">
+                           <a href="#/admin/manage_prov_ids/{{project.id}}" target="_blank">Manage Provision IDs</a> |
+                        </span>
+                    </span>
+
+                    <a href="#/{{ vm.allocations_base_path }}/history/{{nc_req.id}}"
+                       ng-if="nc_req.request_status.code != 'N'">History</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="count_title" ng-if="vm.projects.length >= 0">
+            <span class="text-muted small"><em>Total of {{ vm.projects.length }} Allocation(s)</em></span>
+        </div>
+        <div class="pull-right" ng-if="vm.projects.length > 0">
+            <button type="button" class="btn btn-default btn-sm" ng-csv="vm.allocationCSVData()"
+                    filename="allocations.csv"
+                    csv-header="vm.allocationsCSVHeadings()" decimal-separator="." charset="utf-8">
+                <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+            </button>
+        </div>
+    </div>
+</div>
+<div style="clear: both"/>
+
+<div ng-click="vm.backToTop()" class="btt-btn">TOP</div>

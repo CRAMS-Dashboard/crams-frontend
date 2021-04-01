@@ -1,0 +1,42 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="title_h1">New Message of the day</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-12">
+                <p><span class="label_5">Message of the day</span></p>
+                <p> <i class="glyphicon glyphicon-asterisk text-primary"></i> Max 1500 characters.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 form-group" ng-class="{'has-error': vm.message_invalid || vm.max_len_message_invalid}">
+                <div text-angular="text-angular" name="message_of_day" ng-change="vm.countWords()"
+                     ta-toolbar="[['h1','h2','h3', 'h4', 'h5','h6', 'p', 'pre', 'quote'],
+                     ['bold','italics', 'underline', 'strikeThrough', 'ul', 'ol', 'undo', 'redo', 'clear'],
+                     ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
+                     ['html', 'insertImage', 'insertLink', 'insertVideo']]"
+                     ng-model="vm.message_of_day"></div>
+                <!-- disabling this because its not an accurate counter -->
+                <!--<div class="label_grey" ng-if="vm.counter > 0"> {{vm.counter }} characters</div>-->
+                <div class="help-block" ng-show="vm.message_invalid">Required field</div>
+                <div class="help-block" ng-show="vm.max_len_message_invalid">Max 1500 characters</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input class="btn bg-primary" type="submit" value="Submit" ng-click="vm.newMessage()">
+            </div>
+        </div>
+        <br/>
+    </div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/racmon/site_footer.html'"></div>

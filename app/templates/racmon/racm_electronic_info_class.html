@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <span class="label_h3">Electronic Information Classification</span>
+        </p>
+        <p><span class="alert-info1"><strong>Note</strong></span>: Classification definitions:
+            <span ng-controller="PopupController">
+            <span><a href="" ng-click="showHelp()">Public, Restricted, Protected, Critical</a> </span>
+            <modal title="{{ help.electronic_inf_class.title }}" visible="showModal">
+                <span ng-bind-html="help.electronic_inf_class.text"></span>
+            </modal>
+        </span>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group"
+             ng-class="{'has-error': vm.electronic_inf_class_invalid || vm.alloc_form.electronic_inf_class.$invalid}">
+            <select class="form-control" id="id-electronic_inf_class" name="electronic_inf_class"
+                    ng-model="vm.project.requests[0].request_question_responses[2].question_response"
+                    ng-options="value as value for (key,value) in vm.electronicInfoClassQuestion.choices">
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block"
+                  ng-show="vm.electronic_inf_class_invalid || vm.alloc_form.electronic_inf_class.$invalid">Required field</span>
+        </div>
+    </div>
+
+</div>

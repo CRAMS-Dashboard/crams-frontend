@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="center_div">
+        <div class="col-md-2">
+            <p>
+                Selected Funding Body:
+            </p>
+            <select name="funding_body" id="id-funding_body" class="form-control"
+                    ng-model="vm.selected_funding_body" ng-change="vm.filterAllocations()"
+                    ng-options="funding_body.id as funding_body.name for funding_body in vm.funding_bodies">
+            </select>
+        </div>
+    </div>
+</div>
+<div style="clear: both"/>
+<br/>

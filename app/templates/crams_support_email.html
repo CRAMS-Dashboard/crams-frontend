@@ -1,0 +1,52 @@
+<div ng-controller="SupportEmailController as emailCtrl">
+    <!-- popup template for the support email -->
+    <script type="text/ng-template" id="myModalContent">
+        <form name="vm.form" novalidate>
+            <div class="modal-header">
+                <h3 class="label_h2">CRAMS Support Request</h3>
+                <div class="mp_close" ng-click="vm.close()" title="Close"></div>
+                <hr class="ng-scope">
+            </div>
+            <div ng-class="{ 'alert': flash, 'alert-danger': 'error' }" ng-show="vm.displayMessage" ng-bind="vm.errorMessage"></div>
+            <div class="modal-body" id="modal-body" style="padding-top: 1px;">
+                <p>
+                    For technical support or questions about research storage products and their use,
+                    please fill in the following form and we will get back to you shortly.
+                </p>
+                <!--
+                <p>
+                    <span class="label_5">Support type</span>
+                    <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                </p>
+                <p ng-class="{'has-error': vm.support_email_contacts_invalid}">
+                    <select name="e_research_system" id="e_research_system" class="form-control"
+                            ng-model="vm.selected_support_contact"
+                            ng-options="email_contact.description for email_contact in vm.support_email_contacts"
+                            required>
+                        <option value="">--- Select ---</option>
+                    </select>
+                    <span class="help-block" ng-show="vm.support_email_contacts_invalid">Required field</span>
+                </p>-->
+                <p>
+                    <span class="label_5">Subject/Title</span>
+                    <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                </p>
+                <p ng-class="{'has-error': vm.subject_invalid}">
+                    <input type="text" class="form-control ng-empty" ng-model="vm.subject" name="subject" required="">
+                    <span class="help-block" ng-show="vm.subject_invalid">Required field</span>
+                </p>
+                <p>
+                    <span class="label_5">Question/Issue</span>
+                    <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                </p>
+                <p ng-class="{'has-error': vm.body_invalid}">
+                    <textarea class="form-control ng-empty" ng-model="vm.body" name="body" rows="10" required=""></textarea>
+                    <span class="help-block" ng-show="vm.body_invalid">Required field</span>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-click="vm.submit()">Send</button>
+            </div>
+        </form>
+    </script>
+</div>

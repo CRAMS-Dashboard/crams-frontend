@@ -1,0 +1,286 @@
+<div class="center_div">
+    <div class="loading_div" ng-show="!vm.loaded">
+        <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+        <div class="loading_text">Loading ...</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="display_data_tab" ng-show="vm.show_table">
+            <thead>
+            <tr ng-if="!vm.isAproved">
+                <th width="15%">Name
+                    <span class="pull-right text-muted small" ng-click="vm.showNameFilter()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.nameAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.nameDesc"></i>
+                    </span>
+                    <!-- popup filter -->
+                    <div class="mp_body_small_div" ng-if="vm.show_filter_window">
+                        <div class="mp_header">
+                            <div class="mp_close" ng-click="vm.closeNameFilter()" title="Close"></div>
+                        </div>
+                        <div class="mp_border_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Sort</div>
+                                </div>
+                            </div>
+                            <div class="mp_content">
+                                <span class="btn btn-default" ng-class="{ 'span_clicked': vm.nameAsc}"
+                                      ng-click="vm.setNameAscDescSort('asc')">
+                                    <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ascending
+                                </span>
+                                <span class="btn btn-default" ng-class="{ 'span_clicked': vm.nameDesc}"
+                                      ng-click="vm.setNameAscDescSort('desc')">
+                                    <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Descending
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Filter</div>
+                                    <br/>
+                                    <div class="mp_content_noborder">
+                                        <div class="form-group ">
+                                            <input type="text" class="form-control"
+                                                   name="filter_projects_by_name"
+                                                   placeholder="Type project name to filter"
+                                                   ng-model="vm.filtered_project_name"
+                                                   ng-change="vm.filterProjects()"/>
+                                        </div>
+                                    </div>
+                                    <div class="mp_content">
+                                        <span class="btn btn-default" ng-click="vm.clearProjectNameFilter()">
+                                            <i class="fa fa-eraser" aria-hidden="true"></i> Clear Filter
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th width="10%">Status
+                    <span class="pull-right text-muted small" ng-click="vm.showStatusFilter()">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                    </span>
+                    <!-- popup filter-->
+                    <div class="mp_body_small_div" ng-if="vm.show_status_window">
+                        <div class="mp_header">
+                            <div class="mp_close" ng-click="vm.closeStatusFilter()" title="Close"></div>
+                        </div>
+                        <div class="mp_border_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Status</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div ng-repeat="req_stat in vm.all_status">
+                                        <input type="checkbox" checklist-model="vm.selected_status"
+                                               checklist-value="req_stat.display_name"/> {{ req_stat.display_name }}
+                                    </div>
+                                    <div class="mp_content">
+                                        <span class="btn btn-default" ng-click="vm.filterProjects()">
+                                            <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th width="25%">Resources</th>
+                <th width="15%">Transaction ID
+                    <span class="pull-right text-muted small" ng-click="vm.transactionIdSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.transAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.transDesc"></i>
+                    </span>
+                </th>
+                <th width="15%">Funding
+                    <span class="pull-right text-muted small" ng-click="vm.fundingSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.fundingAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.fundingDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">Updated By
+                    <span class="pull-right text-muted small" ng-click="vm.updatedBySort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.updatedByAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.updatedByDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">Actions</th>
+            </tr>
+            <tr ng-if="vm.isAproved">
+                <th width="15%">Name
+                    <span class="pull-right text-muted small" ng-click="vm.showNameFilter()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.nameAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.nameDesc"></i>
+                    </span>
+                    <!-- popup filter -->
+                    <div class="mp_body_small_div" ng-if="vm.show_filter_window">
+                        <div class="mp_header">
+                            <div class="mp_close" ng-click="vm.closeNameFilter()" title="Close"></div>
+                        </div>
+                        <div class="mp_border_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Sort</div>
+                                </div>
+                            </div>
+                            <div class="mp_content">
+                                <span class="btn btn-default" ng-class="{ 'span_clicked': vm.nameAsc}"
+                                      ng-click="vm.setNameAscDescSort('asc')">
+                                    <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ascending
+                                </span>
+                                <span class="btn btn-default" ng-class="{ 'span_clicked': vm.nameDesc}"
+                                      ng-click="vm.setNameAscDescSort('desc')">
+                                    <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Descending
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Filter</div>
+                                    <br/>
+                                    <div class="mp_content_noborder">
+                                        <div class="form-group ">
+                                            <input type="text" class="form-control"
+                                                   name="filter_projects_by_name"
+                                                   placeholder="Type project name to filter"
+                                                   ng-model="vm.filtered_project_name"
+                                                   ng-change="vm.filterProjects()"/>
+                                        </div>
+                                    </div>
+                                    <div class="mp_content">
+                                        <span class="btn btn-default" ng-click="vm.clearProjectNameFilter()">
+                                            <i class="fa fa-eraser" aria-hidden="true"></i> Clear Filter
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th width="10%">Status
+                    <span class="pull-right text-muted small" ng-click="vm.showStatusFilter()">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                    </span>
+                    <!-- popup filter-->
+                    <div class="mp_body_small_div" ng-if="vm.show_status_window">
+                        <div class="mp_header">
+                            <div class="mp_close" ng-click="vm.closeStatusFilter()" title="Close"></div>
+                        </div>
+                        <div class="mp_border_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Status</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div ng-repeat="req_stat in vm.all_status">
+                                        <input type="checkbox" checklist-model="vm.selected_status"
+                                               checklist-value="req_stat.display_name"/> {{ req_stat.display_name }}
+                                    </div>
+                                    <div class="mp_content">
+                                        <span class="btn btn-default" ng-click="vm.filterProjects()">
+                                            <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th width="25%">Resources</th>
+                <th width="15%">Transaction ID
+                    <span class="pull-right text-muted small" ng-click="vm.transactionIdSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.transAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.transDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">Funding
+                    <span class="pull-right text-muted small" ng-click="vm.fundingSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.fundingAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.fundingDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">Approver
+                    <span class="pull-right text-muted small" ng-click="vm.approverSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.approverAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.approverDesc"></i>
+                    </span>
+                </th>
+                <th width="15%">Actions</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="project in vm.projects">
+            <tr ng-repeat="req in project.requests">
+                <td><a href="#/{{ nav.first_path }}/view_request/{{req.id}}">{{project.title}}</a>
+                </td>
+                <td>
+                    {{req.request_status.display_name}}
+                </td>
+                <td>
+                    <div class="row" ng-repeat="compute_req in req.compute_requests">
+                        <div class="col-md-12">
+                            <div ng-switch="req.request_status.code == 'A' || req.request_status.code == 'P'">
+                                <div ng-switch-when="true">
+                                    {{compute_req.compute_product.name}}: {{compute_req.approved_cores}} Cores,
+                                    {{compute_req.approved_core_hours}} VCPU Hours
+                                </div>
+                                <div ng-switch-default>
+                                    {{compute_req.compute_product.name}}: {{compute_req.cores}} Cores,
+                                    {{compute_req.core_hours}} VCPU Hours
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="storage_req in req.storage_requests">
+                        <div class="col-md-12">
+                            <div ng-switch="req.request_status.code">
+                                <div ng-switch-when="A|P" ng-switch-when-separator="|">
+                                    {{storage_req.storage_product.name}}: {{storage_req.approved_quota_total}} GB
+                                </div>
+                                <div ng-switch-when="X">
+                                    {{storage_req.storage_product.name}}: <span
+                                        ng-if="storage_req.requested_quota_change > 0">+</span>{{storage_req.requested_quota_change}}
+                                    GB
+                                </div>
+                                <div ng-switch-default>
+                                    {{storage_req.storage_product.name}}: {{storage_req.requested_quota_total}} GB
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{req.transaction_id}}
+                </td>
+                <td>
+                    {{req.funding}}
+                </td>
+                <td>
+                    {{project.updated_by.email}}
+                </td>
+                <td>
+                    <span ng-if="req.request_status.code =='N' || req.request_status.code =='E' || req.request_status.code =='X'">
+                        <span ng-if="req.e_research_system.e_research_body == erb">
+                            <a href="#/{{ nav.first_path }}/edit_racmon_request/{{project.id}}/{{req.id}}">Edit</a>
+                             &nbsp; | &nbsp;
+                        </span>
+                    </span>
+                    <a href="#/{{ nav.first_path }}/history/{{req.id}}">History</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div ng-show="vm.loaded">
+            <div class="center_div" ng-show="vm.projects.length == 0">
+                No allocation found
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear: both"/>
+
+<div ng-click="vm.backToTop()" class="btt-btn">TOP</div>

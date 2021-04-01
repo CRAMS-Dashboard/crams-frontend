@@ -1,0 +1,119 @@
+<div class="row">
+    <div class="col-md-4">
+        <span class="label_5">Select a faculty </span>
+        <div class="form-group" class="form-control">
+            <select name="faculty" id="faculty" class="form-control"
+                    ng-model="vm.selected_faculty_id"
+                    ng-options="fac.id as fac.name for fac in vm.faculties"
+                    ng-change="vm.filterFaculty()">
+                <option value="">--- All ---</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="display_separator"></div>
+<div class="row m_graphic_lengend">
+    <div class="col-sm-6 m_toggle_view_div">
+        <span class="label_h5" ng-if="vm.isCostView">Cost view &nbsp; &nbsp; &nbsp; &nbsp;</span>
+        <span class="label_h5" ng-if="!vm.isCostView">Usage view &nbsp; &nbsp; &nbsp; &nbsp;</span> switch to
+        <button class="btn btn-default" style="width: 100px !important;"
+                ng-click="vm.toggleCostView()"> {{vm.view_label}}
+        </button>
+    </div>
+    <div class="col-sm-6 m_lengend_label">
+        <span style="background-color:#ddcc77; border: solid 1px #5a5a5a">&nbsp;&nbsp;&nbsp;&nbsp;</span> Used
+        (Disk) &nbsp;&nbsp;&nbsp;
+        <span style="background-color:#999933; border: solid 1px #5a5a5a">&nbsp;&nbsp;&nbsp;&nbsp;</span> HSM
+        (Tape) &nbsp;&nbsp;&nbsp;
+        <span style="background-color:#cc6677; border: solid 1px #5a5a5a">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        Overdraft &nbsp;&nbsp;&nbsp;
+        <span style="background-color:#88ccee; border: solid 1px #5a5a5a">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        Available &nbsp;&nbsp;&nbsp;
+        <span style="background-color:#ffffff; border: solid 1px #5a5a5a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> None
+    </div>
+</div>
+<div class="display_separator"></div>
+<div ng-repeat="faculty in vm.display_faculties">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="project_name_div" ng-click="vm.loadFacultyGraphicData(faculty.id)">
+                <span><i class="fa fa-list-ul" aria-hidden="true"></i> &nbsp;<span
+                        class="label_h5"> {{faculty.name}}</span></span>
+                <span style="float: right">
+                    <i class="fa fa-plus" aria-hidden="true" ng-show="!vm.isExpanded(faculty.id)"></i>
+                    <i class="fa fa-minus" aria-hidden="true" ng-show="vm.isExpanded(faculty.id)"></i>
+                </span>
+            </div>
+            <div class="loading_spinner" ng-show="vm.isLoading(faculty.id)">
+                <div class="loading">
+                    <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                    <div class="loading_label">Loading ...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m_graphic_section"
+                 ng-if="vm.facultyUsageCost(faculty.id) != undefined && vm.facultyUsageCost(faculty.id).length > 0">
+                <div class="crams-sm-2" ng-repeat="sp in vm.facultyUsageCost(faculty.id) track by $index">
+                    <!-- No data error -->
+                    <div ng-if="!sp.flags.raise_error" ng-class="{'left_border': $index== 1}">
+                        <div class="g_title">
+                            <b>{{sp.product.name}}</b>
+                        </div>
+                        <div class="g_title" ng-if="!vm.isCostView">
+                            <b>{{ sp.total.allocated_gb_size| tbNum}}</b> TB
+                        </div>
+                        <div class="g_title" ng-if="vm.isCostView">
+                            <span class="g_sub_title">Cap: AUD <b>{{sp.total.allocated_cost_cap | number: 2}}</b></span><br/>
+                            <span class="g_sub_title">Ops: AUD <b>{{sp.total.allocated_cost_op | number: 2}}</b></span><br/>
+                            <span class="g_sub_title">Total: AUD <b>{{sp.total.allocated_cost | number: 2}}</b></span>
+                        </div>
+                        <div class="g_title" id="'test_{{$index}}"
+                             crams-chart="PieChart" iscostview="{{vm.isCostView}}" ng-model="sp">
+                        </div>
+                        <div ng-if="!vm.isCostView && sp.total.used_percent > 0">
+                            <div class="g_alert" ng-if="sp.flags.alert_user">
+                                Used: {{ sp.total.used_gb_size | tbNum }} TB
+                            </div>
+
+                            <div class="g_title" ng-if="!sp.flags.alert_user">
+                                Used: {{ sp.total.used_gb_size | tbNum}} TB
+                            </div>
+                        </div>
+
+                        <div ng-if="vm.isCostView && sp.total.used_cost > 0">
+                            <div class="g_alert" ng-if="sp.flags.alert_user">
+                                AUD {{sp.total.used_cost | number: 2}}
+                            </div>
+
+                            <div class="g_title" ng-if="!sp.flags.alert_user">
+                                AUD {{sp.total.used_cost | number: 2}}
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="sp.flags.raise_error">
+                        <div class="g_title">
+                            <b>{{sp.product.name}}</b>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="g_data_error">
+                            <b>Invalid Data</b>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+                <div style="clear: both"/>
+            </div>
+            <div class="m_graphic_section" ng-if="vm.facultyUsageCost(faculty.id).length == 0">
+                <div class="no_data">
+                    No usage data
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-click="vm.backToTop()" class="btt-btn">TOP</div>

@@ -1,0 +1,200 @@
+<p class="label_h3">Section 2: Collection Details</p>
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <p><span class="label_5">Collection Title</span> <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+        <p>The collection title should be as descriptive as possible so that it is meaningful to researchers from other
+            disciplines and into the future.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.title_invalid}">
+            <input type="text" class="form-control" ng-model="vm.project.title" name="title" required/>
+            <span class="help-block" ng-show="vm.title_invalid">{{vm.title_error_message}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <span class="label_5">Collection Description</span> <i
+                class="glyphicon glyphicon-asterisk text-primary"></i>
+        </p>
+        <p>The collection description will be used to assist discovery of your research data and should be similar to a
+            journal article abstract. Provide a description aimed at a reader who has general familiarity with the
+            research area but is not a specialist. Do not use specialist acronyms or jargon. Include important keywords
+            within the text. Please keep this description under 2500 characters if possible.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.description_invalid || vm.description_excess_max_invalid}">
+            <textarea class="form-control" ng-model="vm.project.description" name="description"
+                      rows="5" ng-change="vm.countDesc()" required></textarea>
+            <span class="label_grey"> {{vm.desc_count}} characters</span>
+            <span class="help-block" ng-show="vm.description_invalid">Please enter description</span>
+            <span class="help-block" ng-show="vm.description_excess_max_invalid">Max 2500 characters</span>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">-->
+    <!--<div class="col-md-6">-->
+        <!--<div class="form-group">-->
+            <!--<input type="checkbox" ng-model="vm.has_parent_project" ng-change="vm.hasParentProject()"> <span-->
+                <!--class="label_5"> Is it child project? </span>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<div ng-if="vm.selected_parent_proj">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="div_display_section">
+                <i class="fa fa-caret-right flex-gt-sm" aria-hidden="true"></i>
+                {{vm.project.requests[0].linked_allocations[0].allocation.project}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input class="btn btn-default" type="button" value="Change"
+                       ng-click="vm.changeParentProject()">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="loading_spinner" ng-show="vm.show_loading_proj_spinner">
+            <div class="loading">
+                <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                <div class="loading_label">Loading parent projects...</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mp_body_div" ng-if="vm.show_select_parent_proj_window">
+    <div class="mp_header">
+        <div class="mp_title">Select the parent project</div>
+        <div class="mp_close" ng-click="vm.closeParentProjectWindow()" title="Close"></div>
+    </div>
+    <div class="mp_content">
+        <div class="row">
+            <div class="col-md-6">
+                <div ng-class="{'has-error': vm.no_parent_project_error}">
+                    <span class="help-block has-error" ng-show="vm.no_parent_project_error">
+                         Please select a parent project
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="mp_content_noborder">
+            <div class="form-group ">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="id-search_parent_project_name"
+                           name="search_parent_project_name"
+                           placeholder="Type project name to filter"
+                           ng-model="vm.search_parent_project_name"
+                           ng-change="vm.filterParentProjects()"/>
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="mp_content_scrollborder">
+            <div class="mp_details_section">
+                <div ng-repeat="p_proj in vm.parent_projects">
+                    <div class="line_separator"></div>
+                    <input type="radio" name="vm.selected_parent_proj.id" ng-model="vm.selected_parent_proj.project"
+                           value="{{p_proj.project}}" ng-change="vm.selectParentProject(p_proj)"/>
+                    {{p_proj.project}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <span class="label_5">Sensitive Data Handling</span> <i
+                class="glyphicon glyphicon-asterisk text-primary"></i>
+        </p>
+        <div class="form-group" class="form-control" ng-class="{'has-error': vm.data_sensitive_invalid}">
+            <input type="radio" id="id-data-sensitivity-no" name="id-data-sensistivity-no"
+                ng-model="vm.data_sensitive" ng-value="false">
+            <b>This collection is free, and will continue to be free, of sensitive data</b>
+            <br/>
+            <span style="padding-left: 2em;">Information link: <a href="https://your_organisation_storage_guidelines" target="_blank">[Storage guidelines]</a></span>
+            <br/>
+            <br/>
+            <input type="radio" id="id-data-sensitivity-yes" name="id-data-sensistivity-yes"
+                   ng-model="vm.data_sensitive" ng-value="true">
+            <b>Collection owner believes that this is an appropriate means of access given the sensitivity</b>
+            <br/>
+            <span style="padding-left: 2em;">Information link: <a href="https://your_organisation/security-classifications" target="_blank">[Security classifications]</a></span>
+            <span class="help-block" ng-show="vm.data_sensitive_invalid">Please select an option above</span>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <span class="label_h3">Organisation Details</span>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <span class="label_5">Organisation </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        <div class="form-group" class="form-control"
+             ng-class="{'has-error': vm.organisation_valid}">
+            <select name="organisation" id="organisation" class="form-control"
+                    ng-model="vm.project.department.organisation"
+                    ng-options="org.name as org.name for org in vm.org_list"
+                    ng-change="vm.changeOrg()" required>
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block" ng-show="vm.organisation_valid">Please select an organisation</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <span class="label_5">Faculty/Affiliation </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        <div class="form-group" class="form-control"
+             ng-class="{'has-error': vm.faculty_valid}">
+            <select name="faculty" id="faculty" class="form-control"
+                    ng-model="vm.project.department.faculty"
+                    ng-options="fac.name as fac.name for fac in vm.faculty_list"
+                    ng-change="vm.changeFaculty()" required>
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block" ng-show="vm.faculty_valid">Please select a faculty</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <span class="label_5">Department </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        <div class="form-group" class="form-control"
+             ng-class="{'has-error': vm.department_valid}">
+            <select name="department" id="department" class="form-control"
+                    ng-model="vm.project.department.department"
+                    ng-options="dept.name as dept.name for dept in vm.dept_list"
+                    ng-change="vm.changeDepartment()" required>
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block" ng-show="vm.department_valid">Please select a department</span>
+        </div>
+    </div>
+</div>

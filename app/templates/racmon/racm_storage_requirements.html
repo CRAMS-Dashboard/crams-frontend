@@ -1,0 +1,147 @@
+<div class="row">
+    <div class="col-md-12">
+        <p class="label_h3">Section 3: Storage Requirements</p>
+        <hr/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">What's the size of your current data set?</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group"
+             ng-class="{'has-error':vm.alloc_form['sp_current_size_0'].$invalid}">
+            <input class="form-control" type="number" min="0" name="sp_current_size_0"
+                   id="sp_current_size_0"
+                   ng-model="vm.project.requests[0].request_question_responses[3].question_response"
+                   style="float:left;width: 84%"/>
+            <span class="input-group-btn">
+                <button class="btn" type="button">GB</button>
+            </span>
+            <span class="help-block" ng-show="vm.alloc_form['sp_current_size_0'].$invalid">
+                Specify the current size of data
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            Identify the storage volume for your collection in gigabytes and the preferred storage type.
+        </p>
+        <p>
+            <span class="alert-info1"><strong>Note</strong></span>: Please add at least one storage product
+        </p>
+        <p>
+            <button ng-controller="StorageProductInfoController as spInfoCtrl"
+                    ng-click="spInfoCtrl.open()" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-info-sign"></span> Storage Products
+            </button>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10">
+        <table class="display_data_tab">
+            <thead>
+            <tr ng-if="vm.project.requests[0].storage_requests.length > 1">
+                <th width="30%"> Storage Product <i class="glyphicon glyphicon-asterisk text-primary"></i></th>
+                <th width="20%"> Current Allocation (GB)</th>
+                <th width="25%"> Allocation Change (GB) <i class="glyphicon glyphicon-asterisk text-primary"></i></th>
+                <th width="20%"> Total (GB)</th>
+                <th width="5%"> &nbsp;</th>
+            </tr>
+            <tr ng-if="vm.project.requests[0].storage_requests.length == 1">
+                <th width="30%"> Storage Product <i class="glyphicon glyphicon-asterisk text-primary"></i></th>
+                <th width="20%"> Current Allocation (GB)</th>
+                <th width="25%"> Allocation Change (GB) <i class="glyphicon glyphicon-asterisk text-primary"></i></th>
+                <th width="25%"> Total (GB)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="storage_request in vm.project.requests[0].storage_requests track by $index">
+                <td>
+                    <div class="form-group" ng-if="storage_request.current_quota == 0"
+                         ng-class="{'has-error': vm.alloc_form['sp_' + $index].$invalid || vm.alloc_form['sp_' + $index].$error.isdup}">
+                        <select name="sp_{{$index}}" id="sp_{{$index}}" class="form-control"
+                                ng-model="storage_request.storage_product.id"
+                                ng-options="sp.id as sp.name for sp in vm.storageProducts"
+                                ng-change="vm.checkDuplicatedStorageProd(this, $index)">
+                            <option value="">--- Select ---</option>
+                        </select>
+                        <span class="help-block"
+                              ng-show="vm.alloc_form['sp_' + $index].$invalid && !vm.alloc_form['sp_' + $index].$error.isdup">
+                                        Please select a storage product
+                                    </span>
+                        <span class="help-block" ng-show="vm.alloc_form['sp_' + $index].$error.isdup">
+                                            Duplicated storage product
+                                    </span>
+                    </div>
+
+                    <div class="form-group" ng-if="storage_request.current_quota > 0"
+                         ng-class="{'has-error': vm.alloc_form['sp_' + $index].$invalid || vm.alloc_form['sp_' + $index].$error.isdup}">
+                        <input type="hidden" name="sp_{{$index}}" ng-model="storage_request.storage_product.id"
+                               class="form-control">
+                        {{storage_request.storage_product.name}}
+
+                        <span class="help-block"
+                              ng-show="vm.alloc_form['sp_' + $index].$invalid && !vm.alloc_form['sp_' + $index].$error.isdup">
+                                        Please select a storage product
+                                    </span>
+                        <span class="help-block" ng-show="vm.alloc_form['sp_' + $index].$error.isdup">
+                                            Duplicated storage product
+                                    </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        {{storage_request.current_quota}}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"
+                         ng-class="{'has-error':vm.alloc_form['sp_requested_quota_change_' + $index].$invalid || vm.negative_total_quota_invalid[$index]}">
+                        <input class="form-control" type="number" name="sp_requested_quota_change_{{$index}}"
+                               id="sp_requested_quota_change_{{$index}}" maxlength="10"
+                               ng-model="storage_request.requested_quota_change"
+                               ng-change="vm.calcualteRequestedTotal($index)"/>
+                        <span class="help-block"
+                              ng-show="vm.alloc_form['sp_requested_quota_change_' + $index].$invalid">
+                                Specify a valid allocation change
+                            </span>
+                        <span class="help-block"
+                              ng-show="vm.negative_total_quota_invalid[$index]">
+                                Invalid allocation change
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        {{storage_request.requested_quota_total}}
+                    </div>
+                </td>
+                <td ng-if="vm.project.requests[0].storage_requests.length > 1">
+                    <button class="btn btn-default" id="delete-sp" type="button" ng-click="vm.removeStorageProd($index)"
+                            ng-if="storage_request.current_quota == 0 && $index > 0">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="normal_blank_separator"></div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="vm.addAnotherSpQuota()"><span class="glyphicon glyphicon-plus"></span>Add Another Storage Product</button>
+        </div>
+    </div>
+</div>
+<div ng-include="'templates/racmon/racm_storage_product_info.html'"></div>

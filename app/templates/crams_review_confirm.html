@@ -1,0 +1,22 @@
+<md-dialog aria-label="review_confirm">
+    <form>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div class="col-sm-12">
+                    <div>
+                        {{ confirm_message }}
+                        <hr/>
+                    </div>
+                </div>
+
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <div class="col-sm-12" style="text-align: center">
+                <md-button ng-click="answer('Yes')">Yes</md-button>
+                <md-button ng-click="answer('No')">No</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

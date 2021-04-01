@@ -1,0 +1,460 @@
+<div class="row">
+    <div class="col-md-12">
+        <p class="title_h1">
+            <a href="#/{{ vm.allocations_base_path }}/child_objects/{{vm.current_parent_request.id}}">{{
+                vm.current_parent_request.project.title}}</a>
+        </p>
+    </div>
+</div>
+
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <p class="title_h1">Child Object</p>
+        <span class="alert-info1"><strong>Note</strong></span>: Required fields are marked with an
+        <i class="glyphicon glyphicon-asterisk text-primary"></i>
+    </div>
+</div>
+<hr/>
+<form name="vm.child_object_form" novalidate>
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">ID</span> <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>
+                The label that should be associated with the child object. The sequence number for each child object is assigned automatically.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <table class="data_tab">
+                <tbody>
+                <tr>
+                    <th width="40%">Group Label</th>
+                    <td>
+                        <div class="form-group, label_option" ng-class="{'has-error': vm.selected_label_invalid}">
+                            <select name="group_label" class="form-control" ng-model="vm.selected_label"
+                                    ng-options="label for label in vm.label_options"
+                                    ng-change="vm.checkSelectedLabel()">
+                                <option value="">--- Select ---</option>
+                            </select>
+                            <span class="help-block" ng-show="vm.selected_label_invalid">Please select a group label</span>
+                        </div>
+                        <div class="mp_body_md_div" ng-if="vm.show_add_label">
+                            <div class="mp_header">
+                                <span>Add Group Label <span class="mp_close" ng-click="vm.closeAddLabelWindow()"
+                                                            title="Close"></span></span>
+                            </div>
+                            <hr/>
+                            <div class="row" ng-show="vm.add_label_success">
+                                <div class="col-sm-12">
+                                    <div class="p_success" ng-bind="vm.add_label_success_msg"></div>
+                                </div>
+                                <br/>
+                            </div>
+
+                            <div class="row" ng-show="vm.add_label_error">
+                                <div class="col-sm-12">
+                                    <div class="p_failure" ng-bind="vm.add_label_error_msg"></div>
+                                </div>
+                                <br/>
+                            </div>
+                            <br/>
+                            <div class="mp_border_content">
+                                <div class="mp_content">
+                                    <div class="row">
+                                        <div class="form-group col-sm-12"
+                                             ng-class="{'has-error': vm.new_label_invalid || vm.new_label_max_invalid}">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Type the label to add"
+                                                   name="new_label" ng-model="vm.new_erb_label">
+                                            <span class="help-block" ng-show="vm.new_label_invalid">Missing or Invalid Label</span>
+                                            <span class="help-block" ng-show="vm.new_label_max_invalid">Max 25 characters for group label</span>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button type="button" class="btn btn-default" ng-click="vm.addNewLabel()">
+                                                Add New Label
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sequence Number</th>
+                    <td>
+                        {{ vm.formatted_seq_num }}
+                        <div class="row" ng-show="vm.sequence_number_invalid">
+                            <div class="col-sm-12">
+                                <div class="p_failure">Missing or Invalid sequence number</div>
+                            </div>
+                            <br/>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Title</span> <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>The child object title should be as descriptive as possible so that it is meaningful to researchers from
+                other
+                disciplines and into the future (max 255 characters).</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="{'has-error': vm.title_invalid || vm.title_excess_max_invalid}">
+                <input type="text" class="form-control" ng-model="vm.child_object.properties.title" name="title"
+                       required ng-change="vm.title_validation()"/>
+                <span class="help-block" ng-show="vm.title_invalid">Required field</span>
+                <span class="help-block" ng-show="vm.title_excess_max_invalid">Exceeded max characters</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <span class="label_5">Description</span> <i
+                    class="glyphicon glyphicon-asterisk text-primary"></i>
+            </p>
+            <p>
+                The child object description will be used to assist discovery of your research data and should be
+                similar to
+                a
+                journal article abstract. Provide a description aimed at a reader who has general familiarity with the
+                research area but is not a specialist. Do not use specialist acronyms or jargon. Include important
+                keywords within the text (max 4000 characters).
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="{'has-error': vm.description_invalid || vm.desc_excess_max_invalid}">
+            <textarea class="form-control" ng-model="vm.child_object.properties.description" name="description"
+                      rows="5" ng-change="vm.countDesc()" required></textarea>
+                <span class="label_grey"> {{vm.desc_count}} characters</span>
+                <span class="help-block" ng-show="vm.description_invalid">Please enter description</span>
+                <span class="help-block" ng-show="vm.desc_excess_max_invalid">Exceeded max characters</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Storage Product</span>
+                <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>Specify the storage product.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="{'has-error': vm.storage_product_invalid}">
+                <select name="sp_provision_id" class="form-control"
+                        ng-model="vm.child_object.provision_id"
+                        ng-options="sp.provision_id as sp.name for sp in vm.parent_storage_products"
+                        ng-change="vm.checkSpAvailableSize()">
+                    <option value="">--- Select ---</option>
+                </select>
+                <span class="help-block" ng-show="vm.storage_product_invalid">Select the storage product</span>
+            </div>
+
+            <div>Storage capacity available: <span ng-if="vm.display_sp_available_size <0"><span class="alert-danger1">{{ vm.display_sp_available_size }}</span></span>
+                <span ng-if="vm.display_sp_available_size >= 0">{{ vm.display_sp_available_size }}</span>
+                <b>GB</b>
+                <div ng-if="vm.display_sp_available_size <0"><span class="warning-sign">Quota exceeded. If you require additional capacity, please request an allocation extension.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Size of Child Object</span>
+                <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>
+                The size of the child object.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <table width="100%">
+                <tr>
+                    <td width="50%">
+                        <div class="form-group"
+                             ng-class="{'has-error': vm.allocation_gb_invalid || vm.allocation_gb_excess_max_invalid}">
+                            <input type="number" min="0" class="form-control"
+                                   ng-model="vm.child_object.properties.alloc_size"
+                                   name="allocation_gb" ng-change="vm.checkChildAllocSize()" required/>
+                            <span class="help-block"
+                                  ng-show="vm.allocation_gb_invalid">Size must be greater than 0</span>
+                            <span class="help-block"
+                                  ng-show="vm.allocation_gb_excess_max_invalid">Max size 9,999,999</span>
+                        </div>
+                    </td>
+                    <td width="50%"> &nbsp;&nbsp;
+                        <span>
+                            <input type="radio" name="allocation_unit" ng-model="vm.child_object.properties.alloc_unit"
+                                   value="KB" ng-change="vm.checkChildAllocSize()"> <b> KB </b>&nbsp;
+                            <input type="radio" name="allocation_unit" ng-model="vm.child_object.properties.alloc_unit"
+                                   value="MB" ng-change="vm.checkChildAllocSize()"> <b> MB </b>&nbsp;
+                            <input type="radio" name="allocation_unit" ng-model="vm.child_object.properties.alloc_unit"
+                                   value="GB" ng-change="vm.checkChildAllocSize()"> <b> GB </b>&nbsp;
+                            <input type="radio" name="allocation_unit" ng-model="vm.child_object.properties.alloc_unit"
+                                   value="TB" ng-change="vm.checkChildAllocSize()"> <b> TB </b>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Location</span> <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>
+                The current location (path) of the collection within the parent allocation (max 255 characters).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="{'has-error': vm.data_path_invalid || vm.data_path_max_invalid}">
+                <input type="text" class="form-control" ng-model="vm.child_object.properties.data_path"
+                       name="data_path" ng-change="vm.location_validation()"/>
+                <span class="help-block" ng-show="vm.data_path_invalid">Required field</span>
+                <span class="help-block" ng-show="vm.data_path_max_invalid">Exceeded max characters</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Source</span> <i
+                    class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>
+                The name of the service that originally stored the data and, if known, the original location (path) (max 255 characters).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="{'has-error': vm.source_location_invalid || vm.source_location_max_invalid}">
+                <input type="text" class="form-control" ng-model="vm.child_object.properties.source_location"
+                       name="source_location" ng-change="vm.source_validation()"/>
+                <span class="help-block" ng-show="vm.source_location_invalid">Required field</span>
+                <span class="help-block" ng-show="vm.source_location_max_invalid">Exceeded max characters</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Data Owner</span> <i
+                    class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>
+                The owner of the data.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div ng-class="{'has-error': vm.data_owner_invalid}">
+            <span class="help-block has-error" ng-show="vm.data_owner_invalid">
+                 Please add a data owner
+            </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.data_owner_present">
+        <div class="col-md-4">
+            <div class="field_section_div">{{vm.child_object.properties.data_owner}}</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <br/>
+            <object-data-owner></object-data-owner>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span class="label_5">Organisation </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <div class="form-group" class="form-control" ng-class="{'has-error': vm.do_organisation_invalid}">
+                <select name="organisation" id="organisation" class="form-control"
+                        ng-model="vm.child_object.properties.organisation"
+                        ng-options="org.name as org.name for org in vm.org_list"
+                        ng-change="vm.changeOrg()" required>
+                    <option value="">--- Select ---</option>
+                </select>
+                <span class="help-block" ng-show="vm.do_organisation_invalid">Please select an organisation</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span class="label_5">Faculty/Affiliation </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <div class="form-group" class="form-control" ng-class="{'has-error': vm.do_faculty_invalid}">
+                <select name="faculty" id="faculty" class="form-control"
+                        ng-model="vm.child_object.properties.faculty"
+                        ng-options="fac.name as fac.name for fac in vm.faculty_list"
+                        ng-change="vm.changeFaculty()" required>
+                    <option value="">--- Select ---</option>
+                </select>
+                <span class="help-block" ng-show="vm.do_faculty_invalid">Please select a faculty</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <span class="label_5">Department </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <div class="form-group" class="form-control"
+                 ng-class="{'has-error': vm.do_department_invalid}">
+                <select name="department" id="department" class="form-control"
+                        ng-model="vm.child_object.properties.department"
+                        ng-options="dept.name as dept.name for dept in vm.dept_list"
+                        ng-change="vm.changeDepartment()" required>
+                    <option value="">--- Select ---</option>
+                </select>
+                <span class="help-block" ng-show="vm.do_department_invalid">Please select a department</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Data Set Last Updated Date</span> <i
+                    class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>
+                Date format: DD/MM/YYYY
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group" class="form-control"
+                 ng-class="{'has-error': vm.dataset_last_updated_date_invalid}">
+                <input type="text" name="ds_last_updated_date" class="form-control"
+                       ng-model="vm.child_object.properties.dataset_last_updated_date" readonly="readonly"
+                       uib-datepicker-popup="dd/MM/yyyy" is-open="vm.ds_opened"
+                       ng-click="vm.openDsLudCalendar($event)"
+                       datepicker-options="vm.date_options" show-button-bar="false"
+                       ng-change="vm.closeDsLudCalendar()"/>
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="vm.openDsLudCalendar($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+            </div>
+            <div class="help-block error_message" ng-show="vm.dataset_last_updated_date_invalid">
+                Required field
+            </div>
+
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Archived Date</span> <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+            <p>
+                Date format: DD/MM/YYYY
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group" class="form-control"
+                 ng-class="{'has-error': vm.archived_date_invalid}">
+                <input type="text" name="ad_date" class="form-control"
+                       ng-model="vm.child_object.properties.archived_date" readonly="readonly"
+                       uib-datepicker-popup="dd/MM/yyyy" is-open="vm.ad_opened" ng-click="vm.open_calendar($event)"
+                       datepicker-options="vm.date_options" show-button-bar="false"
+                       ng-change="vm.close_calendar()"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.open_calendar($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="help-block error_message" ng-show="vm.archived_date_invalid">
+                Required field
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <p><span class="label_5">Retention Period</span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            </p>
+            <p>
+                Please enter the number of years that a collection should be retained before it is reviewed. If the
+                collection needs to be retained indefinitely, please enter the maximum value (99).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group"
+                 ng-class="{'has-error': vm.retention_period_invalid || vm.child_object_form['retention_period'].$invalid}">
+                <input type="number" class="form-control" ng-model="vm.child_object.properties.retention_period"
+                       name="retention_period" min="1" max="99" ng-change="vm.setReviewDate()"
+                       onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/>
+                <span class="help-block"
+                      ng-show="vm.retention_period_invalid || vm.child_object_form['retention_period'].$invalid">Please enter a retention period between 1 and 99.</span>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="vm.review_date">
+        <div class="row">
+            <div class="col-md-12">
+                <p><span class="label_5">Review Date</span>
+                <p>The date that the child object will be reviewed.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="vm.review_date" readonly="readonly"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input class="btn bg-primary" type="submit" value="{{vm.button_label}}"
+                       ng-click="vm.addOrUpdateChildObject()">
+                &nbsp; &nbsp;
+                <a href="#/{{ vm.allocations_base_path }}/child_objects/{{vm.current_parent_request.id}}">
+                    <input class="btn bg-primary" type="button" value="Cancel">
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

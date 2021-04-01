@@ -1,0 +1,294 @@
+<div class="nav-side-menu">
+    <div class="brand" ng-controller="ViewSelectionController as vctrl"> &nbsp;
+        <span class="label_5">Select view </span>
+        <div class="form-group" class="form-control">
+            <select name="selected_view" class="form-control"
+                    ng-model="vctrl.selected_view"
+                    ng-options="mv.role as mv.view for mv in globals.my_view_list"
+                    ng-change="vctrl.changeView()">
+            </select>
+        </div>
+    </div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+    <div class="menu-list" ng-controller="SideNavController">
+        <ul id="menu-content" class="menu-content collapse out">
+            <div ng-if="globals.selected_view !== 'approver' && globals.selected_view !== 'provisioner'">
+                <li ng-class="{ 'active': isCurrentPath('dashboard') }">
+                    <a href="#/dashboard" ng-if="globals.selected_view === 'normal_user'">
+                        <i class="fa fa-dashboard fa-lg"></i>Dashboard
+                    </a>
+                    <a href="#/dashboard/admin" ng-if="globals.selected_view === 'admin'">
+                        <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                    </a>
+                    <a href="#/dashboard/merc_admin" ng-if="globals.selected_view === 'service_management'">
+                        <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                    </a>
+                    <a href="#/dashboard/faculty" ng-if="globals.selected_view === 'faculty_management'">
+                        <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                    </a>
+                </li>
+            </div>
+
+            <div ng-if="globals.selected_view === 'normal_user'">
+                <li class="collapsed" ng-class="{ 'selected': isAllocSelected}" data-toggle="collapse"
+                    data-target="#allocations">
+                    <a href=""><i class="fa fa-tasks fa-lg"></i> Allocations <span
+                            class="arrow"></span></a>
+                </li>
+
+                <ul class="sub-menu collapse" ng-class="{'in': isAllocExpanded}" id="allocations">
+                    <li ng-class="{ 'active': isCurrentPath('allocations/racmon_request') }">
+                        <a href="#/allocations/racmon_request">
+                            <i class="fa fa-cart-plus fa-lg"></i> New Request
+                        </a>
+                    </li>
+                    <li ng-class="{ 'active': isCurrentPath('allocations') }">
+                        <a href="#/allocations">
+                            <i class="fa fa-shopping-basket fa-lg"></i> My Requests
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div ng-if="(globals.perms.approver || globals.perms.admin) && globals.selected_view === 'approver'">
+                <li class="collapsed" ng-class="{ 'selected': isAppSelected}" data-toggle="collapse"
+                    data-target="#approval">
+                    <a href=""><i class="fa fa-flag-checkered fa-lg"></i> Approval <span
+                            class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" ng-class="{'in': isAppExpanded}" id="approval">
+                    <li ng-class="{ 'active': isCurrentPath('approval') }">
+                        <a href="#approval">
+                            <i class="fa fa-check-square-o fa-lg" aria-hidden="true"></i> Waiting For Approval
+                        </a>
+                    </li>
+                    <li ng-class="{ 'active': isCurrentPath('approval/approved') }">
+                        <a href="#approval/approved">
+                            <i class="fa fa-adn fa-lg" aria-hidden="true"></i> Approved Allocations
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div ng-if="(globals.perms.provisioner || globals.perms.admin) && globals.selected_view === 'provisioner'">
+                <li class="collapsed" ng-class="{ 'selected': isProvSelected}" data-toggle="collapse"
+                    data-target="#provision">
+                    <a href=""><i class="fa fa-anchor fa-lg"></i> Provision <span
+                            class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" ng-class="{'in': isProvisionExpanded}" id="provision">
+                    <li ng-class="{ 'active': isCurrentPath('provision') }">
+                        <a href="#provision">
+                            <i class="fa fa-check-square-o fa-lg" aria-hidden="true"></i> Waiting For Provision
+                        </a>
+                    </li>
+                    <li ng-class="{ 'active': isCurrentPath('provision/active') }">
+                        <a href="#provision/active">
+                            <i class="fa fa-flag fa-lg" aria-hidden="true"></i> Provisioned Allocations
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div ng-if="globals.perms.admin && globals.selected_view === 'admin'">
+                <li class="collapsed" ng-class="{ 'selected': isAdminSelected}" data-toggle="collapse"
+                    data-target="#admin">
+                    <a href=""><i class="fa fa-cogs fa-lg"></i> Admin <span
+                            class="arrow"></span></a>
+                </li>
+
+                <ul class="sub-menu collapse" ng-class="{'in': isAdminExpanded}" id="admin">
+<!--                    <li ng-class="{ 'active': isCurrentPath('admin/sp') }">-->
+<!--                        <a href="#/admin/sp">-->
+<!--                            <i class="fa fa-cube fa-lg" aria-hidden="true"></i> Storage Products-->
+<!--                        </a>-->
+<!--                    </li>-->
+                    <li ng-class="{ 'active': isCurrentPath('admin/org') }">
+                        <a href="#/admin/org">
+                            <i class="fa fa-gg-circle fa-lg" aria-hidden="true"></i> Organisations
+                        </a>
+                    </li>
+                    <li ng-class="{ 'active': isCurrentPath('admin/contacts') }">
+                        <a href="#/admin/contacts">
+                            <i class="fa fa-users fa-lg" aria-hidden="true"></i> Contacts
+                        </a>
+                    </li>
+
+<!--                    <li ng-class="{ 'active': isCurrentPath('admin/message_day') }">-->
+<!--                        <a href="#/admin/message_day">-->
+<!--                            <i class="fa fa-comments fa-lg" aria-hidden="true"></i>-->
+<!--                            Message of Day-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+                    <!-- <li ng-class="{ 'active': isCurrentPath('admin/event_logs') }">
+                        <a href="#/admin/event_logs">
+                            <i class="fa fa-list fa-lg" aria-hidden="true"></i>
+                            Event Logs
+                        </a>
+                    </li> -->
+
+                    <li ng-class="{ 'active': isCurrentPath('admin/allocations') }">
+                        <a href="#/admin/allocations">
+                            <i class="fa fa-shopping-basket fa-lg"></i> All Requests
+                        </a>
+                    </li>
+
+<!--                    <li class="collapsed" ng-class="{ 'selected': isReviewSelected }" data-toggle="collapse"-->
+<!--                        data-target="#reviews">-->
+<!--                        <a href=""><i class="fa fa-bell fa-lg" aria-hidden="true"></i> Allocation Reviews <span-->
+<!--                                class="arrow"></span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    <ul class="sub-menu collapse" ng-class="{'in': isReviewExpanded}" id="reviews">-->
+<!--                        <li ng-class="{ 'active': isCurrentPath('admin/reviews/pending') }">-->
+<!--                            <a href="#/admin/reviews/pending">-->
+<!--                                <i class="fa fa-calendar-minus-o fa-lg fa-ul" aria-hidden="true"></i> Pending Reviews-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li ng-class="{ 'active': isCurrentPath('admin/reviews/skipped') }">-->
+<!--                            <a href="#/admin/reviews/skipped">-->
+<!--                                <i class="fa fa-calendar-times-o fa-lg fa-ul" aria-hidden="true"></i> Skipped Reviews-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li ng-class="{ 'active': isCurrentPath('admin/reviews/sent') }">-->
+<!--                            <a href="#/admin/reviews/sent">-->
+<!--                                <i class="fa fa-calendar-check-o  fa-lg fa-ul" aria-hidden="true"></i> Sent Reviews-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+                </ul>
+            </div>
+
+<!--            <div ng-if="(globals.perms.faculty_management || globals.perms.admin || globals.perms.service_management) && (globals.selected_view === 'admin' || globals.selected_view === 'service_management' || globals.selected_view === 'faculty_management')">-->
+<!--                <li class="collapsed" ng-class="{ 'selected': isRepSelected}" data-toggle="collapse"-->
+<!--                    data-target="#reports">-->
+<!--                    <a href=""><i class="fa fa-file-text fa-lg"></i> Reports <span-->
+<!--                            class="arrow"></span></a>-->
+<!--                </li>-->
+<!--                <ul class="sub-menu collapse" ng-class="{'in': isReportExpanded}" id="reports">-->
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/faculty_usage') }">-->
+<!--                        <a href="#reports/faculty_usage/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i> Faculty Usage-->
+<!--                        </a>-->
+<!--                        <a href="#reports/faculty_usage/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i> Faculty Usage-->
+<!--                        </a>-->
+<!--                        <a href="#reports/faculty_usage/faculty" ng-if="globals.selected_view === 'faculty_management'">-->
+<!--                            <i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i> Faculty Usage-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/faculty_usage_history') }">-->
+<!--                        <a href="#reports/faculty_usage_history/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i>Faculty Usage History-->
+<!--                        </a>-->
+<!--                        <a href="#reports/faculty_usage_history/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Faculty Usage History-->
+<!--                        </a>-->
+<!--                        <a href="#reports/faculty_usage_history/faculty" ng-if="globals.selected_view === 'faculty_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Faculty Usage History-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/project_usage_history') }">-->
+<!--                        <a href="#reports/project_usage_history/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Project Usage History-->
+<!--                        </a>-->
+<!--                        <a href="#reports/project_usage_history/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Project Usage History-->
+<!--                        </a>-->
+<!--                        <a href="#reports/project_usage_history/faculty" ng-if="globals.selected_view === 'faculty_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Project Usage History-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/prod_demand') }"-->
+<!--                        ng-if="globals.selected_view === 'admin' || globals.selected_view ==='service_management'">-->
+
+<!--                        <a href="#reports/prod_demand/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Product Demand-->
+<!--                        </a>-->
+<!--                        <a href="#reports/prod_demand/merc_admin" ng-if="globals.selected_view ==='service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Product Demand-->
+<!--                        </a>-->
+
+<!--                    </li>-->
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/prod_usage') }"-->
+<!--                        ng-if="globals.selected_view ==='faculty_management'">-->
+<!--                        <a href="#reports/prod_usage/faculty">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Product Usage-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/fund_alloc_costs') }"-->
+<!--                        ng-if="globals.selected_view === 'admin' || globals.selected_view ==='service_management'">-->
+<!--                        <a href="#reports/fund_alloc_costs/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Funding Allocation Costs-->
+<!--                        </a>-->
+<!--                        <a href="#reports/fund_alloc_costs/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Funding Allocation Costs-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/storage_transaction') }">-->
+<!--                        <a href="#reports/storage_transaction/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Storage Transactions-->
+<!--                        </a>-->
+<!--                        <a href="#reports/storage_transaction/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Storage Transactions-->
+<!--                        </a>-->
+<!--                        <a href="#reports/storage_transaction/faculty"-->
+<!--                           ng-if="globals.selected_view === 'faculty_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Storage Transactions-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/collection_ingest') }">-->
+<!--                        <a href="#reports/collection_ingest/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Collection Ingest-->
+<!--                        </a>-->
+<!--                        <a href="#reports/collection_ingest/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Collection Ingest-->
+<!--                        </a>-->
+<!--                        <a href="#reports/collection_ingest/faculty"-->
+<!--                           ng-if="globals.selected_view === 'faculty_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Collection Ingest-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/alloc_custodian') }">-->
+<!--                        <a href="#reports/alloc_custodian/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Allocation Custodian Info-->
+<!--                        </a>-->
+<!--                        <a href="#reports/alloc_custodian/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Allocation Custodian Info-->
+<!--                        </a>-->
+<!--                        <a href="#reports/alloc_custodian/faculty"-->
+<!--                           ng-if="globals.selected_view === 'faculty_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Allocation Custodian Info-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li ng-class="{ 'active': isCurrentPath('reports/storage_stats') }">-->
+<!--                        <a href="#reports/storage_stats/admin" ng-if="globals.selected_view === 'admin'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Storage Stats-->
+<!--                        </a>-->
+<!--                        <a href="#reports/storage_stats/merc_admin"-->
+<!--                           ng-if="globals.selected_view === 'service_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Storage Stats-->
+<!--                        </a>-->
+<!--                        <a href="#reports/storage_stats/faculty"-->
+<!--                           ng-if="globals.selected_view === 'faculty_management'">-->
+<!--                            <i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i> Storage Stats-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+        </ul>
+    </div>
+</div>

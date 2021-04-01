@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+        <a href="#/admin/org/new_org">
+            <input class="btn btn-default" type="button" value="New Organisation">
+        </a>
+        <br/>
+        <br/>
+        <div>
+            <table class="display_data_tab">
+                <thead>
+                <tr>
+                    <th style="width:25%">Name</th>
+                    <th style="width:15%">Short name</th>
+                    <th style="width:25%">ANDS URL</th>
+                    <th style="width:25%">Notification email</th>
+                    <th style="width:10%"></th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="org in vm.org_list track by $index">
+                <tr>
+                    <td>{{org.name}}</td>
+                    <td>{{org.short_name}}</td>
+                    <td><a href="{{org.ands_url}}" target="_blank">{{org.ands_url}}</a></td>
+                    <td><a href="mailto: {{org.notification_email}}">{{org.notification_email}}</a></td>
+                    <td><a href="/#/admin/org/edit_org/{{org.id}}">edit</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="title_h1">Storage Request Application</p>
+                <p>By submitting this application you agree that [Your Organisation] has the right to share the
+                    information
+                    contained in this form with any individuals, institutions or systems involved in processing this
+                    application, and that [Your Organisation] may retain this application for future reference.
+                </p>
+                <span class="alert-info1"><strong>Note</strong></span>: Required fields are marked with an
+                <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            </div>
+        </div>
+
+        <hr/>
+        <form name="vm.alloc_form" novalidate>
+            <div ng-include="'templates/racmon/racm_authority_form.html'"></div>
+            <div ng-include="'templates/racmon/racm_data_custodian.html'"></div>
+            <div ng-include="'templates/racmon/racm_technical_contact.html'"></div>
+            <div ng-include="'templates/racmon/racm_collection_details.html'"></div>
+            <div ng-include="'templates/racmon/racm_for_code.html'"></div>
+            <div ng-include="'templates/racmon/racm_funding_scheme.html'"></div>
+            <div ng-include="'templates/racmon/racm_data_retention.html'"></div>
+            <div ng-include="'templates/racmon/racm_electronic_info_class.html'"></div>
+            <div ng-include="'templates/racmon/racm_research_grant.html'"></div>
+            <div ng-include="'templates/racmon/racm_storage_requirements.html'"></div>
+            <div ng-include="'templates/racmon/racm_data_migration.html'"></div>
+            <div ng-include="'templates/racmon/racm_user_interface.html'"></div>
+            <div ng-include="'templates/racmon/racm_technical_details.html'"></div>
+            <div ng-include="'templates/racmon/racm_data_loss_management.html'"></div>
+
+            <div ng-include="'templates/racmon/racm_privacy_notice.html'"></div>
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <input type="checkbox" ng-model="vm.project.requests[0].sent_email"> <span class="label_6"> Send email notification to all collection contacts </span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="btn bg-primary" type="submit" value="Save as draft" ng-click="vm.submitDraftReq()"
+                               ng-if="vm.project.requests[0].request_status.code == 'N'">
+                        <input class="btn bg-primary" type="submit" value="Submit" ng-click="vm.submitRacMonReq()">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/racmon/site_footer.html'"></div>

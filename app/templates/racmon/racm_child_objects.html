@@ -1,0 +1,227 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="m_title">Project Name: {{ vm.child_objects_data.project.title }}</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="center_div">
+        <div class="loading_div" ng-show="!vm.load_fininshed">
+            <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+            <div class="loading_text">Loading reporting ...</div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="vm.load_fininshed">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="s_display_data_tab">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Total Allocation (GB)</th>
+                    <th>Available (GB)</th>
+                    <th>No. of Child Objects</th>
+                    <th>Total Child Objects Usage (GB)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat=" alloc_sp in vm.parent_alloc_sp">
+                    <td>{{ alloc_sp.name }}</td>
+                    <td> {{ alloc_sp.alloc_size }}</td>
+                    <td>
+                    <span ng-if="alloc_sp.available_size < 0 "><span class="alert-danger1">{{ alloc_sp.available_size }}</span> &nbsp; [ <span
+                            class="alert-danger1">Overdraft</span> ]</span>
+                        <span ng-if="alloc_sp.available_size >= 0 ">{{ alloc_sp.available_size}} </span>
+                    </td>
+                    <td>{{ alloc_sp.child_no }}</td>
+                    <td>{{ (alloc_sp.alloc_size - alloc_sp.available_size) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="div-info" ng-if="vm.mixed_sp || vm.comp_sp_only">"Computational" storage cannot accept Child
+                object
+                creation.
+            </div>
+
+            <a href="#/{{vm.allocations_base_path}}/child_objects/add/{{vm.request_id}}"
+               ng-if="vm.mixed_sp || vm.non_comp_sp_only">
+                <button class="btn btn-default" type="button">Add Child Object</button>
+            </a>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="label_5" ng-if="vm.mixed_sp || vm.non_comp_sp_only">
+            Child Objects: <span class="title_normal"> Total <b>{{ vm.child_objects_data.child_allocations.length }}</b> of child objects</span>
+        </div>
+        <div class="row" ng-if="vm.child_objects_data.child_allocations.length > 0">
+            <div class="col-md-12">
+                <table class="s_display_data_tab">
+                    <thead>
+                    <tr>
+                        <th width="6">
+                            ID
+                            <span class="sort_span" ng-click="vm.sortBy('seq_id', 'asc')" ng-if="vm.id_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('seq_id', 'desc')" ng-if="vm.id_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="8%">
+                            Title
+                            <span class="sort_span" ng-click="vm.sortBy('title', 'asc')" ng-if="vm.t_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('title', 'desc')" ng-if="vm.t_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="10%">
+                            Description
+                            <span class="sort_span" ng-click="vm.sortBy('desc', 'asc')" ng-if="vm.d_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('desc', 'desc')" ng-if="vm.d_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="10%">
+                            Storage Product
+                            <span class="sort_span" ng-click="vm.sortBy('sp', 'asc')" ng-if="vm.sp_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('sp', 'desc')" ng-if="vm.sp_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="5%">
+                            Size (GB)
+                            <span class="sort_span" ng-click="vm.sortBy('size', 'asc')" ng-if="vm.gb_asc"><i
+                                    class="fa fa-sort-numeric-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('size', 'desc')" ng-if="vm.gb_desc"><i
+                                    class="fa fa-sort-numeric-desc"></i></span>
+                        </th>
+                        <th width="6%">
+                            Location
+                            <span class="sort_span" ng-click="vm.sortBy('location', 'asc')" ng-if="vm.l_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('location', 'desc')" ng-if="vm.l_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="7%">
+                            Source
+                            <span class="sort_span" ng-click="vm.sortBy('source', 'asc')" ng-if="vm.src_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('source', 'desc')" ng-if="vm.src_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="7%">
+                            Data Owner
+                            <span class="sort_span" ng-click="vm.sortBy('owner', 'asc')" ng-if="vm.o_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('owner', 'desc')" ng-if="vm.o_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="8%">
+                            Dataset Last Updated Date
+                            <span class="sort_span" ng-click="vm.sortBy('ds_date', 'asc')" ng-if="vm.dsd_asc"><i
+                                    class="fa fa-sort-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('ds_date', 'desc')" ng-if="vm.dsd_desc"><i
+                                    class="fa fa-sort-desc"></i></span>
+                        </th>
+                        <th width="5%">
+                            Archived Date
+                            <span class="sort_span" ng-click="vm.sortBy('arc_date', 'asc')" ng-if="vm.arc_asc"><i
+                                    class="fa fa-sort-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('arc_date', 'desc')" ng-if="vm.arc_desc"><i
+                                    class="fa fa-sort-desc"></i></span>
+                        </th>
+                        <th width="8%">
+                            Retention Period (Year)
+                            <span class="sort_span" ng-click="vm.sortBy('retention', 'asc')" ng-if="vm.ret_asc"><i
+                                    class="fa fa-sort-numeric-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('retention', 'desc')" ng-if="vm.ret_desc"><i
+                                    class="fa fa-sort-numeric-desc"></i></span>
+                        </th>
+                        <th width="6%">
+                            Review Date
+                            <span class="sort_span" ng-click="vm.sortBy('review', 'asc')" ng-if="vm.rv_asc"><i
+                                    class="fa fa-sort-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('review', 'desc')" ng-if="vm.rv_desc"><i
+                                    class="fa fa-sort-desc"></i></span>
+
+                        </th>
+                        <th width="6%">
+                            Created By
+                            <span class="sort_span" ng-click="vm.sortBy('created_by', 'asc')" ng-if="vm.cb_asc"><i
+                                    class="fa fa-sort-alpha-asc"></i></span>
+                            <span class="sort_span" ng-click="vm.sortBy('created_by', 'desc')" ng-if="vm.cb_desc"><i
+                                    class="fa fa-sort-alpha-desc"></i></span>
+                        </th>
+                        <th width="8%">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="child_alloc in vm.child_objects_data.child_allocations">
+                        <td>
+                            {{ vm.displayID(child_alloc) }}
+                        </td>
+                        <td style="word-break: break-all">
+                            {{ child_alloc.properties.title }}
+                        </td>
+                        <td style="word-break: break-all">
+                            <div ng-text-truncate="child_alloc.properties.description" ng-tt-chars-threshold="30"></div>
+                        </td>
+                        <td>
+                            {{vm.getSpName(child_alloc.provision_id)}}
+                        </td>
+                        <td>
+                            {{ child_alloc.allocation_gb }}
+                        </td>
+                        <td style="word-break: break-all">
+                            {{ child_alloc.properties.data_path }}
+                        </td>
+                        <td style="word-break: break-all">
+                            {{ child_alloc.properties.source_location }}
+                        </td>
+                        <td>
+                            {{ child_alloc.properties.data_owner }}
+                        </td>
+                        <td>
+                            {{ child_alloc.properties.dataset_last_updated_date}}
+                        </td>
+                        <td>
+                            {{ child_alloc.properties.archived_date }}
+                        </td>
+                        <td>
+                            {{ child_alloc.properties.retention_period }}
+                        </td>
+                        <td>
+                            {{ vm.convertReviewDate(child_alloc) }}
+                        </td>
+                        <td>
+                            {{ vm.display_name(child_alloc.created_by) }}
+                        </td>
+
+                        <td>
+                            <a href="#/{{vm.allocations_base_path}}/child_objects/update/{{vm.request_id}}/{{child_alloc.id}}">
+                                Edit </a> |
+                            <a href="#/{{vm.allocations_base_path}}/child_objects/history/{{vm.request_id}}/{{child_alloc.id}}">
+                                History </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <div>
+                    <button type="button" class="btn btn-default" ng-csv="vm.childObjectCSVData()"
+                            filename="{{ vm.csvFileName() }}"
+                            csv-header="vm.sortHeadings()" decimal-separator="." charset="utf-8">
+                        <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

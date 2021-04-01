@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="center_div">
+        <div class="loading_div" ng-show="!vm.loaded">
+            <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+            <div class="loading_text">Loading ...</div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="vm.loaded">
+    <div class="col-md-12">
+        <table class="display_data_tab">
+            <thead>
+            <tr>
+                <th width="10%">Name</th>
+                <th width="15%">Email</th>
+                <th width="10%">Phone</th>
+                <th width="20%">Organisation</th>
+                <th width="20%">ORCID</th>
+                <th width="10%">ScopusID</th>
+                <th width="10%">
+                    <span class="pull-right text-muted small" ng-click="vm.lastLoginSort()">
+                        <i class="fa fa-sort-asc" aria-hidden="true" ng-if="vm.lastLoginAsc"></i>
+                        <i class="fa fa-sort-desc" aria-hidden="true" ng-if="vm.lastLoginDesc"></i>
+                    </span>
+                    Last Login
+                </th>
+                <th width="5%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="contact in vm.vn_contacts">
+                <td><a href="#/admin/contacts/view_contact/{{ contact.id }}">
+                    <span ng-if="contact.given_name != null && contact.surname != null">
+                        {{ (contact.title || "") }} {{ contact.given_name }} {{ contact.surname }}
+                    </span>
+                    <span ng-if="contact.given_name == null && contact.surname == null">
+                        {{ contact.email }}
+                    </span>
+                </a>
+                </td>
+                <td><a href="mailto: {{contact.email}}">{{ contact.email }}</a></td>
+                <td>{{ contact.phone }}</td>
+                <td><a href="#/admin/org/edit_org/{{contact.organisation.id}}">{{ contact.organisation.name }}</a></td>
+                <td><a href="{{ contact.orcid }}" target="_blank">{{ contact.orcid }}</a></td>
+                <td>{{ contact.scopusid }}</td>
+                <td>{{ contact.last_login | date:"dd/MM/yyyy 'at' hh:mma"}}</td>
+                <td align="center">
+                    <a href="#/admin/contacts/edit_contact/{{ contact.id }}">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div ng-click="vm.backToTop()" class="btt-btn">TOP</div>

@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            This form allows you to approve an allocation request, enter the quotas for the tenant to be created.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <span class="alert-info1"><strong>Note</strong></span>: Required fields are marked with an
+        <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        sign
+    </div>
+</div>
+<hr/>
+<form name="vm.approve_form" novalidate>
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Project Title
+            </label>
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.alloc.title"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Project Description
+            </label>
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.proj_desc"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label for="funding_scheme">Funding Scheme</label> <i
+                class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p><span class="alert-info1"><strong>Note</strong></span>: Please select a funding scheme</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group" class="form-control"
+                 ng-class="{'has-error': vm.funding_scheme_invalid || vm.approve_form['funding_scheme'].$invalid}">
+                <select name="funding_scheme" id="funding_scheme" class="form-control"
+                        ng-model="vm.alloc.requests[0].funding_scheme.id"
+                        ng-options="fc.id as fc.funding_scheme for fc in vm.funding_schemes"
+                        ng-change="vm.selectFundingScheme()">
+                    <option value="">--- Select ---</option>
+                </select>
+                <span class="help-block"
+                      ng-show="vm.funding_scheme_invalid || vm.approve_form['funding_scheme'].$invalid">Please select a funding scheme</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sub_title">
+                <span class="sub_title"><i class="fa fa-database"></i> Storage Resources <i
+                        class="glyphicon glyphicon-asterisk text-primary"></i></span>
+            </div>
+            <div>
+                <table class="display_data_tab">
+                    <thead>
+                    <tr>
+                        <th width="15%">Storage <i class="glyphicon glyphicon-asterisk text-primary"></i></th>
+                        <th width="12%">Current Allocation (GB)</th>
+                        <th width="20%">Requested Allocation Change (GB)</th>
+                        <th width="15%">Requested Allocation Total(GB)</th>
+                        <th width="18%">
+                            Approved Allocation Change (GB) <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                        </th>
+                        <th width="15%">Approved Allocation Total (GB)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="storage in vm.alloc.requests[0].storage_requests track by $index">
+                        <td>
+                            <div class="form-group">{{storage.storage_product.name}}</div>
+                            <!--
+                            <div class="form-group" ng-if="storage.requested_quota_change != 0"
+                                 ng-class="{'has-error': vm.approve_form['sp_' + $index].$invalid || vm.approve_form['sp_' + $index].$error.isdup}">
+                                <select name="sp_{{$index}}" id="sp_{{$index}}" class="form-control"
+                                        ng-model="storage.storage_product.id"
+                                        ng-options="sp.id as sp.name for sp in vm.storageProducts"
+                                        ng-change="vm.changeStorageProduct(this, $index)"
+                                        required>
+                                    <option value="">--- Select ---</option>
+                                </select>
+                                <span class="help-block"
+                                      ng-show="vm.approve_form['sp_' + $index].$invalid && !vm.approve_form['sp_' + $index].$error.isdup">
+                                                    Please select a storage product
+                                            </span>
+                                <span class="help-block"
+                                      ng-show="vm.approve_form['sp_' + $index].$error.isdup">
+                                                    Duplicated storage product
+                                            </span>
+                            </div>
+                            <div class="form-group" ng-if="storage.requested_quota_change === 0" ng-class="{ 'div-grey': storage.requested_quota_change === 0}">
+                                {{storage.storage_product.name}}
+                            </div>-->
+                        </td>
+                        <td>
+                            <div class="form-group" ng-class="{ 'div-grey': storage.requested_quota_change === 0}">
+                                {{storage.current_quota}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group" ng-class="{ 'div-grey': storage.requested_quota_change === 0}">
+                                {{storage.requested_quota_change}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group" ng-class="{ 'div-grey': storage.requested_quota_change === 0}">
+                                {{storage.requested_quota_total}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group" ng-if="storage.requested_quota_change != 0"
+                                 ng-class="{'has-error':vm.approve_form['approved_quota_change_' + $index].$invalid || vm.negative_total_quota_invalid[$index]}">
+                                <input type="number" class="form-control" maxlength="10"
+                                       name="approved_quota_change_{{$index}}" id="approved_quota_change_{{$index}}"
+                                       ng-model="storage.approved_quota_change" ng-required="true"
+                                       ng-change="vm.calcualteApprovedTotal($index)"
+                                />
+                                <span class="help-block"
+                                      ng-show="vm.approve_form['approved_quota_change_' + $index].$invalid">
+                                    Specify a valid allocation change
+                                </span>
+                                <span class="help-block" ng-show="vm.negative_total_quota_invalid[$index]">
+                                    Invalid allocation change
+                                </span>
+                            </div>
+
+                            <div class="form-group" ng-if="storage.requested_quota_change == 0"
+                                 ng-class="{ 'div-grey': storage.requested_quota_change === 0}">
+                                {{storage.approved_quota_change}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group" ng-class="{ 'div-grey': storage.requested_quota_change === 0}">
+                                {{storage.current_quota + storage.approved_quota_change }}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="id-approval_notes">
+                Comment
+            </label>
+            <span ng-controller="PopupController">
+                <span ng-click="showHelp()" class="help-icon-sp"><img class="help-icon" src="images/help.png"></span>
+                <modal title="{{ help.approve_comment.title }}" visible="showModal">
+                    <span ng-bind-html="help.approve_comment.text"></span>
+                </modal>
+            </span>
+            <div class="form-group" ng-class="{'has-error': vm.approval_notes_invalid}">
+                <textarea name="approval_notes" id="id-approval_notes"
+                          ng-model="vm.alloc.requests[0].approval_notes" class="form-control"
+                          rows="5"></textarea>
+                <span class="help-block"
+                      ng-show="vm.approval_notes_invalid">{{vm.approval_notes_err_msg}}</span>
+            </div>
+        </div>
+    </div>
+
+<!--    <div class="row">-->
+<!--        <div class="col-md-6">-->
+<!--            <div class="form-group">-->
+<!--                <input type="checkbox" ng-model="vm.alloc.requests[0].sent_email"> <span class="label_6"> Send email notification to all collection contacts </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <button type="submit" class="btn bg-primary" ng-click="vm.approve_request()" ng-disabled="vm.btn_disabled"> Approve </button>
+            </div>
+        </div>
+    </div>
+</form>

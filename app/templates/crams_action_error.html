@@ -1,0 +1,29 @@
+<div>
+    <div class="col-md-12">
+        <div class="error-template">
+            <h1>Oops!</h1>
+            <div>Sorry, an error has occured!</div>
+            <div class="normal_blank_separator"></div>
+            <div class="error-details">
+                {{flash.message}}
+            </div>
+            <div class="col-lg-4 col-lg-offset-4 text-center">
+                <div class="col-lg-12 error-actions" ng-if="globals.isLoggedIn">
+                    <div class="col-md-6">
+                        <a href="#/allocations"><i class="fa fa-tasks"></i> Go to Allocations </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#/contact_us"><i class="fa fa-fax"></i> Contact Support </a>
+                    </div>
+                </div>
+                <div class="col-lg-12 error-actions" ng-if="!globals.isLoggedIn">
+                    <a href="#/contact_us"><i class="fa fa-fax"></i> Contact Support </a>
+                </div>
+            </div>
+            <div style="clear:both"/>
+        </div>
+        <br/>
+    </div>
+    <div style="clear:both"/>
+    <br/>
+</div>

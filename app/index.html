@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="crams">
+<head>
+    <link rel="icon" ng-href="images/{{theme}}/favicon.ico">
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Cloud Resource Allocation Management System</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.css">
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="bower_components/textAngularJs/dist/textAngular.css">
+    <link rel="stylesheet" ng-href="css/{{theme}}/app.css">
+    <link rel="stylesheet" href="css/racmon/app.css">
+</head>
+<body>
+
+<div class="contents-div" ng-view></div>
+<div style="clear:both"/>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/underscore/underscore-min.js"></script>
+<script src="bower_components/ng-dialog/js/ngDialog.js"></script>
+<script src="bower_components/ng-csv/build/ng-csv.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/ng-text-truncate/ng-text-truncate.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+<script src="bower_components/checklist-model/checklist-model.js"></script>
+<script src="bower_components/textAngularJs/dist/textAngular-sanitize.min.js"></script>
+<script src="bower_components/textAngularJs/dist/textAngular-rangy.min.js"></script>
+<script src="bower_components/textAngularJs/dist/textAngular.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script src="js/crams.config.js"></script>
+<script src="app.js"></script>
+
+<script src="js/service/flash.service.js"></script>
+<script src="js/service/lookup.service.js"></script>
+<script src="js/service/authentication.service.js"></script>
+
+<!-- crams side nav -->
+<script src="js/controller/crams.sidenav.controller.js"></script>
+<script src="js/controller/crams.view.selection.controller.js"></script>
+<script src="js/controller/crams.sitefooter.controller.js"></script>
+<script src="js/controller/crams.login.status.controller.js"></script>
+
+<!-- crams api service -->
+<script src="js/service/crams.api.service.js"></script>
+<script src="js/service/crams.questions.service.js"></script>
+
+<script src="js/service/contact.service.js"></script>
+<script src="js/service/crams_utils.js"></script>
+<script src="js/service/vicnode.request.service.js"></script>
+<script src="js/service/organisation.service.js"></script>
+<script src="js/service/crams.support-email.service.js"></script>
+<script src="js/service/crams.review.service.js"></script>
+
+<script src="js/directive/popup.directive.js"></script>
+<script src="js/directive/provision.details.directive.js"></script>
+<script src="js/directive/data.custodian.directive.js"></script>
+<script src="js/directive/technical.contact.directive.js"></script>
+<script src="js/directive/chief.investigator.directive.js"></script>
+<script src="js/directive/crams.chart.directive.js"></script>
+<script src="js/directive/data.owner.directive.js"></script>
+<script src="js/directive/modal.movable.directive.js"></script>
+
+<script src="js/controller/crams.dashboard.controller.js"></script>
+<script src="js/controller/racmon/racmon.ingest.history.controller.js"></script>
+<script src="js/controller/crams.termsconditions.controller.js"></script>
+<script src="js/controller/ks-login.controller.js"></script>
+<script src="js/controller/crams-login.controller.js"></script>
+<script src="js/controller/popup.controller.js"></script>
+<script src="js/controller/crams.error.controller.js"></script>
+
+<!-- Auth Controllers -->
+<script src="js/controller/crams.rapid.conn.login.controller.js"></script>
+<script src="js/controller/crams.rcshib.login.controller.js"></script>
+<script src="js/controller/crams.openid.login.controller.js"></script>
+<script src="js/controller/crams.show.aaf.login.controller.js"></script>
+
+<!-- crams allocation controller -->
+<script src="js/controller/crams.list.my.allocations.controller.js"></script>
+<script src="js/controller/crams.allocation.view.controller.js"></script>
+<script src="js/controller/crams.crams_id.view.controller.js"></script>
+<script src="js/controller/crams.project.view.controller.js"></script>
+<script src="js/controller/crams.allocation.history.controller.js"></script>
+<script src="js/controller/crams.list.allocations.controller.js"></script>
+<script src="js/controller/crams.provision.view.details.controller.js"></script>
+<script src="js/controller/racmon/racmon.manage.prov.ids.controller.js"></script>
+
+<script src="js/controller/crams.list.contacts.controller.js"></script>
+<script src="js/controller/crams.user.contact.controller.js"></script>
+<script src="js/controller/crams.organisation.controller.js"></script>
+<script src="js/controller/crams.storage.product.controller.js"></script>
+
+<script src="js/controller/crams.admin.contact.controller.js"></script>
+<script src="js/controller/crams.admin.list.allocations.controller.js"></script>
+
+<script src="js/controller/crams.technical.contact.controller.js"></script>
+<script src="js/controller/crams.data.custodian.controller.js"></script>
+<script src="js/controller/crams.chief.investigator.controller.js"></script>
+<script src="js/controller/crams.support-email.controller.js"></script>
+<script src="js/controller/racmon/racmon.data.owner.controller.js"></script>
+
+<script src="js/controller/crams.review.list.controller.js"></script>
+<script src="js/controller/crams.review.details.controller.js"></script>
+
+<script src="js/controller/crams.event.logs.controller.js"></script>
+<!-- racmon --->
+<script src="js/controller/racmon/racmon.message.day.controller.js"></script>
+<script src="js/controller/racmon/racmon.list.message.day.controller.js"></script>
+<script src="js/controller/racmon/racmon.new.message.day.controller.js"></script>
+<script src="js/controller/racmon/racmon.request.controller.js"></script>
+<script src="js/controller/racmon/racmon.team.member.controller.js"></script>
+<script src="js/controller/racmon/racmon.declineapprove.controller.js"></script>
+<script src="js/controller/racmon/racmon.membership.controller.js"></script>
+<script src="js/controller/racmon/racmon.add.project.member.controller.js"></script>
+<script src="js/controller/crams.reports.faculty.usage.controller.js"></script>
+<script src="js/controller/crams.reports.faculty.history.usage.controller.js"></script>
+<script src="js/controller/crams.reports.project.history.usage.controller.js"></script>
+<script src="js/controller/racmon/racmon.storage.product.info.controller.js"></script>
+<script src="js/controller/racmon/racmon.list.child.objects.controller.js"></script>
+<script src="js/controller/racmon/racmon.add.update.child.object.controller.js"></script>
+<script src="js/controller/racmon/racmon.view.child.object.history.controller.js"></script>
+<script src="js/controller/racmon/racmon.view.infrastructure.controller.js"></script>
+<script src="js/controller/crams.reports.product.demand.controller.js"></script>
+<script src="js/controller/crams.reports.product.usage.controller.js"></script>
+<script src="js/controller/crams.reports.funding.allocation.costs.controller.js"></script>
+<script src="js/controller/crams.reports.storage.transactions.controller.js"></script>
+<script src="js/controller/crams.reports.collection.ingest.controller.js"></script>
+<script src="js/controller/crams.reports.storage_stats.controller.js"></script>
+<script src="js/controller/crams.reports.alloc.contact.info.controller.js"></script>
+<script src="js/controller/contactus.controller.js"></script>
+<script src="js/controller/crams.list.provision.js"></script>
+<script src="js/controller/racmon/racmon.provision.controller.js"></script>
+<script src="js/controller/racmon/racmon.usage.alert.controller.js"></script>
+<script src="js/filter/crams.utils.filters.js"></script>
+<script src="js/filter/crams.num.commas.filters.js"></script>
+</body>
+</html>

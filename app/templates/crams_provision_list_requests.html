@@ -1,0 +1,130 @@
+<div class="center_div">
+    <div class="loading_div" ng-show="!vm.loaded">
+        <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+        <div class="loading_text">Loading ...</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="display_data_tab" ng-show="vm.projects.length > 0">
+            <thead>
+            <tr>
+                <th width="15%">Name
+                    <span class="pull-right text-muted small" ng-click="vm.nameSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.nameAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.nameDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">Status
+                    <span class="pull-right text-muted small" ng-click="vm.showStatusFilter()">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                    </span>
+                    <!-- popup filter-->
+                    <div class="mp_body_small_div" ng-if="vm.show_status_window">
+                        <div class="mp_header">
+                            <div class="mp_close" ng-click="vm.closeStatusFilter()" title="Close"></div>
+                        </div>
+                        <div class="mp_border_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mp_sub_title">Status</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div ng-repeat="req_stat in vm.all_status">
+                                        <input type="checkbox" checklist-model="vm.selected_status"
+                                               checklist-value="req_stat.display_name"/> {{ req_stat.display_name }}
+                                    </div>
+                                    <div class="mp_content">
+                                        <span class="btn btn-default" ng-click="vm.filterProjects()">
+                                            <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th width="25%">Resources</th>
+                <th width="15%">Transaction ID
+                    <span class="pull-right text-muted small" ng-click="vm.transactionIdSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.transAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.transDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">Funding
+                    <span class="pull-right text-muted small" ng-click="vm.fundingSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.fundingAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.fundingDesc"></i>
+                    </span>
+                </th>
+                <th width="10%">Approver
+                    <span class="pull-right text-muted small" ng-click="vm.approverSort()">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.approverAsc"></i>
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.approverDesc"></i>
+                    </span>
+                </th>
+                <th width="15%">Actions</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="project in vm.projects">
+            <tr ng-repeat="req in project.requests">
+                <td><a href="#/{{ nav.first_path }}/view_request/{{req.id}}">{{project.title}}</a>
+                </td>
+                <td>
+                    {{req.request_status.display_name}}
+                </td>
+                <td>
+                    <div class="row" ng-repeat="storage_req in req.storage_requests">
+                        <div class="col-md-12">
+                            <table class="no_border_tab">
+                                <tr>
+                                    <td width="40%">
+                                        {{storage_req.product.name}}:
+                                    </td>
+                                    <td width="30">
+                                        {{storage_req.approved_quota_total}} GB:
+                                    </td>
+                                    <td width="30%">
+                                        <div ng-if="req.partial_provision_flag.storage_request">
+                                            <span ng-if="vm.isSpProvisioned(storage_req)">
+                                                [ <span class="provisioned">Provisioned</span> ]
+                                            </span>
+                                            <span ng-if="vm.isSpProvisionPending(storage_req)">
+                                                [ <span class="in_progress">Pending</span> ]
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{req.transaction_id}}
+                </td>
+                <td>
+                    {{req.funding_scheme.funding_scheme}}
+                </td>
+                <td>
+                    {{req.approver_email}}
+                </td>
+                <td>
+                    <span ng-if="req.request_status.status =='Approved'">
+                        <a href="#/{{ nav.first_path }}/racmon_provision/{{project.id}}">Provision</a>
+                         &nbsp; | &nbsp;
+                    </span>
+                    <a href="#/{{ nav.first_path }}/history/{{req.id}}">History</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div ng-show="vm.loaded">
+            <div class="center_div" ng-show="vm.projects.length == 0">
+                No allocation found
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear: both"/>

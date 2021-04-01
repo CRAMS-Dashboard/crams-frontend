@@ -1,0 +1,121 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="label_h4">{{vm.report_title}}</div>
+            </div>
+        </div>
+
+        <form name="vm.project_usage_form" novalidate>
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="label_5">Start Date</span>
+                    <div class="input-group" ng-class="{'has-error': vm.start_date_later_than_end_date_invalid}">
+                        <input type="text" name="start_date" id="id-start_date" class="form-control"
+                               data-ng-model="vm.start_date" readonly="readonly"
+                               uib-datepicker-popup='yyyyMMdd' is-open="vm.start_opened"
+                               ng-click="vm.openStartDateCalendar($event)"
+                               datepicker-options="vm.date_options" show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="vm.openStartDateCalendar($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <span class="label_5">End Date</span>
+                    <div class="input-group">
+                        <input type="text" name="start_date" id="id-end_date" class="form-control"
+                               data-ng-model="vm.end_date" readonly="readonly"
+                               uib-datepicker-popup='yyyyMMdd' is-open="vm.end_opened"
+                               ng-click="vm.openEndDateCalendar($event)"
+                               datepicker-options="vm.date_options" show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="vm.openEndDateCalendar($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="vm.start_date_later_than_end_date_invalid">
+                <br/>
+                <div class="col-md-5">
+                    <span class="error_message">
+                        The start date must be earlier than the end date
+                    </span>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="label_5">Select a faculty </span>
+                    <div class="form-group" class="form-control">
+                        <select name="faculty" id="faculty" class="form-control"
+                                ng-model="vm.selected_faculty_id"
+                                ng-options="fac.id as fac.name for fac in vm.faculties">
+                            <option value="">--- All ---</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-default" ng-click="vm.filterProjectUsageHistoryReport()"
+                            value="Search"> &nbsp; Search &nbsp;
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="vm.clearFilter()"
+                            value="Clear"> &nbsp; Clear &nbsp;
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="center_div">
+                <div class="loading_div" ng-show="!vm.load_fininshed">
+                    <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                    <div class="loading_text">Loading reporting ...</div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="vm.load_fininshed">
+            <div class="row">
+                <div class="col-md-12" ng-if="vm.usage_history_data.length > 0">
+                    <div class="display_separator"></div>
+                    <div>
+                        <br/>
+                        <p>Please click button to download the csv report file.</p>
+                        <br/>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-default" ng-csv="vm.sortReportData()"
+                                filename="{{ vm.csvReportFileName() }}" csv-main="vm.parent_heading()"
+                                csv-header="vm.sortHeadings()" decimal-separator="."
+                                charset="utf-8">
+                            <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" ng-if="vm.usage_history_data.length == 0">
+                    <div class="display_separator"></div>
+                    <div class="label_info">
+                        No Report Data Found
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/' + theme + '/site_footer.html'"></div>

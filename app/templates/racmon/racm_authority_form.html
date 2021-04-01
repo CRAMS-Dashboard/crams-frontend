@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-12">
+        <p><span class="label_5">Authority</span> <i class="glyphicon glyphicon-asterisk text-primary"></i></p>
+        <p>{{ vm.authorityQuestion.question}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group"
+             ng-class="{'has-error': vm.authority_question_invalid || vm.alloc_form.authority.$invalid}">
+            <select class="form-control" id="id-authority_question" name="authority"
+                    ng-model="vm.project.requests[0].request_question_responses[0].question_response"
+                    ng-options="value as value for (key,value) in vm.authorityQuestion.choices" required>
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block" ng-show="vm.authority_question_invalid || vm.alloc_form.authority.$invalid">Required field</span>
+        </div>
+    </div>
+</div>

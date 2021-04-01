@@ -1,0 +1,38 @@
+<div class="site-header-div">
+    <! LOGO -->
+    <div class="col-md-6 site-top-left">
+        <div class="navbar-logo"><a class="" href="#/">
+            <img class="img-responsive image_brand" ng-src="images/{{theme}}/crams.png"></a>
+            <div class="label_default_5">
+                &nbsp; &nbsp; &nbsp; &nbsp; Cloud Resource Allocation Management System
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 site-top-right">
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" ng-if="globals.isLoggedIn">
+                <li>
+                    <a ng-controller="SupportEmailController as emailCtrl"
+                       ng-click="emailCtrl.open()" href="">
+                        <span><i class="fa fa-ticket" aria-hidden="true"></i></span>
+                        Support Request
+                    </a>
+                </li>
+                <!--                <li ng-controller="LoginStatusController as statusCtrl">-->
+                <li>
+                    <a href="#/contacts/view_contact/{{globals.currentUser.username}}">
+                        {{ globals.currentUser.username }}
+                    </a>
+                    <!--                    <span ng-if="login_status.creation_ts !== null" class="text-muted small status_span"><em>Last Logged in {{login_status.creation_ts | date: "dd/MM/yyyy 'at' hh:mma"}}</em></span>-->
+                    <!--                    <span ng-if="login_status.creation_ts === null" class="text-muted small status_span"><em>Last Logged in None</em></span>-->
+                </li>
+                <li ng-controller="CRAMSLoginController as loginCtr"><a href="#" ng-click="loginCtr.logout()"><span><i
+                        class="fa fa-sign-out"
+                        aria-hidden="true"></i></span> Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+    <div style="clear: both"/>
+</div>
+<div ng-include="'templates/crams_support_email.html'"></div>

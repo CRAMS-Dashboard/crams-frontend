@@ -1,0 +1,177 @@
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            This form allows you to provision an allocation request.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <span class="alert-info1"><strong>Note</strong></span>: Required fields are marked with an
+        <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        sign
+    </div>
+</div>
+<hr/>
+<form name="vm.provision_form" novalidate>
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Project Title
+            </label>
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.alloc.title"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Project Description
+            </label>
+
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.proj_desc"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label>Funding Scheme</label>
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.alloc.requests[0].funding_scheme.funding_scheme"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Transaction ID
+            </label>
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.alloc.requests[0].transaction_id"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <label>
+                Approval Notes
+            </label>
+
+            <div class="desc_section_div">
+                <p ng-bind-html="vm.alloc.requests[0].approval_notes"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="sub_title">
+                <span class="sub_title"><i class="fa fa-database"></i> Storage Resources (GB) </span>
+            </div>
+        </div>
+    </div>
+    <div class="row error_message" ng-show="vm.non_storage_product_selected">
+        <div class="col-md-6">
+            None of storage products are selected
+        </div>
+    </div>
+    <div class="row" ng-repeat="storage_req in vm.alloc.requests[0].storage_requests track by $index">
+        <div class="col-md-6">
+            <table class="data_tab">
+                <tr>
+                    <td width="5%" rowspan="5">
+                        <div class="form-group" ng-if="!vm.sp_provisions[$index].provisioned">
+                            <input type="checkbox" name="selected_sp_provisions_{{$index}}"
+                                   ng-model="vm.sp_provisions[$index].provision.success"
+                                   ng-change="vm.checkSelectedSp($index)">
+                        </div>
+                    </td>
+                    <th width="30%">Storage Product</th>
+                    <td width="65%">{{storage_req.product.name}}</td>
+                </tr>
+                <tr>
+                    <th>Current Allocation (GB)</th>
+                    <td>{{storage_req.current_quota}}</td>
+                </tr>
+                <tr>
+                    <th>Approved Allocation Change (GB)</th>
+                    <td>{{storage_req.approved_quota_change}}</td>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="form-group">
+                            Provision ID <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                        </div>
+                    </th>
+                    <td>
+                        <div class="form-group" ng-if="!vm.sp_provisions[$index].provisioned"
+                             ng-class="{'has-error':vm.provision_form['sp_provision_id_' + $index].$invalid}">
+                            <input type="text" class="form-control" name="sp_provision_id_{{$index}}"
+                                   ng-model="vm.sp_provisions[$index].provision.provision_id"
+                                   maxlength="60" list="prov_ids_{{$index}}"/>
+                            <datalist id="prov_ids_{{$index}}">
+                                <option ng-repeat="prov_id in vm.recent_product_prov_ids[storage_req.product.name] track by prov_id.index">{{prov_id.provision_id}}</option>
+                            </datalist>
+                            <div class="help-block" ng-show="vm.provision_form['sp_provision_id_'+ $index].$invalid">
+                                Invalid ID
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="vm.sp_provisions[$index].provisioned">
+                            {{ vm.sp_provisions[$index].provision.provision_id }}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="form-group">
+                            Provision Notes
+                        </div>
+                    </th>
+                    <td>
+                        <div class="form-group" ng-if="!vm.sp_provisions[$index].provisioned"
+                             ng-class="{'has-error': vm.provision_form['sp_provision_notes_'+ $index].$invalid}">
+                                <textarea class="form-control" name="sp_provision_notes_{{$index}}"
+                                          id="id-sp_provision_notes_{{$index}}" ng-change="vm.countNotes($index)"
+                                          placeholder="Leave provision notes here, max 1500 characters"
+                                          ng-model="vm.sp_provisions[$index].provision.message" rows="3">
+                                </textarea>
+                            <span class="label_grey" ng-if="vm.notes_counts[$index] > 0 "> {{vm.notes_counts[$index]}} characters</span>
+                            <span class="help-block"
+                                  ng-show="vm.provision_form['sp_provision_notes_'+ $index].$invalid">Max 1500 characters</span>
+                        </div>
+                        <div class="form-group" ng-if="vm.sp_provisions[$index].provisioned">
+                            <p ng-bind-html="vm.sp_provisions[$index].provision.message"></p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+<!--    <div class="row">-->
+<!--        <div class="col-md-6">-->
+<!--            <div class="form-group">-->
+<!--                <input type="checkbox" ng-model="vm.alloc.requests[0].sent_email"> <span class="label_6"> Send email notification to all collection contacts </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <button type="submit" class="btn bg-primary" ng-click="vm.provision_request()"
+                        ng-disabled="vm.btn_disabled"> Provision
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

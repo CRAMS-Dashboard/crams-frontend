@@ -1,0 +1,135 @@
+<div>
+    <form name="contact_form">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.contact_form_errors['title_status']}">
+                    <label for="title">
+                        Title
+                    </label>
+                    <input type="text" class="form-control" id="title" ng-model="vm.contact.title"/>
+                    <span class="help-block" ng-show="vm.contact_form_errors['title_status']">
+                        {{ vm.contact_form_errors['title_message'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.contact_form_errors['given_name_status']}">
+                    <label for="given_name">
+                        Given name <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                    </label>
+                    <input type="text" class="form-control" id="given_name" ng-model="vm.contact.given_name"/>
+                    <span class="help-block" ng-show="vm.contact_form_errors['given_name_status']">
+                        {{ vm.contact_form_errors['given_name_message'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" ng-class="{'has-error': vm.contact_form_errors['surname_status']}">
+                    <label for="surname">
+                        Surname <i class="glyphicon glyphicon-asterisk text-primary"></i>
+                    </label>
+                    <input type="text" class="form-control" id="surname" ng-model="vm.contact.surname"/>
+                    <span class="help-block" ng-show="vm.contact_form_errors['surname_status']">
+                        {{ vm.contact_form_errors['surname_message'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.contact_form_errors['email_status'] || contact_form.email.$error.email }">
+                    <label for="email">
+                        Institutional email address <i
+                            class="glyphicon glyphicon-asterisk text-primary"></i>
+                    </label>
+                    <input type="email" class="form-control" id="email" ng-model="vm.contact.email" name="email" readonly/>
+                    <span class="help-block" ng-show="vm.contact_form_errors['email_status']">
+                        {{ vm.contact_form_errors['email_message'] }}
+                    </span>
+                    <span class="help-block" ng-show="contact_form.email.$error.email">
+                        Invalid email
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.contact_form_errors['phone_status']}">
+                    <label for="phone">
+                        Phone
+                    </label>
+                    <input type="text" class="form-control" id="phone" ng-model="vm.contact.phone"/>
+                    <span class="help-block" ng-show="vm.contact_form_errors['phone_status']">
+                        {{ vm.contact_form_errors['phone_message'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.contact_form_errors['organisation_status']}">
+                    <label for="organisation">
+                        Institution
+                    </label>
+                    <select name="organisation" id="organisation" class="form-control"
+                            ng-model="vm.contact.organisation.name" ng-change="vm.organisation_change()"
+                            ng-options="org.name as org.name for org in vm.organisations" required>
+                        <option value="">--- Select ---</option>
+                    </select>
+                    <span class="help-block" ng-show="vm.contact_form_errors['organisation_status']">
+                        {{ vm.contact_form_errors['organisation_message'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.contact_form_errors['orcid_status']}">
+                    <label for="orcid">
+                        ORCID
+                    </label>
+                    <input type="text" class="form-control" id="orcid" ng-model="vm.contact.orcid"/>
+                    <span class="help-block" ng-show="vm.contact_form_errors['orcid_status']">
+                        {{ vm.contact_form_errors['orcid_message'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                     ng-class="{'has-error': vm.contact_form_errors['scopusid_status']}">
+                    <label for="scopusid">
+                        ScopusID
+                    </label>
+                    <input type="text" class="form-control" id="scopusid" ng-model="vm.contact.scopusid" maxlength="11"/>
+                    <span class="help-block" ng-show="vm.contact_form_errors['scopusid_status']">
+                        {{ vm.contact_form_errors['scopusid_message'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn bg-primary" ng-click="vm.editContact()">
+            Update
+        </button>
+    </form>
+
+</div>

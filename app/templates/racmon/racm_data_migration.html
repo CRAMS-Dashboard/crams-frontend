@@ -1,0 +1,35 @@
+<p><span class="label_h3">Data Migration</span></p>
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">{{ vm.dataMigrationSrcQuestion.question}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.data_migration_src_invalid}">
+            <input type="text" class="form-control" name="data_migration_src"
+                   ng-model="vm.project.requests[0].request_question_responses[4].question_response"/>
+            <span class="help-block" ng-show="vm.data_migration_src_invalid">Required field</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">{{ vm.dataMigrationAstQuestion.question}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group"
+             ng-class="{'has-error': vm.data_migration_ast_invalid || vm.alloc_form.data_migration_ast.$invalid}">
+            <select class="form-control" id="id-data_migration_ast" name="data_migration_ast"
+                    ng-model="vm.project.requests[0].request_question_responses[5].question_response"
+                    ng-options="value as value for (key,value) in vm.dataMigrationAstQuestion.choices">
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block"
+                  ng-show="vm.data_migration_ast_invalid || vm.alloc_form.data_migration_ast.$invalid">Required field</span>
+        </div>
+    </div>
+
+</div>

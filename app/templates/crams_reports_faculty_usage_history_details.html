@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="label_h4">{{vm.report_title}}</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <span class="label_5">Select a faculty </span>
+        <div class="form-group" class="form-control">
+            <select name="faculty" id="faculty" class="form-control"
+                    ng-model="vm.selected_faculty_id"
+                    ng-options="fac.id as fac.name for fac in vm.faculties"
+                    ng-change="vm.filterFacultyUsageHistoryReport()">
+                <option value="">--- All ---</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="display_separator"></div>
+<div class="row">
+    <div class="center_div">
+        <div class="loading_div" ng-show="!vm.load_fininshed">
+            <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+            <div class="loading_text">Loading reporting ...</div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="vm.load_fininshed">
+
+    <div class="col-md-12" ng-if="vm.usage_history_data.length > 0">
+        <div>
+            <br/>
+            <p>Please click button to download the csv report file.</p>
+            <br/>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-default" ng-csv="vm.sortReportData()"
+                    filename="{{ vm.csvReportFileName() }}" csv-header="vm.sortHeadings()" decimal-separator="."
+                    charset="utf-8">
+                <span class="glyphicon glyphicon-download-alt">&nbsp;</span><b>Download CSV</b>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12" ng-if="vm.usage_history_data.length == 0 || vm.usage_history_data == undefined">
+        <div>
+            <div class="label_info">
+                No Report Data
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div ng-click="vm.backToTop()" class="btt-btn">TOP</div>

@@ -1,0 +1,120 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ vm.heading }}</h1>
+                <div ng-if="vm.showActionItems && vm.show_table">
+                    <button class="btn bg-primary" ng-disabled="vm.disableBulkAction"
+                            ng-click="vm.sendBulkReviews($event)"><span class="glyphicon glyphicon-send"></span>&nbsp;Send selected reviews</button>
+                    <button class="btn bg-primary" ng-disabled="vm.disableBulkAction"
+                            ng-click="vm.skipBulkReviews($event)"><span class="glyphicon glyphicon-remove"></span>&nbsp;Skip selected reviews</button>
+                </div>
+            </div>
+        </div>
+        <div class="center_div">
+            <div class="loading_div" ng-show="!vm.loaded">
+                <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                <div class="loading_text">Loading ...</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" ng-show="vm.show_table">
+                <table class="display_data_tab">
+                    <thead>
+                    <tr>
+                        <th ng-if="vm.showActionItems" width="5%" style="text-align:center">
+                            <input type="checkbox" ng-model="vm.selectAll" ng-change="vm.checkAll()"/>
+                        </th>
+                        <th width="25%">Project
+                            <span class="pull-right text-muted small" ng-click="vm.projectSort()">
+                                    <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.projectAsc"></i>
+                                    <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.projectDesc"></i>
+                                </span>
+                        </th>
+                        <th width="20%">Data Custodian
+                            <span class="pull-right text-muted small" ng-click="vm.dataCustSort()">
+                                    <i class="fa fa-sort-asc" aria-hidden="true" ng-if="vm.dataCustAsc"></i>
+                                    <i class="fa fa-sort-desc" aria-hidden="true" ng-if="vm.dataCustDesc"></i>
+                                </span>
+                        </th>
+                        <th width="10%">Review Date
+                            <span class="pull-right text-muted small" ng-click="vm.reviewDateSort()">
+                                    <i class="fa fa-sort-asc" aria-hidden="true" ng-if="vm.reviewDateAsc"></i>
+                                    <i class="fa fa-sort-desc" aria-hidden="true" ng-if="vm.reviewDateDesc"></i>
+                                </span>
+                        </th>
+                        <th width="10%">Last Updated
+                            <span class="pull-right text-muted small" ng-click="vm.lastUpdatedSort()">
+                                    <i class="fa fa-sort-asc" aria-hidden="true" ng-if="vm.lastUpdatedAsc"></i>
+                                    <i class="fa fa-sort-desc" aria-hidden="true" ng-if="vm.lastUpdatedDesc"></i>
+                                </span>
+                        </th>
+                        <th width="20%">Updated By
+                            <span class="pull-right text-muted small" ng-click="vm.updatedBySort()">
+                                    <i class="fa fa-sort-alpha-asc" aria-hidden="true" ng-if="vm.updatedByAsc"></i>
+                                    <i class="fa fa-sort-alpha-desc" aria-hidden="true" ng-if="vm.updatedByDesc"></i>
+                                </span>
+                        </th>
+                        <th ng-if="vm.showActionItems" width="10%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="review in vm.review_list">
+                        <td ng-if="vm.showActionItems" style="text-align:center">
+                            <input type="checkbox" ng-model="review.select"
+                                   ng-change="vm.checkSingleReview(review)"/>
+                        </td>
+                        <td>
+                            <a href="#/admin/allocations/view_request/{{vm.getLatestRequestID(review)}}"
+                               target="_blank">{{ review.project }}</a>
+                        </td>
+                        <td>
+                            <span ng-repeat="contact in review.project_contacts">
+                                <div ng-switch="contact.contact_role">
+                                    <span ng-switch-when="Data Custodian">
+                                        <a href="#/admin/contacts/view_contact/{{contact.contact_id}}" target="_blank">
+                                            {{ contact.name }}
+                                        </a><br/>
+                                    </span>
+                                </div>
+                            </span>
+                        </td>
+                        <td>{{ review.review_date | date:"dd/MM/yyyy" }}</td>
+                        <td>{{ review.updated_date | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+                        <td>{{ review.updated_by }}</td>
+                        <td ng-if="vm.showActionItems">
+                            <button class="btn bg-primary" ng-disabled="review.select"
+                                    ng-click="vm.sendSingleReview($event, review)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Send review">
+                                <span class="glyphicon glyphicon-send"></span>
+                            </button>
+                            <button class="btn bg-primary" ng-disabled="review.select"
+                                    ng-click="vm.skipSingleReview($event, review)"
+                                    data-toggle="tooltip" data-placement="left" title="Skip review">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <!--
+                            <button class="btn bg-primary"
+                                    ng-click=""
+                                    data-toggle="tooltip" data-placement="left" title="History">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </button>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12" ng-show="!vm.show_table && vm.loaded">
+                <div class="desc_section">
+                    No project found
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/' + theme + '/site_footer.html'"></div>

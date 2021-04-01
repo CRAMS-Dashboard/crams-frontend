@@ -1,0 +1,412 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="m_title">
+            Project Name: {{vm.alloc_project_request.title}}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="sub_title">
+            <i class="fa fa-file-text"></i> Description
+        </div>
+        <div class="desc_section">
+            <p ng-bind-html="vm.alloc_project_request.description"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="sub_title">
+            <i class="fa fa-lock"></i> Sensitive Data Handling
+        </div>
+        <div class="desc_section" ng-switch="vm.alloc_project_request.requests[0].data_sensitive">
+            <span class="text-success" ng-switch-when="false">
+                This collection is free of sensitive data
+            </span>
+            <span class="text-danger" ng-switch-when="true">
+                This collection contains sensitive data
+            </span>
+            <span ng-switch-when="null">
+                -
+            </span>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<div class="sub_title">-->
+<!--<i class="fa fa-link"></i> Parent Project-->
+<!--</div>-->
+<!--<div class="desc_section">-->
+<!--<span ng-if="vm.alloc_project_request.requests[0].linked_allocations.length > 0">-->
+<!--<a href="#/{{vm.view_request_path}}/{{vm.alloc_project_request.requests[0].linked_allocations[0].allocation.id}}">{{vm.alloc_project_request.requests[0].linked_allocations[0].allocation.project}}</a>-->
+<!--</span>-->
+<!--<span ng-if="vm.alloc_project_request.requests[0].linked_allocations.length == 0">-->
+<!--None-->
+<!--</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="sub_title">
+            <i class="fa fa-users"></i> Project Contacts
+        </div>
+        <table class="data_tab">
+            <tr ng-repeat="contact in vm.alloc_project_request.project_contacts">
+                <th width="50%">{{ contact.contact_role }}</th>
+                <td width="50%">{{ contact.contact.email }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6" ng-if="vm.alloc_project_request.project_ids.length > 0">
+        <div class="sub_title">
+            <i class="fa fa-crosshairs"></i> System IDs
+        </div>
+        <table class="data_tab">
+            <tr ng-repeat="projid in vm.alloc_project_request.project_ids">
+                <th width="50%">{{ projid.system.system }}</th>
+                <td width="50%">{{ projid.identifier }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-paper-plane-o"></i> FOR Code</span>
+        </div>
+        <table class="data_tab">
+            <thead>
+            <tr>
+                <th width="30%">FOR Code</th>
+                <th width="40%">Description</th>
+                <th width="30%">Percentage</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="dom in vm.alloc_project_request.domains">
+                <td>{{dom.for_code.code}}</td>
+                <td>{{dom.for_code.description}}</td>
+                <td>{{dom.percentage}} %</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="blank_separator"></div>
+    <div class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-th-list"></i> Supported Institutions</span>
+        </div>
+        <table class="data_tab">
+            <tbody>
+            <tr ng-repeat="ins in vm.alloc_project_request.institutions">
+                <td>{{ins.institution}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-book"></i> Publications</span>
+        </div>
+        <table class="data_tab">
+            <tbody>
+            <tr ng-repeat="pub in vm.alloc_project_request.publications">
+                <td>{{pub.reference}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="blank_separator"></div>
+
+    <div class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-money"></i> Grants </span>
+        </div>
+        <table class="data_tab" ng-repeat="grant in vm.alloc_project_request.grants">
+            <tbody>
+            <tr>
+                <th width="30%">Funding Type</th>
+                <td>{{grant.grant_type.description}}</td>
+            </tr>
+            <tr>
+                <th>Funding Body and Scheme</th>
+                <td>{{ grant.funding_body_and_scheme }}</td>
+            </tr>
+            <tr>
+                <th>Grant ID</th>
+                <td>{{grant.grant_id}}</td>
+            </tr>
+            <tr>
+                <th>First Year Funded</th>
+                <td>{{grant.start_year}}</td>
+            </tr>
+            <tr>
+                <th>Funding Duration (Months)</th>
+                <td>{{grant.duration}}</td>
+            </tr>
+            <tr>
+                <th>Total Funding (AUD)</th>
+                <td>{{grant.total_funding}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-money"></i> Funding </span>
+        </div>
+        <table class="data_tab">
+            <tbody>
+            <tr ng-repeat="req in vm.alloc_project_request.requests">
+                <th width="30%">National</th>
+                <td width="20%">{{req.national_percent}} %</td>
+                <th width="20%">Node</th>
+                <td width="30%">{{req.allocation_home}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="blank_separator"></div>
+
+    <div class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-comments"></i> Additional Information </span>
+        </div>
+        <table class="data_tab">
+            <tbody>
+            <tr ng-repeat="pqresp in vm.alloc_project_request.project_question_responses">
+                <th width="30%">{{pqresp.question.question}}</th>
+                <td width="70%">{{ pqresp.question_response}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="blank_separator"></div>
+
+<div class="row" ng-repeat="req in vm.alloc_project_request.requests">
+    <div class="col-md-12">
+        <div class="sub_title">
+            <i class="fa fa-credit-card" aria-hidden="true"></i> Request Id: {{req.id}} [ <span class="hl_color">{{req.request_status.display_name}}</span>
+            ] &nbsp; &nbsp; Updated by {{req.updated_by.email}} - {{req.last_modified_ts | date:"dd/MM/yyyy"}}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="data_tab">
+            <tbody>
+            <tr>
+                <th width="30%">Transaction ID:</th>
+                <td width="70%">{{req.transaction_id}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="blank_separator"></div>
+    </div>
+
+
+    <div class="col-md-12">
+        <table class="data_tab">
+            <tbody>
+            <tr>
+                <th width="30%">Funding Scheme:</th>
+                <td width="70%">{{req.funding_scheme.funding_scheme}}</td>
+            </tr>
+            <tr ng-repeat="reqresponse in req.request_question_responses">
+                <th width="30%">
+                    <span ng-if="reqresponse.question.key == 'racm_privacy_q3'">
+                       <p ng-bind-html="reqresponse.question.question"></p>
+                    </span>
+                    <span ng-if="reqresponse.question.key != 'racm_privacy_q3'">
+                        {{reqresponse.question.question}}
+                    </span>
+                </th>
+                <td width="70%">
+                    <span ng-if="reqresponse.question.key == 'racm_data_retention_period' && reqresponse.question_response == '0'">
+                        Indefinite
+                    </span>
+                    <span ng-if="reqresponse.question.key == 'racm_data_retention_period' && reqresponse.question_response != '0'">
+                        {{reqresponse.question_response}}
+                    </span>
+                    <span ng-if="reqresponse.question.key != 'racm_data_retention_period'">
+                       <p ng-bind-html="reqresponse.question_response"></p>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="blank_separator"></div>
+
+    <div class="col-md-12" ng-if="req.compute_requests.length > 0">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-desktop"></i> Compute Resources </span>
+        </div>
+        <div>
+            <table class="data_tab">
+                <thead>
+                <tr>
+                    <th width="30%">&nbsp;</th>
+                    <th width="30%">Requested</th>
+                    <th width="40%">Approved</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <table width="100%">
+            <tr ng-repeat="compute in req.compute_requests">
+                <td>
+                    <table class="data_tab">
+                        <tr>
+                            <td colspan="3">{{compute.compute_product.name}}</td>
+                        </tr>
+                        <tr>
+                            <th width="30%">Virtual Machine Instances</th>
+                            <td width="30%">{{compute.instances}}</td>
+                            <td width="40%"><span
+                                    ng-if="req.request_status.code =='A' || req.request_status.code =='p'">{{compute.approved_instances}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Core</th>
+                            <td>{{compute.cores}}</td>
+                            <td><span ng-if="req.request_status.code =='A' || req.request_status.code =='p'">{{compute.approved_cores}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Core Hours</th>
+                            <td>{{compute.core_hours}}</td>
+                            <td><span ng-if="req.request_status.code =='A' || req.request_status.code =='p'">{{compute.approved_core_hours}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="blank_separator">&nbsp;</div>
+
+    <div ng-show="req.approval_notes">
+        <div class="col-md-12">
+            <div class="sub_title">
+                <span class="sub_title"><i class="fa fa-comment"></i> {{req.request_status.display_name}} <i
+                        class="fa fa-long-arrow-right"></i> Note </span>
+            </div>
+            <div>
+                <textarea name="approval_notes" id="id-approval_notes"
+                          ng-model="req.approval_notes" class="form-control"
+                          rows="5" style="height:120px; width:480px" readonly="readonly"></textarea>
+            </div>
+        </div>
+        <div class="blank_separator"></div>
+    </div>
+    <div class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-database"></i> Storage Resources (GB)</span>
+        </div>
+    </div>
+    <div class="blank_separator"></div>
+    <div ng-repeat="storage_req in req.storage_requests track by $index">
+        <div class="col-md-12">
+            <table class="data_tab">
+                <tr>
+                    <th width="30%">Storage Product</th>
+                    <td width="70%">{{storage_req.storage_product.name}}</td>
+                </tr>
+                <tr>
+                    <th>Current Allocation (GB)</th>
+                    <td>{{storage_req.current_quota}}</td>
+                </tr>
+                <tr>
+                    <th>Requested Allocation Change (GB)</th>
+                    <td>{{storage_req.requested_quota_change}}</td>
+
+                </tr>
+                <tr>
+                    <th>Requested Allocation Total (GB)</th>
+                    <td>{{storage_req.requested_quota_total}}</td>
+                </tr>
+                <tr ng-if="req.request_status.code =='P' || req.request_status.code =='A' ">
+                    <th>Approved Allocation Change (GB)</th>
+                    <td>{{storage_req.approved_quota_change}}</td>
+                </tr>
+                <tr ng-if="req.request_status.code =='P' || req.request_status.code =='A'">
+                    <th>Approved Allocation Total</th>
+                    <td>{{storage_req.approved_quota_change + storage_req.current_quota}}</td>
+                </tr>
+                <tr ng-show="storage_req.provision_id && (globals.perms.approver || globals.perms.admin || globals.perms.provisioner)">
+                    <th>Provision ID:</th>
+                    <td>
+                        {{storage_req.provision_id}}
+                    </td>
+                </tr>
+                <tr ng-show="storage_req.provision_id && (globals.perms.approver || globals.perms.admin || globals.perms.provisioner)">
+                    <th>Provision Notes</th>
+                    <td>
+                        <p ng-bind-html="storage_req.provision_details.message"></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="blank_separator"></div>
+    <span class="col-md-12">
+        <div class="sub_title">
+            <span class="sub_title"><i class="fa fa-codepen"></i> Actions </span>
+        </div>
+        <span ng-if="(req.request_status.code =='E' || req.request_status.code =='N') && !req.historic && !vm.isReadonly(req)">
+             <span ng-if="req.e_research_system.e_research_body == erb">
+                <a href="#/{{vm.allocations_base_path}}/edit_racmon_request/{{vm.alloc_project_request.id}}/{{req.id}}">
+                    <input class="btn bg-primary" type="button" value="Edit Request">
+                </a>
+            </span>
+        </span>
+        <span ng-if="req.request_status.code !='E' && req.request_status.code !='A' && req.request_status.code !='N' && !req.historic && !vm.isReadonly(req)">
+            <span ng-if="req.e_research_system.e_research_body == erb">
+                 <a href="#/{{vm.allocations_base_path}}/edit_racmon_request/{{vm.alloc_project_request.id}}/{{req.id}}">
+                     <input class="btn bg-primary" type="button" value="Amend/Extend Allocation">
+                 </a>
+            </span>
+         </span>
+
+
+        <span ng-if="vm.isApprovableOrDeclinable(req.request_status.code, nav.first_path) && !req.historic && !vm.isReadonly(req)">
+            <span ng-if="req.e_research_system.e_research_body == erb">
+                <span>
+                    <a href="#/{{nav.first_path}}/approve_racmon_request/{{req.id}}">
+                        <input class="btn bg-primary" type="button" value="Approve Request"/>
+                    </a>
+                </span>
+                <span>
+                    <a href="#/{{nav.first_path}}/decline_racmon_request/{{req.id}}">
+                         <input class="btn bg-primary" type="button" value="Decline Request"/>
+                    </a>
+                </span>
+            </span>
+        </span>
+
+        <span ng-if="vm.isProvisionable(req.request_status.code, nav.first_path) && !req.historic && !vm.isReadonly(req)">
+            <span ng-if="req.e_research_system.e_research_body == erb">
+                <span>
+                    <a href="#/{{nav.first_path}}/racmon_provision/{{vm.alloc_project_request.id}}">
+                        <input class="btn bg-primary" type="button" value="Provision"/>
+                    </a>
+                </span>
+            </span>
+        </span>
+        <span ng-if="!req.historic && req.request_status.code != 'N'">
+            <a href="#/{{ vm.allocations_base_path }}/history/{{req.id}}">
+                <input class="btn bg-primary" type="button" value="Request History"/>
+            </a>
+        </span>
+    </span>
+</div>

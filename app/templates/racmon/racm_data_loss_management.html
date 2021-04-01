@@ -1,0 +1,51 @@
+<p><span class="label_h3">Data Loss Management</span></p>
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">{{ vm.onlyCopyQuestion.question}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.only_copy_invalid || vm.alloc_form.only_copy.$invalid}">
+            <select class="form-control" name="only_copy"
+                    ng-model="vm.project.requests[0].request_question_responses[8].question_response"
+                    ng-options="value as value for (key,value) in vm.onlyCopyQuestion.choices">
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block" ng-show="vm.only_copy_invalid">Required field</span>
+            <span class="help-block" ng-show="vm.alloc_form.only_copy.$invalid">Required field</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">{{ vm.canRegeneratedQuestion.question}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.can_regenerated_invalid}">
+            <select class="form-control" name="can_regenerated"
+                    ng-model="vm.project.requests[0].request_question_responses[9].question_response"
+                    ng-options="value as value for (key,value) in vm.canRegeneratedQuestion.choices">
+                <option value="">--- Select ---</option>
+            </select>
+            <span class="help-block" ng-show="vm.can_regenerated_invalid">Required field</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">{{ vm.lossImpactQuestion.question}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.loss_impact_invalid}">
+            <input type="text" class="form-control" name="loss_impact"
+                   ng-model="vm.project.requests[0].request_question_responses[10].question_response"/>
+            <span class="help-block" ng-show="vm.loss_impact_invalid">Required field</span>
+        </div>
+    </div>
+</div>

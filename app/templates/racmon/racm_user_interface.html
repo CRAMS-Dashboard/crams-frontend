@@ -1,0 +1,30 @@
+<p><span class="label_h3">User Interface</span></p>
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">{{ vm.accessMethodQuestion.question}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.access_method_invalid}">
+            <input type="text" class="form-control" name="access_method"
+                   ng-model="vm.project.requests[0].request_question_responses[6].question_response"/>
+            <span class="help-block" ng-show="vm.access_method_invalid">Required field</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_5">{{ vm.preferAccessMethodQuestion.question}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group" ng-class="{'has-error': vm.prefer_access_method_invalid}">
+            <input type="text" class="form-control" name="prefer_access_method"
+                   ng-model="vm.project.requests[0].request_question_responses[7].question_response"/>
+            <span class="help-block" ng-show="vm.prefer_access_method_invalid">Required field</span>
+        </div>
+    </div>
+</div>

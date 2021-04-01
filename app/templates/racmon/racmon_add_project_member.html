@@ -1,0 +1,109 @@
+<div>
+    <script type="text/ng-template" id="addMemberOrCIContent">
+        <div modal-movable>
+            <div class="modal-header">
+                <h3 class="label_h2">Add User</h3>
+                <div class="mp_close" ng-click="vm.closeModalWindow()" title="Close"></div>
+                <hr class="ng-scope">
+            </div>
+
+            <div class="modal-body" id="modal-body" style="padding-top: 1px;">
+
+                <div class="row">
+                    <div class="col-md-12 " ng-if="vm.hasError">
+                        <div class="error_message">
+                            {{vm.error_msg}}
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        Search to find an user to add by email or name
+                    </div>
+                </div>
+
+                <div class="display_separator"></div>
+                <br/>
+                <form name="vm.add_member_form" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                       id="id-search_contact" name="search_contact"
+                                       ng-model="vm.search_contact"
+                                       ng-change="vm.findContacts()"/>
+                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            </div>
+
+                            <div class="form-group" class="form-control"
+                                 ng-class="{'has-error': vm.contact_id_invalid}">
+                                <span class="help-block" ng-show="vm.contact_id_invalid && vm.found_contacts.length === 0">Please find an user to add</span>
+                                <span class="help-block" ng-show="vm.contact_id_invalid && vm.found_contacts.length !== 0">Please select an user to add</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mp_content_noborder" style="overflow-y: scroll;">
+                            <div class="mp_details_section">
+                                <div class="data_content_div" ng-repeat="contact in vm.found_contacts">
+                                    <div>
+                                        <input type="radio" name="contact_id" ng-model="vm.add_member_data.contact_id"
+                                               value="{{contact.id}}" ng-change="vm.updateSelectedMemberStatus(contact)"/>
+                                        {{(contact.title || "") + " " + (contact.given_name || "") + " " + (contact.surname
+                                        ||
+                                        "") +
+                                        " (" + contact.email + ")"}}
+                                    </div>
+                                    <div class="line_separator"></div>
+                                </div>
+
+                                <div ng-if="vm.found_contacts.length == 0 && vm.contact_searched">
+                                    <b>No user found</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="label_5">User Role </span> <i
+                                class="glyphicon glyphicon-asterisk text-primary"></i>
+                            <div class="form-group" class="form-control"
+                                 ng-class="{'has-error': vm.add_member_form['contact_role'].$invalid}">
+                                <select name="contact_role" id="contact_role" class="form-control"
+                                        ng-model="vm.add_member_data.contact_role">
+                                    <option value="">--- Select ---</option>
+                                    <option ng-repeat="r in vm.contact_roles" value="{{r.name}}">
+                                        {{r.name}}
+                                    </option>
+                                </select>
+                                <span class="help-block" ng-show="vm.add_member_form['contact_role'].$invalid">Please select user role</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-12">-->
+<!--                            <div class="form-group">-->
+<!--                                <input type="checkbox" ng-model="vm.add_member_data.sent_email"/> <span class="label_6"> Send email notification to all collection contacts </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn bg-primary" type="submit" ng-click="vm.addMember()">
+                                Add User
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </script>
+</div>
