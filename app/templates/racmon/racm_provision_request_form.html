@@ -86,6 +86,17 @@
             None of storage products are selected
         </div>
     </div>
+
+    <div class="row error_message" ng-show="vm.sp_provision_error">
+        <div class="col-md-6">
+            <ul>
+                <li ng-repeat="sp_error in vm.resp_errors">
+                    {{sp_error}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row" ng-repeat="storage_req in vm.alloc.requests[0].storage_requests track by $index">
         <div class="col-md-6">
             <table class="data_tab">
@@ -93,7 +104,7 @@
                     <td width="5%" rowspan="5">
                         <div class="form-group" ng-if="!vm.sp_provisions[$index].provisioned">
                             <input type="checkbox" name="selected_sp_provisions_{{$index}}"
-                                   ng-model="vm.sp_provisions[$index].provision.success"
+                                   ng-model="vm.sp_provisions[$index].selected"
                                    ng-change="vm.checkSelectedSp($index)">
                         </div>
                     </td>

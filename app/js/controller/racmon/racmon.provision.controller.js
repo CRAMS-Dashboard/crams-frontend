@@ -71,11 +71,10 @@
                         }
                     }
 
-                    var sr_provision = createStorageRequestProvision(sp_id, provision_id, false, provision_notes, storage_prod);
-                    var sp_details = {'provisioned': provisioned, 'provision': sr_provision};
+                    var sr_provision = createStorageRequestProvision(sp_id, provision_id, provision_notes, storage_prod);
+                    var sp_details = {'provisioned': provisioned, 'provision': sr_provision, 'selected': false};
                     vm.sp_provisions.push(sp_details);
                 });
-
             } else {
                 var msg = "Failed to get the approved request, " + response.message + ".";
                 FlashService.DisplayError(msg, response.data);
@@ -86,7 +85,7 @@
 
         vm.checkSelectedSp = function (index) {
             vm.selected_sp_provisions = _.reject(vm.sp_provisions, function (sp_p) {
-                return sp_p.provision.success === false;
+                return sp_p.selected === false;
             });
             vm.provision_form['sp_provision_id_' + index].$invalid = false;
             validateProvisionForm();
@@ -104,23 +103,22 @@
                 }
             });
         };
+
         vm.provision_request = function () {
             vm.btn_disabled = true;
             if (validateProvisionForm()) {
-                var provision_result = generateProvisionResults(vm.alloc);
-                // alert('provision result: ' + JSON.stringify(provision_result));
-                CramsApiService.provisionProject(provision_result).then(function (response) {
+                var sp_r_provisions = [];
+                angular.forEach(vm.selected_sp_provisions, function (sp_p, key) {
+                    sp_r_provisions.push(sp_p.provision);
+                });
+                CramsApiService.provisionStorageProductRequests(sp_r_provisions).then(function (response) {
                     if (response.success) {
-                        FlashService.Success('Provisioned', true);
-                        $location.path('/' + return_path);
-                        vm.btn_disabled = false;
+                        var sp_r_provisions = response.data;
+                        check_sp_provision_response(sp_r_provisions);
                     } else {
-                        var msg_suffix = get_first_provision_error_message(response.data);
-                        var msg = "Failed to provision allocation: " + msg_suffix;
+                        var msg = "Provision Failed ";
                         FlashService.DisplayError(msg, response.data);
-                        console.error(msg);
                         $anchorScroll();
-                        vm.btn_disabled = false;
                     }
                 });
             } else {
@@ -131,58 +129,56 @@
             }
         };
 
-        function get_first_provision_error_message(err_data) {
-            //{"requests":[
-            //    {"storage_requests":[
-            //        {"non_field_errors":[
-            //             "Provision Id \"/mnt/cephfs-fuse/marketv2/RDS-FD-2101\" in use by Project: ABACUS BreastScreen Data"
-            // ]}]}]}
-            //Return only one error at a time
-            var requests = err_data['requests'];
-            for (var i = 0; i < requests.length; i++) {
-                var request = requests[i];
-                var storage_requests = request['storage_requests'];
-                for (var j = 0; j < storage_requests.length; j++) {
-                    var storage_request = storage_requests[j];
-                    var nf_err_list = storage_request['non_field_errors'];
-                    if (nf_err_list.length > 0)
-                        return nf_err_list[0];
+        function check_sp_provision_response(resp_data) {
+            vm.resp_errors = [];
+            angular.forEach(resp_data, function (sp_resp, key) {
+                var success = sp_resp.success;
+                if (success === false) {
+                    var errors = sp_resp.errors;
+                    if (errors !== null) {
+                        var non_field_errors = _.pick(errors, 'non_field_errors');
+                        if (!_.isEmpty(non_field_errors)) {
+                            vm.resp_errors.push(non_field_errors.non_field_errors[0]);
+                        }
+                        var sp = errors.storage_product;
+                        if (sp !== undefined) {
+                            var sp_non_field_errors = _.pick(sp, 'non_field_errors');
+                            if (!_.isEmpty(sp_non_field_errors)) {
+
+                                vm.resp_errors.push(sp_non_field_errors.non_field_errors[0]);
+                            }
+                        }
+                        var prov_id_errors = _.pick(errors, 'provision_id');
+                        if (!_.isEmpty(prov_id_errors)) {
+                            vm.resp_errors.push(prov_id_errors.provision_id[0]);
+                        }
+                    }
+                } else {
+                    var sp_provision = sp_resp.sp_provision;
+                    var sp_p_id = sp_provision.id;
+                    angular.forEach(vm.sp_provisions, function (sp_provision, key) {
+                        var sp_prov = sp_provision.provision;
+                        var found_sp_id = sp_prov.id;
+                        if (sp_p_id === found_sp_id) {
+                            sp_provision.provisioned = true;
+                            sp_provision.selected = false;
+                        }
+                    });
                 }
-            }
-            return '';
-        }
-
-        function create_provision_result(allocation) {
-            var provision_response = {};
-            provision_response['id'] = allocation.id;
-            provision_response['success'] = true;
-            provision_response['message'] = allocation.title + ' has been provisioned successfully';
-            provision_response['project_ids'] = [];
-
-            var request_provisions = [];
-            provision_response['requests'] = request_provisions;
-            angular.forEach(allocation.requests, function (request, index) {
-                var req_provision = {};
-                req_provision['id'] = request.id;
-                req_provision['compute_requests'] = [];
-                var storage_provisions = [];
-                req_provision['storage_requests'] = storage_provisions;
-                req_provision['sent_email'] = request.sent_email;
-                angular.forEach(request.storage_requests, function (storage_request, ind) {
-                    var s_provision = {};
-                    s_provision['id'] = storage_request.id;
-                    // s_provision['provisioned_quota'] = storage_request.provisioned_quota;
-                    s_provision['provision_id'] = storage_request.provision_id;
-                    s_provision['success'] = true;
-                    s_provision['message'] = storage_request.approved_quota_change + ' GB ' + storage_request.product.name + ' has been provisioned successfully';
-                    var storage_prod = {};
-                    storage_prod['id'] = storage_request.product.id;
-                    s_provision['storage_product'] = storage_prod;
-                    storage_provisions.push(s_provision);
-                });
-                request_provisions.push(req_provision);
             });
-            return provision_response;
+            vm.sp_provision_error = false;
+            // alert('---- provision erros: ' + JSON.stringify(vm.resp_errors));
+            if (vm.resp_errors.length > 0) {
+                var msg = "Provision Failed, see the below errors.";
+                FlashService.DisplayError(msg, null);
+                $anchorScroll();
+                vm.btn_disabled = false;
+                vm.sp_provision_error = true;
+            } else {
+                FlashService.Success('Provisioned', true);
+                $location.path('/' + return_path);
+                vm.btn_disabled = false;
+            }
         }
 
         function isStorageChanged() {
@@ -206,7 +202,7 @@
 
             angular.forEach(vm.sp_provisions, function (sp_p, key) {
                 var provisioned = sp_p.provisioned;
-                var selected = sp_p.provision.success;
+                var selected = sp_p.selected;
                 if (!provisioned && selected) {
                     if (sp_p.provision.provision_id === null || sp_p.provision.provision_id === undefined || sp_p.provision.provision_id === '') {
                         vm.provision_form['sp_provision_id_' + key].$invalid = true;
@@ -229,8 +225,6 @@
         function generateProvisionResults(allocation) {
             var project_provision = emptyProjectRequestProvisions();
             project_provision.id = allocation.id;
-            project_provision.message = allocation.title + ' has been provisioned successfully';
-            //request provisions
             var req_provision = {};
             req_provision.id = allocation.requests[0].id;
             req_provision.compute_requests = [];
@@ -246,11 +240,10 @@
             return project_provision;
         }
 
-        function createStorageRequestProvision(s_req_id, provision_id, success, message, storage_product) {
+        function createStorageRequestProvision(s_req_id, provision_id, message, storage_product) {
             var storage_provision = {};
             storage_provision.id = s_req_id;
             storage_provision.provision_id = provision_id;
-            storage_provision.success = success;
             storage_provision.message = message;
             storage_provision.storage_product = storage_product;
             return storage_provision;
@@ -259,8 +252,6 @@
         function emptyProjectRequestProvisions() {
             var provision_details = {};
             provision_details.id = null;
-            provision_details.success = true;
-            provision_details.message = null;
             provision_details.project_ids = [];
             provision_details.requests = [];
             return provision_details;

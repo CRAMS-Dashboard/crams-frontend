@@ -17,7 +17,7 @@
         var project_usage_cost_url = ENV.apiEndpoint + "reports/project_storage_product_usage";
         var faculty_usage_cost_url = ENV.apiEndpoint + "reports/faculty_storage_product_usage";
         var provision_list_url = ENV.apiEndpoint + "provision_project/list/";
-        var provision_update_url = ENV.apiEndpoint + "provision_project/update/";
+        var provision_update_url = ENV.apiEndpoint + "provision/storage_requests/update/";
         var reports_url = ENV.apiEndpoint + "reports/";
         // var project_admin_list_url = ENV.apiEndpoint + 'project/admin/'; //ENV.apiEndpoint + 'project_admin_list/';
         var project_admin_list_url = ENV.apiEndpoint + 'allocation_list/admin/';
@@ -60,7 +60,7 @@
 
         service.provisionList = provisionList;
         service.getProvisionRequestById = getProvisionRequestById;
-        service.provisionProject = provisionProject;
+        service.provisionStorageProductRequests = provisionStorageProductRequests;
 
         service.newHPCProjectRequest = newHPCProjectRequest;
         service.emptyHPCRequest = emptyHPCRequest;
@@ -194,7 +194,7 @@
         }
 
         function updateProvisionID(stor_req_id, stor_prod, new_prov_id) {
-            let prov_update_url = ENV.apiEndpoint + "provision/storage_requests/" + stor_req_id + "/update_provision_id";
+            let prov_update_url = ENV.apiEndpoint + "provision/storage_requests/" + stor_req_id + "/update_provision_id/";
             let json_payload = {
                 "storage_product": stor_prod,
                 "provision_id": new_prov_id,
@@ -279,11 +279,12 @@
             return $http.get(provision_list_url + request_id + '/').then(handleSuccess, handleError);
         }
 
-        function provisionProject(provision_result) {
+        function provisionStorageProductRequests(sp_r_provisions) {
+            let prov_update_url = ENV.apiEndpoint + "provision/storage_requests/update_provision_id_bulk/";
             return $http({
-                    url: provision_update_url,
+                    url: prov_update_url,
                     method: 'POST',
-                    data: provision_result
+                    data: sp_r_provisions
                 }
             ).then(handleSuccess, handleError);
         }
