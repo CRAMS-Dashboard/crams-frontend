@@ -93,7 +93,7 @@ module.exports = function (grunt) {
                         funding_body: 'CRAMS',
                         system: 'CRAMS-ERB-SYS',
                         erb: 'CRAMS-ERB',
-                        auth: 'AAFAuthController'
+                        auth: 'RapidConnAuthController'
                     }
                 }
             },
