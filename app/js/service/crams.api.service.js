@@ -385,7 +385,7 @@
         }
 
         function getProjectUsageCost(project_id, e_r_system) {
-            return $http.get(project_usage_cost_url + "/" + project_id + "/?e_research_system=" + e_r_system).then(handleSuccess, handleError);
+            return $http.get(project_usage_cost_url + "/" + project_id + "/?e_research_system=" + e_r_system + "&request_status=provisioned").then(handleSuccess, handleError);
         }
 
         //getFacultyUsageCostById
