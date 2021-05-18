@@ -13,7 +13,7 @@
         return service;
 
         function sendSupportEmail(message) {
-            var url = ENV.apiEndpoint + "support_email/";
+            var url = ENV.apiEndpoint + "support_email";
 
             return $http({
                     url: url,

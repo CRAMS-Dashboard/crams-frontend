@@ -98,25 +98,24 @@
         }
 
         function get_support_email() {
-            //TODO: re-enabled the support email.
-            // LookupService.loadSupportEmailContactsERB($rootScope.erb).then(function (response) {
-            //     if (response.success) {
-            //         // should only return 1 result, grab the first email from list
-            //         if (response.data.length == 1) {
-            //             var result = response.data[0];
-            //             vm.support_email_id =  result.id;
-            //             vm.support_type = result.description;
-            //         } else {
-            //             var msg = "Unable to get fetch support email";
-            //             FlashService.Error(msg);
-            //             console.error(msg);
-            //         }
-            //     } else {
-            //         var msg = "Failed to load ERB support contact emails, " + response.message;
-            //         FlashService.Error(msg);
-            //         console.error(msg);
-            //     }
-            // });
+            LookupService.loadSupportEmailContactsERB($rootScope.erb).then(function (response) {
+                if (response.success) {
+                    // should only return 1 result, grab the first email from list
+                    if (response.data.length == 1) {
+                        var result = response.data[0];
+                        vm.support_email_id =  result.id;
+                        vm.support_type = result.description;
+                    } else {
+                        var msg = "Unable to get fetch support email";
+                        FlashService.Error(msg);
+                        console.error(msg);
+                    }
+                } else {
+                    var msg = "Failed to load ERB support contact emails, " + response.message;
+                    FlashService.Error(msg);
+                    console.error(msg);
+                }
+            });
         }
 
         vm.submit = function () {
