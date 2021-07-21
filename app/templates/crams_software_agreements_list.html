@@ -1,0 +1,79 @@
+<div ng-if="globals.perms.admin">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="left_section">
+                <a href="#/software_agreements/new">
+                    <button type="button" class="btn bg-primary">Add software agreement</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr/>
+</div>
+
+<div class="row">
+    <div class="center_div">
+        <div class="loading_div" ng-show="!vm.loaded">
+            <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+            <div class="loading_text">Loading ...</div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="vm.loaded">
+    <div class="col-md-12">
+        <table class="display_data_tab">
+            <thead>
+            <tr>
+                <th width="20%">Name</th>
+                <th width="10%">Version</th>
+                <th width="40">Description</th>
+                <th ng-if="globals.perms.admin" width="10%">POSIX id</th>
+                <th width="10%">Category</th>
+                <th width="10%">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="sa in vm.software_list">
+                <td>
+                    <span ng-class="{ sw_expired: vm.isExpired(sa) }">
+                        {{ sa.software.name }}
+                    </span>
+                    <span style="float: right;" ng-if="globals.perms.admin">
+                        <a href="#/software_agreements/update/{{sa.id}}"><i class="fa fa-pencil-square-o fa-lg"
+                                                                            aria-hidden="true"></i></a>
+                    </span>
+                </td>
+                <td ng-class="{ sw_expired: vm.isExpired(sa) }">
+                    {{ sa.software.version }}
+                </td>
+                <td ng-class="{ sw_expired: vm.isExpired(sa) }">
+                    <p ng-text-truncate="sa.software.description" ng-tt-words-threshold="15"></p>
+                </td>
+                <td ng-if="globals.perms.admin">
+                      <span ng-class="{ sw_expired: vm.isExpired(sa) }">
+                        {{vm.get_groupid(sa.software.metadata)}}
+                      </span>
+                </td>
+                <td ng-class="{ sw_expired: vm.isExpired(sa) }">
+                    {{ sa.software.category.category }}
+                </td>
+                <td>
+                    <a href="#/software_agreements/apply/{{sa.id}}">
+                        <div ng-if="sa.status">
+                                <span ng-class="{ sw_expired: vm.isExpired(sa) }">
+                                    {{sa.status}} <span ng-if="vm.isExpired(sa)">(Expired)</span>
+                                </span>
+                        </div>
+                        <div ng-if="sa.status == null && !vm.isExpired(sa) ">Apply</div>
+                        <div ng-if="sa.status == null && vm.isExpired(sa) ">
+                            <span class="sw_expired"> Expired </span>
+                        </div>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

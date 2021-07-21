@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="center_div">
+        <div class="loading_div" ng-show="!vm.loaded">
+            <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+            <div class="loading_text">Loading ...</div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="vm.loaded">
+    <div class="col-md-12">
+        <table class="display_data_tab">
+            <thead>
+            <tr>
+                <th width="15%">Date</th>
+                <th width="20%">Name</th>
+                <th width="10%">Version</th>
+                <th width="20%">User</th>
+                <th width="15%">POSIX id</th>
+                <th width="10%">Status</th>
+                <th width="10%">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="s_req in vm.software_requests">
+                <td>{{ s_req.accepted_ts | date:'dd MMM yyyy hh:mm:ss'}}</td>
+                <td>
+                    {{ s_req.license.software.name }}
+                </td>
+                <td>{{ s_req.license.software.version }}</td>
+                <td>
+                    {{ s_req.contact.email }}
+                </td>
+                <td>{{vm.get_groupid(s_req.license.software.metadata)}}</td>
+                <td>{{ s_req.status }}</td>
+                <td>
+                    <div ng-if="s_req.status === 'Requested'">
+                        <a href="" ng-click="vm.approve(s_req.id)">Approve</a> &nbsp; &nbsp; | &nbsp; &nbsp;<a href="" ng-click="vm.decline(s_req.id)">Decline</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

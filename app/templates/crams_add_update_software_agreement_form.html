@@ -1,0 +1,276 @@
+<div class="row">
+    <div class="col-md-12">
+        <span class="label_h3">Software agreement</span>
+        <p>
+            <span class="alert-info"> <strong>Info: </strong></span>Required fields are marked with an
+            <i class="glyphicon glyphicon-asterisk text-primary"></i>
+        </p>
+        <hr/>
+    </div>
+</div>
+
+<form name="vm.software_form" novalidate>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Name: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                The name of software agreement. Name cannot exceed 100 characters.
+            </p>
+            <div class="form-group" ng-class="{'has-error': vm.name_invalid || vm.name_over_max}">
+                <input type="text" class="form-control" ng-model="vm.software_data.software.name" name="name"
+                       ng-change="vm.checkSoftwareName()" required/>
+                <span class="help-block" ng-show="vm.name_invalid">Please enter the name</span>
+                <span class="help-block" ng-show="vm.name_over_max">Name cannot exceed 100 characters</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Category: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                Please select a software agreement category
+            </p>
+            <div class="form-group" class="form-control"
+                 ng-class="{'has-error': vm.category_invalid}">
+                <select name="category" id="category_id" class="form-control"
+                        ng-model="vm.software_data.software.category.id"
+                        ng-options="cat.id as cat.category for cat in vm.software_categories"
+                        ng-change="vm.updateCategory()" required>
+                    <option value="">--- Select ---</option>
+                </select>
+                <span class="help-block" ng-show="vm.category_invalid">Please select a category</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Group name: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                The POSIX group name of software agreement
+            </p>
+            <div class="form-group" ng-class="{'has-error': vm.group_name_invalid}">
+                <input type="text" class="form-control" ng-model="vm.software_data.software.metadata[0].value"
+                       name="group_name" required/>
+                <span class="help-block" ng-show="vm.group_name_invalid">Please enter the group name</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Description: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                Software agreement description.
+            </p>
+            <div class="form-group"
+                 ng-class="{'has-error': vm.description_invalid}">
+            <textarea class="form-control" ng-model="vm.software_data.software.description" name="description"
+                      rows="5" required maxlength="1500"></textarea>
+                <span class="help-block" ng-show="vm.description_invalid">Please enter description</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group" class="form-control">
+                <span class="label_5">Academic only: </span>
+                <input type="checkbox" name="is_academic" ng-model="vm.software_data.is_academic">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group" class="form-control">
+                <span class="label_5">Restricted: </span>
+                <input type="checkbox" name="is_restricted" ng-model="vm.software_data.is_restricted">
+                <span class="label_italic">Requires admin approval</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Home page: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                Software agreement home page
+            </p>
+            <div class="form-group"
+                 ng-class="{'has-error': vm.homepage_invalid || vm.software_form['homepage'].$invalid}">
+                <input type="url" class="form-control" ng-model="vm.software_data.homepage" name="homepage"/>
+                <span class="help-block" ng-show="vm.homepage_invalid && !vm.software_form['homepage'].$invalid">Please enter valid home page </span>
+                <span class="help-block" ng-show="vm.software_form['homepage'].$invalid">Invalid home page</span>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <span class="label_h4">Version info</span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <div class="line_separator"></div>
+            <br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Version: </span>
+            <p class="label_italic">
+                Software version number
+            </p>
+            <div class="form-group" class="form-control" ng-class="{'has-error': vm.version_invalid}">
+                <input type="text" class="form-control" ng-model="vm.software_data.software.version" name="version"
+                       maxlength="22" required/>
+                <span class="help-block" ng-show="vm.version_invalid">Please enter version number</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Clusters: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                Please select one or more clusters: &nbsp; [Windows: hold down 'ctrl' key; Mac: hold down 'command' key]
+            </p>
+            <div class="form-group" class="form-control" ng-class="{'has-error': vm.clusters_invalid}">
+                <select name="multipleSelect" class="form-control" ng-model="vm.cluster_data" multiple
+                        ng-options="cluster.id as cluster.name for cluster in vm.funding_schemes">
+                </select>
+                <span class="help-block" ng-show="vm.clusters_invalid">Please select cluster(s)</span>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <span class="label_h4">Licence info</span>
+            <div class="line_separator"></div>
+            <br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Licence version: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                Licence version number.
+            </p>
+            <div class="form-group" ng-class="{'has-error': vm.license_version_invalid}">
+                <input type="text" class="form-control" ng-model="vm.software_data.version"
+                       name="license_version" maxlength="22" required/>
+                <span class="help-block"
+                      ng-show="vm.license_version_invalid">Please enter licence version number</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Licence type: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                Please select a licence type
+            </p>
+            <div class="form-group" class="form-control"
+                 ng-class="{'has-error': vm.license_type_invalid}">
+                <select name="license_type" class="form-control"
+                        ng-model="vm.software_data.type.id"
+                        ng-options="ltype.id as ltype.type for ltype in vm.license_types"
+                        ng-change="vm.updatLicenseType()" required>
+                    <option value="">--- Select ---</option>
+                </select>
+                <span class="help-block" ng-show="vm.license_type_invalid">Please select a type</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4">
+           <span class="label_5">
+                Licence date <i class="glyphicon glyphicon-asterisk text-primary"></i>
+           </span>
+            <p class="label_italic">
+                Licence date
+            </p>
+            <div class="input-group" class="form-control"
+                 ng-class="{'has-error': vm.license_date_invalid || vm.later_than_end_date_invalid}">
+                <input type="text" name="start_date" class="form-control"
+                       data-ng-model="vm.software_data.start_date" readonly="readonly"
+                       datepicker-popup='yyyy-MM-dd' is-open="vm.opened" ng-click="vm.openCalendar($event)"
+                       datepicker-options="vm.date_options" show-button-bar="false"
+                       ng-change="vm.checkStartDate()"
+                       ng-change="vm.closeCalendar()"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="help-block" ng-show="vm.later_than_end_date_invalid"
+                 ng-class="{'has_field_error': vm.later_than_end_date_invalid}">
+                The licence date shouldn't be later than expiry date.
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-4">
+           <span class="label_5">
+                Licence expiry date <i class="glyphicon glyphicon-asterisk text-primary"></i>
+           </span>
+            <p class="label_italic">
+                Licence expiry date
+            </p>
+            <div class="input-group" class="form-control"
+                 ng-class="{'has-error': license_expiry_date_invalid || vm.end_date_less_than_start_date}">
+                <input type="text" name="expiry_date" class="form-control"
+                       data-ng-model="vm.software_data.end_date_ts" readonly="readonly"
+                       datepicker-popup='yyyy-MM-dd' is-open="vm.expiry_opened" ng-click="vm.openExpiryCalendar($event)"
+                       datepicker-options="vm.date_options" show-button-bar="false"
+                       ng-change="vm.chekExpiryDate()"
+                       ng-change="vm.closeExpiryCalendar()"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openExpiryCalendar($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="help-block" ng-show="vm.end_date_less_than_start_date"
+                 ng-class="{'has_field_error': vm.end_date_less_than_start_date}">
+                The licence expiry date should be greater than license date
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <span class="label_5">Licence text: </span> <i class="glyphicon glyphicon-asterisk text-primary"></i>
+            <p class="label_italic">
+                Licence Text
+            </p>
+            <div class="form-group" class="form-control"
+                 ng-class="{'has-error': vm.license_text_invalid}">
+            <textarea class="form-control" ng-model="vm.software_data.license_text" name="license_text"
+                      rows="5" required maxlength="1500"></textarea>
+                <span class="help-block" ng-show="vm.license_text_invalid">Please enter licence text</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <input class="btn bg-primary" type="submit" value="Submit" ng-click="vm.submitSoftwareAgreement()">
+            </div>
+        </div>
+    </div>
+</form>
+
+<br/>

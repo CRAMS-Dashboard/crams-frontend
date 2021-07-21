@@ -10,6 +10,7 @@
         $scope.isAllocExpanded = false;
         $scope.isAppExpanded = false;
         $scope.isAdminExpanded = false;
+        $scope.isSoftwareExpanded = false;
         $scope.isProvisionExpanded = false;
         $scope.isReportExpanded = false;
         $scope.isReviewExpanded = false;
@@ -134,6 +135,10 @@
             if (first_path === 'admin') {
                 $scope.isAdminExpanded = true;
                 $scope.isAdminSelected = true;
+            }
+            if (first_path === 'software_agreements') {
+                $scope.isSoftwareExpanded = true;
+                $scope.isSoftwareSelected = true;
             }
             if (first_path === 'approval') {
                 $scope.isAppExpanded = true;

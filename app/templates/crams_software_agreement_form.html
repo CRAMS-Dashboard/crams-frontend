@@ -1,0 +1,144 @@
+<div ng-include="'templates/crams_authen_header.html'"></div>
+<div ng-include="'templates/crams_side_menu.html'"></div>
+<div ng-include="'templates/crams_nav_title.html'"></div>
+<div>
+    <div class="main-display">
+        <div ng-include="'templates/crams_message_display.html'"></div>
+        <div class="row">
+            <div class="center_div">
+                <div class="loading_div" ng-show="!vm.loaded">
+                    <img style="display:block; margin:0 auto;" ng-src="images/{{theme}}/loader.gif">
+                    <div class="loading_text">Loading ...</div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="vm.loaded">
+            <div class="row">
+                <div class="col-md-6">
+                    <div ng-if="vm.getStatus(vm.software_license.software.id)">
+                        <div class="sub_title">
+                            <i class="fa fa-dashboard"></i> Status
+                        </div>
+                        <table class="data_tab">
+                            <tr>
+                                <th width="30%">Status</th>
+                                <td width="70%">{{vm.getStatus(vm.software_license.software.id)}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="sub_title">
+                        <i class="fa fa-leanpub"></i> Software product
+                    </div>
+                    <table class="data_tab">
+                        <tr>
+                            <th width="30%">Name</th>
+                            <td width="70%">{{vm.software_license.software.name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Version</th>
+                            <td>{{vm.software_license.software.version}}</td>
+                        </tr>
+                        <tr>
+                            <th>Category</th>
+                            <td>{{vm.software_license.software.category.category}}</td>
+                        </tr>
+                        <tr>
+                            <th>Homepage</th>
+                            <td>{{vm.software_license.homepage}}</td>
+                        </tr>
+                        <tr>
+                            <th>Academic</th>
+                            <td>{{vm.software_license.is_academic}}</td>
+                        </tr>
+                        <tr>
+                            <th>Restricted</th>
+                            <td>{{vm.software_license.is_restricted}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cluster</th>
+                            <td>
+                                <div ng-repeat="cluster in vm.software_license.cluster">
+                                    {{cluster.name}}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>
+                                <p ng-bind-html="vm.software_license.software.description"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="sub_title">
+                        <i class="fa fa-drivers-license"></i> Licence agreement
+                    </div>
+                    <table class="data_tab">
+                        <tr>
+                            <th width="30%">Version</th>
+                            <td width="70%">{{vm.software_license.version}}</td>
+                        </tr>
+                        <tr>
+                            <th>Start date</th>
+                            <td>{{vm.software_license.start_date}}</td>
+                        </tr>
+                        <tr>
+                            <th>Expiry date</th>
+                            <td>{{vm.software_license.end_date_ts | date:'yyyy-MM-dd'}}</td>
+                        </tr>
+                        <tr>
+                            <th>Type</th>
+                            <td>{{vm.software_license.type.type}}</td>
+                        </tr>
+                        <tr>
+                            <th>Licence text</th>
+                            <td>
+                                <p ng-bind-html="vm.software_license.license_text"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <br/>
+            <div ng-if="vm.displayAction(vm.software_license) && vm.notRequestedLicense(vm.software_license.software.id)">
+                <div class="row" ng-if="vm.software_license.is_restricted">
+                    <div class="col-md-12">
+                        <div class="alert-danger1">
+                            <strong>NOTE:</strong> This software is restricted and requires admin approval. You will
+                            receive
+                            notification via email once your request has been processed
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="sub_title">
+                            <i class="fa fa-users"></i> Agreement
+                        </div>
+                        <div>
+                            <p>
+                                By clicking "I agree", it means that you have read the licence text and hereby agree to
+                                the terms and conditions set forth by the software licence.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="" ng-click="vm.apply(vm.software_license.id)">
+                                <input class="btn bg-primary" type="button" value="I agree"/>
+                            </a>
+
+                            <a href="#/software_agreements">
+                                <input class="btn bg-primary" type="button" value="Cancel"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear:both"/>
+<div ng-include="'templates/' + theme + '/site_footer.html'"></div>

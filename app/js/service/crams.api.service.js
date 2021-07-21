@@ -33,6 +33,13 @@
         var project_usage_history_url = ENV.apiEndpoint + 'reports/faculty_storage_product_ingest_history/';
         var recent_prov_id_url = ENV.apiEndpoint + 'ingest/recent_provision_id';
 
+        var software_license_url = ENV.apiEndpoint + 'software/license';
+        var software_category_url = ENV.apiEndpoint + 'software/category/';
+        var software_license_type_url = ENV.apiEndpoint + 'software/type/';
+        var software_products_url = ENV.apiEndpoint + 'software/products';
+        var software_contact_license_url = ENV.apiEndpoint + 'software/contact_license';
+        var admin_contact_license_request = ENV.apiEndpoint + 'software/contact_license/request';
+
         var request_usage_alerts_api_base_url = ENV.apiEndpoint + "usage_alerts/";
         var check_login_status_base_url = ENV.apiEndpoint + 'crams_log/login/last/';
 
@@ -108,6 +115,22 @@
         service.getUsageAlertsByRequestId = getUsageAlertsByRequestId;
         service.addOrEditUsageAlert = addOrEditUsageAlert;
         service.getLoginStatus = getLoginStatus;
+
+        // software
+        service.newSoftwareAgreementRequest = newSoftwareAgreementRequest;
+        service.createSoftwareAgreementRequest = createSoftwareAgreementRequest;
+        service.updateSoftwareAgreementRequest = updateSoftwareAgreementRequest;
+        service.listSoftwareCategories = listSoftwareCategories;
+        service.listLicenseTypes = listLicenseTypes;
+        service.listSoftwareAgreements = listSoftwareAgreements;
+        service.softwareProducts = softwareProducts;
+        service.getSoftwareById = getSoftwareById;
+        service.softwareContactLicense = softwareContactLicense;
+        service.softwareContactLicenseById = softwareContactLicenseById;
+        service.softwareContactLicenseCreate = softwareContactLicenseCreate;
+        service.listSoftwareAgreementsRequests = listSoftwareAgreementsRequests;
+        service.approveSoftwareLicenseRequest = approveSoftwareLicenseRequest;
+        service.declineSoftwareLicenseRequest = declineSoftwareLicenseRequest;
 
         var approve_request_path_str = "approve_request";
         var decline_request_path_str = "decline_request";
@@ -421,6 +444,81 @@
                 }
             }
             return $http.get(usage_history_url).then(handleSuccess, handleError);
+        }
+
+        function createSoftwareAgreementRequest(software_data) {
+            return $http({
+                    url: software_license_url,
+                    method: 'POST',
+                    data: software_data
+                }
+            ).then(handleSuccess, handleError);
+        }
+
+        function updateSoftwareAgreementRequest(software_data) {
+            return $http({
+                    url: software_license_url + '/' + software_data.id,
+                    method: 'PUT',
+                    data: software_data
+                }
+            ).then(handleSuccess, handleError);
+        }
+
+        function listSoftwareCategories() {
+            return $http.get(software_category_url).then(handleSuccess, handleError);
+        }
+
+        function listLicenseTypes() {
+            return $http.get(software_license_type_url).then(handleSuccess, handleError);
+        }
+
+        function softwareProducts() {
+            return $http.get(software_products_url).then(handleSuccess, handleError);
+        }
+
+        function listSoftwareAgreements() {
+            return $http.get(software_license_url).then(handleSuccess, handleError);
+        }
+
+        function listSoftwareAgreementsRequests() {
+            return $http.get(admin_contact_license_request).then(handleSuccess, handleError);
+        }
+
+        function getSoftwareById(software_id) {
+            return $http.get(software_license_url + '/' + software_id).then(handleSuccess, handleError);
+        }
+
+        function softwareContactLicense() {
+            return $http.get(software_contact_license_url).then(handleSuccess, handleError);
+        }
+
+        function softwareContactLicenseById(software_license_id) {
+            return $http.get(software_contact_license_url + '/' + software_license_id).then(handleSuccess, handleError);
+        }
+
+        function softwareContactLicenseCreate(software_data) {
+            return $http({
+                    url: software_contact_license_url,
+                    method: 'POST',
+                    data: software_data
+                }
+            ).then(handleSuccess, handleError);
+        }
+
+        function approveSoftwareLicenseRequest(contact_license_id) {
+            return $http({
+                    url: software_contact_license_url + '/' + contact_license_id + '/accept_request',
+                    method: 'POST'
+                }
+            ).then(handleSuccess, handleError);
+        }
+
+        function declineSoftwareLicenseRequest(contact_license_id) {
+            return $http({
+                    url: software_contact_license_url + '/' + contact_license_id + '/decline_request',
+                    method: 'POST'
+                }
+            ).then(handleSuccess, handleError);
         }
 
         function listParentProjects() {
@@ -984,6 +1082,40 @@
                     "storage_question_responses": []
                 }
             ];
+        }
+
+        function newSoftwareAgreementRequest() {
+            return {
+                "version": "",
+                "is_academic": false,
+                "is_restricted": false,
+                "software": {
+                    "name": "",
+                    "version": "",
+                    "description": "",
+                    "category": {
+                        "id": null
+                    },
+                    "e_research_body": "CRAMS-ERB",
+                    "metadata": [
+                        {
+                            "name": {
+                                "key": "CRAMS_SOFTWARE_GROUP_ID",
+                                "e_research_body": "CRAMS-ERB"
+                            },
+                            "value": ""
+                        }
+                    ]
+                },
+                "homepage": "",
+                "type": {
+                    "id": null
+                },
+                "cluster": [],
+                "start_date": new Date(),
+                "end_date_ts": new Date(),
+                "license_text": ""
+            };
         }
 
         return service;

@@ -49,6 +49,13 @@
                         </a>
                     </li>
                 </ul>
+
+                
+                <li ng-class="{ 'active': isCurrentPath('software_agreements') }">
+                    <a href="#software_agreements">
+                        <i class="fa fa-leanpub" aria-hidden="true"></i> Software agreements
+                    </a>
+                </li>
             </div>
 
             <div ng-if="(globals.perms.approver || globals.perms.admin) && globals.selected_view === 'approver'">
@@ -159,6 +166,23 @@
 <!--                            </a>-->
 <!--                        </li>-->
 <!--                    </ul>-->
+                </ul>
+                <li class="collapsed" ng-class="{ 'selected': isSoftwareSelected}" data-toggle="collapse"
+                    data-target="#software">
+                    <a href=""><i class="fa fa-leanpub fa-lg"></i> Software agreements <span class="arrow"></span></a>
+                </li>
+
+                <ul class="sub-menu collapse" ng-class="{'in': isSoftwareExpanded}" id="software">
+                    <li ng-class="{ 'active': isCurrentPath('software_agreements') }">
+                        <a href="#software_agreements">
+                            <i class="fa fa-file-text" aria-hidden="true"></i> All software agreements
+                        </a>
+                    </li>
+                    <li ng-class="{ 'active': isCurrentPath('software_agreements/pending') }">
+                        <a href="#software_agreements/pending">
+                            <i class="fa fa-bandcamp fa-lg" aria-hidden="true"></i> Pending requests
+                        </a>
+                    </li>
                 </ul>
             </div>
 

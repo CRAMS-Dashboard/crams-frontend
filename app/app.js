@@ -182,6 +182,33 @@
                 templateUrl: 'templates/crams_view_allocation.html',
                 controllerAs: 'vm'
             })
+            
+            // software
+            .when('/software_agreements', {
+                controller: 'CramsSoftwareAgreementController',
+                templateUrl: 'templates/crams_software_agreements.html',
+                controllerAs: 'vm'
+            })
+            .when('/software_agreements/apply/:software_id', {
+                controller: 'CramsSoftwareApplyController',
+                templateUrl: 'templates/crams_software_agreement_form.html',
+                controllerAs: 'vm'
+            })
+            .when('/software_agreements/new', {
+                controller: 'CramsNewUpdateSoftwareAgreementController',
+                templateUrl: 'templates/crams_add_update_software_agreement.html',
+                controllerAs: 'vm'
+            })
+            .when('/software_agreements/update/:id', {
+                controller: 'CramsNewUpdateSoftwareAgreementController',
+                templateUrl: 'templates/crams_add_update_software_agreement.html',
+                controllerAs: 'vm'
+            })
+            .when('/software_agreements/pending', {
+                controller: 'CramsSoftwareAgreementRequestsController',
+                templateUrl: 'templates/crams_software_agreements_requests.html',
+                controllerAs: 'vm'
+            })
 
             .when('/admin/allocations/collection/:crams_id', {
                 controller: 'CramsCramsIdViewController',
