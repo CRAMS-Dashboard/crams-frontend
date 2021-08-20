@@ -194,7 +194,7 @@
         vm.privacy3Question = CramsQuestionsService.getQuestion('racm_privacy_q3');
 
         //Populate nectar storage product lookup
-        LookupService.loadStorageProducts(ENV.funding_body).then(function (response) {
+        LookupService.loadStorageProducts(ENV.erb, ENV.system).then(function (response) {
             if (response.success) {
                 vm.storageProducts = response.data;
             } else {

@@ -53,8 +53,8 @@
             return fetchLookup('vicnode_sps');
         }
 
-        function loadStorageProducts(fb_name) {
-            var sp_path = 'storage_products/' + fb_name;
+        function loadStorageProducts(fb_name, erb_system) {
+            var sp_path = 'storage_products/' + fb_name + '/' + erb_system;
             return fetchLookup(sp_path);
         }
 
