@@ -165,16 +165,16 @@
                 },
 
                 {
-                    "key": "racm_authorization",
+                    "key": "crams_demo_authorization",
                     "question": "Please confirm that you have the authority to store this collection on [Your Organisation] infrastructure.",
                     "choices": {1: "Yes", 2: "No"}
                 },
                 {
-                    "key": "racm_data_retention_period",
+                    "key": "crams_demo_data_retention_period",
                     "question": "Data Retention Period (Year)?"
                 },
                 {
-                    "key": "racm_electronic_inf_class",
+                    "key": "crams_demo_electronic_inf_class",
                     "question": "Electronic Information Classification",
                     "choices": {
                         1: "Critical",
@@ -184,33 +184,33 @@
                     }
                 },
                 {
-                    "key": "racm_data_migration_src",
+                    "key": "crams_demo_data_migration_src",
                     "question": "Where is the collection currently stored?"
                 },
                 {
-                    "key": "racm_data_migration_assistance",
+                    "key": "crams_demo_data_migration_assistance",
                     "question": "Do you require assistance to migrate your data?",
                     "choices": {1: "Yes", 2: "No"}
                 },
                 {
-                    "key": "racm_current_access_method",
+                    "key": "crams_demo_current_access_method",
                     "question": "How do you or your users currently access your collection?"
                 },
                 {
-                    "key": "racm_preferred_access_method",
+                    "key": "crams_demo_preferred_access_method",
                     "question": "What is your preferred access method?"
                 },
                 {
-                    "key": "racm_data_format",
+                    "key": "crams_demo_data_format",
                     "question": "Identify the format(s) of the data to be stored on [Your Organisation]."
                 },
                 {
-                    "key": "racm_only_copy",
+                    "key": "crams_demo_only_copy",
                     "question": "Will [Your Organisation] be hosting the only copy of the collection?",
                     "choices": {1: "Yes", 2: "No"}
                 },
                 {
-                    "key": "racm_can_be_regenerated",
+                    "key": "crams_demo_can_be_regenerated",
                     "question": "If yes, how easily can the data be regenerated?",
                     "choices": {
                         1: "Fully Replaceable",
@@ -220,21 +220,21 @@
                     }
                 },
                 {
-                    "key": "racm_loss_impact",
+                    "key": "crams_demo_loss_impact",
                     "question": "What would be the impact and/or cost incurred if data is lost?"
                 },
                 {
-                    "key": "racm_privacy_q1",
+                    "key": "crams_demo_privacy_q1",
                     "question": "Publish the information on this dashboard for you to view details about your collection",
                     "choices": {1: "Yes", 2: "No"}
                 },
                 {
-                    "key": "racm_privacy_q2",
+                    "key": "crams_demo_privacy_q2",
                     "question": "Contacting you from time to time to improve our service and/or let you know about any service interruptions, changes or updates",
                     "choices": {1: "Yes", 2: "No"}
                 },
                 {
-                    "key": "racm_privacy_q3",
+                    "key": "crams_demo_privacy_q3",
                     "question": "Creating metadata records which may be sent to the your organisation to enable research discovery by public users through the <a href='http://www.researchdata.ands.org.au' target='_blank'>RDA portal</a>",
                     "choices": {1: "Yes", 2: "No"}
                 }

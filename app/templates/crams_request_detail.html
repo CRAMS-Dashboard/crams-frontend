@@ -222,21 +222,21 @@
             </tr>
             <tr ng-repeat="reqresponse in req.request_question_responses">
                 <th width="30%">
-                    <span ng-if="reqresponse.question.key == 'racm_privacy_q3'">
+                    <span ng-if="reqresponse.question.key == 'crams_demo_privacy_q3'">
                        <p ng-bind-html="reqresponse.question.question"></p>
                     </span>
-                    <span ng-if="reqresponse.question.key != 'racm_privacy_q3'">
+                    <span ng-if="reqresponse.question.key != 'crams_demo_privacy_q3'">
                         {{reqresponse.question.question}}
                     </span>
                 </th>
                 <td width="70%">
-                    <span ng-if="reqresponse.question.key == 'racm_data_retention_period' && reqresponse.question_response == '0'">
+                    <span ng-if="reqresponse.question.key == 'crams_demo_data_retention_period' && reqresponse.question_response == '0'">
                         Indefinite
                     </span>
-                    <span ng-if="reqresponse.question.key == 'racm_data_retention_period' && reqresponse.question_response != '0'">
+                    <span ng-if="reqresponse.question.key == 'crams_demo_data_retention_period' && reqresponse.question_response != '0'">
                         {{reqresponse.question_response}}
                     </span>
-                    <span ng-if="reqresponse.question.key != 'racm_data_retention_period'">
+                    <span ng-if="reqresponse.question.key != 'crams_demo_data_retention_period'">
                        <p ng-bind-html="reqresponse.question_response"></p>
                     </span>
                 </td>

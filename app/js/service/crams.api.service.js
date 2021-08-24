@@ -680,85 +680,85 @@
                             {
                                 "question_response": 'Yes',
                                 "question": {
-                                    "key": "racm_authorization"
+                                    "key": "crams_demo_authorization"
                                 }
                             },
                             {
                                 "question_response": 5,
                                 "question": {
-                                    "key": "racm_data_retention_period"
+                                    "key": "crams_demo_data_retention_period"
                                 }
                             },
                             {
                                 "question_response": null,
                                 "question": {
-                                    "key": "racm_electronic_inf_class"
+                                    "key": "crams_demo_electronic_inf_class"
                                 }
                             },
                             {
                                 "question_response": 0,
                                 "question": {
-                                    "key": "racm_current_size"
+                                    "key": "crams_demo_current_size"
                                 }
                             },
                             {
                                 "question_response": "",
                                 "question": {
-                                    "key": "racm_data_migration_src"
+                                    "key": "crams_demo_data_migration_src"
                                 }
                             },
                             {
                                 "question_response": null,
                                 "question": {
-                                    "key": "racm_data_migration_assistance"
+                                    "key": "crams_demo_data_migration_assistance"
                                 }
                             },
                             {
                                 "question_response": "",
                                 "question": {
-                                    "key": "racm_current_access_method"
+                                    "key": "crams_demo_current_access_method"
                                 }
                             },
                             {
                                 "question_response": "",
                                 "question": {
-                                    "key": "racm_preferred_access_method"
+                                    "key": "crams_demo_preferred_access_method"
                                 }
                             },
                             {
                                 "question_response": null,
                                 "question": {
-                                    "key": "racm_only_copy"
+                                    "key": "crams_demo_only_copy"
                                 }
                             },
                             {
                                 "question_response": null,
                                 "question": {
-                                    "key": "racm_can_be_regenerated"
+                                    "key": "crams_demo_can_be_regenerated"
                                 }
                             },
                             {
                                 "question_response": "",
                                 "question": {
-                                    "key": "racm_loss_impact"
+                                    "key": "crams_demo_loss_impact"
                                 }
                             },
                             {
                                 "question_response": "",
                                 "question": {
-                                    "key": "racm_privacy_q1"
+                                    "key": "crams_demo_privacy_q1"
                                 }
                             },
                             {
                                 "question_response": "",
                                 "question": {
-                                    "key": "racm_privacy_q2"
+                                    "key": "crams_demo_privacy_q2"
                                 }
                             },
                             {
                                 "question_response": "No",
                                 "question": {
-                                    "key": "racm_privacy_q3"
+                                    "key": "crams_demo_privacy_q3"
                                 }
                             }
                         ],
@@ -795,85 +795,85 @@
                 {
                     "question_response": 0,
                     "question": {
-                        "key": "racm_authorization"
+                        "key": "crams_demo_authorization"
                     }
                 },
                 {
                     "question_response": 0,
                     "question": {
-                        "key": "racm_data_retention_period"
+                        "key": "crams_demo_data_retention_period"
                     }
                 },
                 {
                     "question_response": null,
                     "question": {
-                        "key": "racm_electronic_inf_class"
+                        "key": "crams_demo_electronic_inf_class"
                     }
                 },
                 {
                     "question_response": 0,
                     "question": {
-                        "key": "racm_current_size"
+                        "key": "crams_demo_current_size"
                     }
                 },
                 {
                     "question_response": "",
                     "question": {
-                        "key": "racm_data_migration_src"
+                        "key": "crams_demo_data_migration_src"
                     }
                 },
                 {
                     "question_response": null,
                     "question": {
-                        "key": "racm_data_migration_assistance"
+                        "key": "crams_demo_data_migration_assistance"
                     }
                 },
                 {
                     "question_response": "",
                     "question": {
-                        "key": "racm_current_access_method"
+                        "key": "crams_demo_current_access_method"
                     }
                 },
                 {
                     "question_response": "",
                     "question": {
-                        "key": "racm_preferred_access_method"
+                        "key": "crams_demo_preferred_access_method"
                     }
                 },
                 {
                     "question_response": null,
                     "question": {
-                        "key": "racm_only_copy"
+                        "key": "crams_demo_only_copy"
                     }
                 },
                 {
                     "question_response": null,
                     "question": {
-                        "key": "racm_can_be_regenerated"
+                        "key": "crams_demo_can_be_regenerated"
                     }
                 },
                 {
                     "question_response": "",
                     "question": {
-                        "key": "racm_loss_impact"
+                        "key": "crams_demo_loss_impact"
                     }
                 },
                 {
                     "question_response": "",
                     "question": {
-                        "key": "racm_privacy_q1"
+                        "key": "crams_demo_privacy_q1"
                     }
                 },
                 {
                     "question_response": "",
                     "question": {
-                        "key": "racm_privacy_q2"
+                        "key": "crams_demo_privacy_q2"
                     }
                 },
                 {
                     "question_response": "No",
                     "question": {
-                        "key": "racm_privacy_q3"
+                        "key": "crams_demo_privacy_q3"
                     }
                 }
             ];

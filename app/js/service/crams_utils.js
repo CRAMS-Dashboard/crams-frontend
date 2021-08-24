@@ -77,10 +77,10 @@
             var question_responses = {};
             var sorted_req_question_responses = [];
             var req_question_response_list = alloc.requests[0].request_question_responses;
-            var req_question_keys = ['racm_authorization', 'racm_data_retention_period', 'racm_electronic_inf_class',
-                'racm_current_size', 'racm_data_migration_src', 'racm_data_migration_assistance', 'racm_current_access_method',
-                'racm_preferred_access_method', 'racm_only_copy', 'racm_can_be_regenerated', 'racm_loss_impact',
-                'racm_privacy_q1', 'racm_privacy_q2', 'racm_privacy_q3'];
+            var req_question_keys = ['crams_demo_authorization', 'crams_demo_data_retention_period', 'crams_demo_electronic_inf_class',
+                'crams_demo_current_size', 'crams_demo_data_migration_src', 'crams_demo_data_migration_assistance', 'crams_demo_current_access_method',
+                'crams_demo_preferred_access_method', 'crams_demo_only_copy', 'crams_demo_can_be_regenerated', 'crams_demo_loss_impact',
+                'crams_demo_privacy_q1', 'crams_demo_privacy_q2', 'crams_demo_privacy_q3'];
 
             // before sorting first check for missing request question responses
             // and added the missing question response back in
@@ -101,7 +101,7 @@
                             "key": missing_qu_resp[i]
                         }
                     };
-                    if (missing_qu_resp[i] === 'racm_current_size') {
+                    if (missing_qu_resp[i] === 'crams_demo_current_size') {
                         missing_qr = {
                             "question_response": 0,
                             "question": {
@@ -109,7 +109,7 @@
                             }
                         };
                     }
-                    if (missing_qu_resp[i] === 'racm_data_retention_period') {
+                    if (missing_qu_resp[i] === 'crams_demo_data_retention_period') {
                         missing_qr = {
                             "question_response": 5,
                             "question": {

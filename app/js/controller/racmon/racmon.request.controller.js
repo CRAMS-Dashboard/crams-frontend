@@ -179,19 +179,19 @@
 
         //FOR Code Percentages
         vm.for_percentages = forCodePercentages();
-        vm.authorityQuestion = CramsQuestionsService.getQuestion('racm_authorization');
-        vm.dataRetentionQuestion = CramsQuestionsService.getQuestion('racm_data_retention_period');
-        vm.electronicInfoClassQuestion = CramsQuestionsService.getQuestion('racm_electronic_inf_class');
-        vm.dataMigrationSrcQuestion = CramsQuestionsService.getQuestion('racm_data_migration_src');
-        vm.dataMigrationAstQuestion = CramsQuestionsService.getQuestion('racm_data_migration_assistance');
-        vm.accessMethodQuestion = CramsQuestionsService.getQuestion('racm_current_access_method');
-        vm.preferAccessMethodQuestion = CramsQuestionsService.getQuestion('racm_preferred_access_method');
-        vm.onlyCopyQuestion = CramsQuestionsService.getQuestion('racm_only_copy');
-        vm.canRegeneratedQuestion = CramsQuestionsService.getQuestion('racm_can_be_regenerated');
-        vm.lossImpactQuestion = CramsQuestionsService.getQuestion('racm_loss_impact');
-        vm.privacy1Question = CramsQuestionsService.getQuestion('racm_privacy_q1');
-        vm.privacy2Question = CramsQuestionsService.getQuestion('racm_privacy_q2');
-        vm.privacy3Question = CramsQuestionsService.getQuestion('racm_privacy_q3');
+        vm.authorityQuestion = CramsQuestionsService.getQuestion('crams_demo_authorization');
+        vm.dataRetentionQuestion = CramsQuestionsService.getQuestion('crams_demo_data_retention_period');
+        vm.electronicInfoClassQuestion = CramsQuestionsService.getQuestion('crams_demo_electronic_inf_class');
+        vm.dataMigrationSrcQuestion = CramsQuestionsService.getQuestion('crams_demo_data_migration_src');
+        vm.dataMigrationAstQuestion = CramsQuestionsService.getQuestion('crams_demo_data_migration_assistance');
+        vm.accessMethodQuestion = CramsQuestionsService.getQuestion('crams_demo_current_access_method');
+        vm.preferAccessMethodQuestion = CramsQuestionsService.getQuestion('crams_demo_preferred_access_method');
+        vm.onlyCopyQuestion = CramsQuestionsService.getQuestion('crams_demo_only_copy');
+        vm.canRegeneratedQuestion = CramsQuestionsService.getQuestion('crams_demo_can_be_regenerated');
+        vm.lossImpactQuestion = CramsQuestionsService.getQuestion('crams_demo_loss_impact');
+        vm.privacy1Question = CramsQuestionsService.getQuestion('crams_demo_privacy_q1');
+        vm.privacy2Question = CramsQuestionsService.getQuestion('crams_demo_privacy_q2');
+        vm.privacy3Question = CramsQuestionsService.getQuestion('crams_demo_privacy_q3');
 
         //Populate nectar storage product lookup
         LookupService.loadStorageProducts(ENV.erb, ENV.system).then(function (response) {
@@ -1218,10 +1218,10 @@
                 });
             }
 
-            set_empty_qresp('racm_data_migration_src');
-            set_empty_qresp('racm_current_access_method');
-            set_empty_qresp('racm_preferred_access_method');
-            set_empty_qresp('racm_loss_impact');
+            set_empty_qresp('crams_demo_data_migration_src');
+            set_empty_qresp('crams_demo_current_access_method');
+            set_empty_qresp('crams_demo_preferred_access_method');
+            set_empty_qresp('crams_demo_loss_impact');
 
             //check storage products
             let empty_sr_indexes = []; // indexes of empty sr 
@@ -1335,7 +1335,7 @@
             angular.forEach(vm.project.requests[0].request_question_responses, function (request_question_resp, index) {
                 var question_key = request_question_resp.question.key;
                 var q_response = request_question_resp.question_response;
-                if (question_key === 'racm_current_size') {
+                if (question_key === 'crams_demo_current_size') {
                     var current_size = parseInt(q_response);
                     request_question_resp.question_response = current_size;
                 }
